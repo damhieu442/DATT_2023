@@ -10,22 +10,19 @@
           <div class="row align-center row-top">
             <div class="col medium-6 small-12 large-3">
               <div class="col-inner">
-                <h3>GIỚI THIỆU</h3>
+                <h3>{{ this.$BResource.INTRODUCE.CAPTION }}</h3>
                 <div
                   class="is-divider divider clearfix"
                   style="max-width: 35px; background-color: rgb(195, 0, 5)"
                 ></div>
                 <p>
-                  Chào mừng bạn đến với ngôi nhà Converse! Tại đây, mỗi một dòng
-                  chữ, mỗi chi tiết và hình ảnh đều là những bằng chứng mang dấu
-                  ấn lịch sử Converse 100 năm, và đang không ngừng phát triển
-                  lớn mạnh.
+                  {{ this.$BResource.INTRODUCE.TITLE }}
                 </p>
               </div>
             </div>
             <div class="col medium-6 small-12 large-3">
               <div class="col-inner">
-                <h3>ĐỊA CHỈ</h3>
+                <h3>{{ this.$BResource.ADDRESS.CAPTION }}</h3>
                 <div
                   class="is-divider divider clearfix"
                   style="max-width: 35px; background-color: rgb(195, 0, 5)"
@@ -43,8 +40,7 @@
                   </div>
                   <div class="icon-box-text last-reset">
                     <p>
-                      Ngõ 70 Xuân Phương, Phường Phương Canh, Quận Nam Từ Liêm,
-                      Hà Nội
+                      {{ this.$BResource.ADDRESS.TITLE }}
                     </p>
                   </div>
                 </div>
@@ -58,7 +54,9 @@
                   </div>
                   <div class="icon-box-text last-reset">
                     <p>
-                      <a href="tel:0384144442">0384 144 442</a>
+                      <a href="tel:0384144442">{{
+                        this.$BResource.ADDRESS.PHONE
+                      }}</a>
                     </p>
                   </div>
                 </div>
@@ -75,9 +73,9 @@
                   </div>
                   <div class="icon-box-text last-reset">
                     <p>
-                      <a href="mailto:hieudam442@gmail.com"
-                        >hieudam442@gmail.com</a
-                      >
+                      <a href="mailto:hieudam442@gmail.com">{{
+                        this.$BResource.ADDRESS.EMAIL
+                      }}</a>
                     </p>
                   </div>
                 </div>
@@ -86,7 +84,7 @@
                     <div class="icon">
                       <div class="icon-inner">
                         <i
-                          class="fa-solid fa-location-dot"
+                          class="fa-brands fa-skype"
                           style="color: #ffffff"
                         ></i>
                       </div>
@@ -94,7 +92,9 @@
                   </div>
                   <div class="icon-box-text last-reset">
                     <p>
-                      <a href="skype:live:.cid.c2563e8ec37aad03">Hiếu Đàm</a>
+                      <a href="skype:live:.cid.c2563e8ec37aad03">{{
+                        this.$BResource.ADDRESS.SKYPE
+                      }}</a>
                     </p>
                   </div>
                 </div>
@@ -102,7 +102,7 @@
             </div>
             <div class="col medium-6 small-12 large-3">
               <div class="col-inner">
-                <h3>MENU</h3>
+                <h3>{{ this.$BResource.MENU.CAPTION }}</h3>
                 <div
                   class="is-divider divider clearfix"
                   style="max-width: 35px; background-color: rgb(195, 0, 5)"
@@ -114,7 +114,6 @@
                         <li><a href="#">Trang chủ</a></li>
                         <li><a href="#">Giới thiệu</a></li>
                         <li><a href="#">Cửa hàng</a></li>
-                        <li><a href="#">Tin tức</a></li>
                         <li><a href="#">Liên hệ</a></li>
                       </ul>
                     </div>
@@ -124,14 +123,14 @@
             </div>
             <div class="col medium-6 small-12 large-3">
               <div class="col-inner">
-                <h3>MẠNG XÃ HỘI</h3>
+                <h3>{{ this.$BResource.SOCIAL.CAPTION }}</h3>
                 <div
                   class="is-divider divider clearfix"
                   style="max-width: 35px; background-color: rgb(195, 0, 5)"
                 ></div>
                 <div class="social-icons follow-icons" style="font-size: 50%">
                   <a
-                    href="#"
+                    href="https://www.facebook.com/hieudam2kx/"
                     target="_blank"
                     data-label="Facebook"
                     rel="noopener noreferrer nofollow"
@@ -142,7 +141,7 @@
                     ></i
                   ></a>
                   <a
-                    href="#"
+                    href="https://www.instagram.com/vp_melody/"
                     target="_blank"
                     data-label="Facebook"
                     rel="noopener noreferrer nofollow"
@@ -165,7 +164,7 @@
                 >
                   <div class="gallery-col col">
                     <div class="col-inner">
-                      <a href="#" class="image-lightbox lightbox-gallery">
+                      <a class="image-lightbox lightbox-gallery">
                         <div class="box has-hover gallery-box box-none">
                           <div class="box-image">
                             <img src="@/assets/img/paypal.png" alt="" />
@@ -176,7 +175,7 @@
                   </div>
                   <div class="gallery-col col">
                     <div class="col-inner">
-                      <a href="#" class="image-lightbox lightbox-gallery">
+                      <a class="image-lightbox lightbox-gallery">
                         <div class="box has-hover gallery-box box-none">
                           <div class="box-image">
                             <img
@@ -191,7 +190,7 @@
                   </div>
                   <div class="gallery-col col">
                     <div class="col-inner">
-                      <a href="#" class="image-lightbox lightbox-gallery">
+                      <a class="image-lightbox lightbox-gallery">
                         <div class="box has-hover gallery-box box-none">
                           <div class="box-image">
                             <img src="@/assets/img/vnpay.svg" alt="" />
@@ -202,7 +201,7 @@
                   </div>
                   <div class="gallery-col col">
                     <div class="col-inner">
-                      <a href="#" class="image-lightbox lightbox-gallery">
+                      <a class="image-lightbox lightbox-gallery">
                         <div class="box has-hover gallery-box box-none">
                           <div class="box-image">
                             <img src="@/assets/img/visa.png" alt="" />
@@ -222,8 +221,10 @@
       <div class="container clearfix">
         <div class="footer-primary pull-left">
           <div class="copyright-footer">
-            © Bản quyền thuộc về
-            <a href="#">Đàm Văn Hiếu</a>
+            {{ this.$BResource.COPYRIGHT.CAPTION }}
+            <a href="https://www.facebook.com/hieudam2kx/">{{
+              this.$BResource.COPYRIGHT.NAME
+            }}</a>
           </div>
         </div>
       </div>

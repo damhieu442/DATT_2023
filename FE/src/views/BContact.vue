@@ -40,23 +40,151 @@
           <div class="row">
             <div class="col medium-6 small-12 large-6">
               <div class="col-inner">
-                <h3>THÔNG TIN LIÊN HỆ</h3>
+                <h3>{{ this.$BResource.ADDRESS.CAPTION2 }}</h3>
                 <div
                   class="icon-box featured-box icon-box-left text-left"
                   style="margin: 0px 0px 10px 0px"
                 >
-                  <div class="icon-box-img" style="width: 20px">
+                  <div class="icon-box-img" style="width: 17.5px">
                     <div class="icon">
                       <div class="icon-inner">
-                        <i class="fa-solid fa-location-dot location"></i>
+                        <i class="fa-solid fa-location-dot fa-xl"></i>
                       </div>
                     </div>
                   </div>
                   <div class="icon-box-text last-reset">
                     <p>
-                      Ngõ 70 Xuân Phương, Phường Phương Canh, Quận Nam Từ Liêm,
-                      Hà Nội
+                      {{ this.$BResource.ADDRESS.TITLE }}
                     </p>
+                  </div>
+                </div>
+                <div
+                  class="icon-box featured-box icon-box-left text-left"
+                  style="margin: 0px 0px 10px 0px"
+                >
+                  <div class="icon-box-img">
+                    <div class="icon">
+                      <div class="icon-inner">
+                        <i class="fa-solid fa-phone fa-lg"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="icon-box-text last-reset">
+                    <p>
+                      <a href="tel:0384144442">{{
+                        this.$BResource.ADDRESS.PHONE
+                      }}</a>
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="icon-box featured-box icon-box-left text-left"
+                  style="margin: 0px 0px 10px 0px"
+                >
+                  <div class="icon-box-img">
+                    <div class="icon">
+                      <div class="icon-inner">
+                        <i class="fa-solid fa-envelope fa-lg"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="icon-box-text last-reset">
+                    <p>
+                      <a href="mailto:hieudam442@gmail.com">{{
+                        this.$BResource.ADDRESS.EMAIL
+                      }}</a>
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="icon-box featured-box icon-box-left text-left"
+                  style="margin: 0px 0px 10px 0px"
+                >
+                  <div class="icon-box-img">
+                    <div class="icon">
+                      <div class="icon-inner">
+                        <i class="fa-brands fa-skype fa-lg"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="icon-box-text last-reset">
+                    <p>
+                      <a href="skype:live:.cid.c2563e8ec37aad03">{{
+                        this.$BResource.ADDRESS.SKYPE
+                      }}</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col medium-6 small-12 large-6">
+              <div class="col-inner">
+                <div class="wpcf7">
+                  <div class="wpcf7-form">
+                    <div
+                      class="form-ct clear"
+                      :class="[false ? 'processing' : '']"
+                    >
+                      <div class="form-row w50">
+                        <span class="wpcf7-form-control-wrap text-name">
+                          <DxTextBox
+                            value=""
+                            label="Họ và tên"
+                            labelMode="floating"
+                          />
+                        </span>
+                      </div>
+                      <div class="form-row w50">
+                        <span class="wpcf7-form-control-wrap text-name">
+                          <DxTextBox
+                            value=""
+                            label="Email"
+                            labelMode="floating"
+                          />
+                        </span>
+                      </div>
+                      <div class="form-row w50">
+                        <span class="wpcf7-form-control-wrap text-name">
+                          <DxTextBox
+                            value=""
+                            label="Số điện thoại"
+                            labelMode="floating"
+                          />
+                        </span>
+                      </div>
+                      <div class="form-row w50">
+                        <span class="wpcf7-form-control-wrap text-name">
+                          <DxTextBox
+                            value=""
+                            label="Địa chỉ"
+                            labelMode="floating"
+                          />
+                        </span>
+                      </div>
+                      <div class="form-row">
+                        <span class="wpcf7-form-control-wrap text-name">
+                          <DxTextArea
+                            :height="90"
+                            value=""
+                            label="Địa chỉ"
+                            labelMode="floating"
+                          />
+                        </span>
+                      </div>
+                      <div class="form-row center-txt">
+                        <DxButton
+                          text="GỬI"
+                          :width="280"
+                          :height="38"
+                          type="danger"
+                          styling-mode="contained"
+                        />
+                        <span
+                          class="ajax-loader"
+                          :class="[true ? 'is-active' : '']"
+                        ></span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -85,6 +213,9 @@
   </main>
 </template>
 <script>
+import DxTextBox from "devextreme-vue/text-box";
+import DxTextArea from "devextreme-vue/text-area";
+import DxButton from "devextreme-vue/button";
 import DxMap from "devextreme-vue/map";
 import { markersData } from "@/js/constant";
 const markerUrl =
@@ -92,7 +223,7 @@ const markerUrl =
 
 export default {
   name: "Contact",
-  components: { DxMap },
+  components: { DxMap, DxTextBox, DxTextArea, DxButton },
   data() {
     return {
       markersData,
