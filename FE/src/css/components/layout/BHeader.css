@@ -126,6 +126,18 @@ li {
   transition: background-color 0.3s;
 }
 
+.nav > li.header-divider {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  height: 30px;
+  vertical-align: middle;
+  position: relative;
+  margin: 0 7.5px;
+}
+
+.nav-dark .nav > li.header-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
 .nav li:first-child {
   margin-left: 0 !important;
 }

@@ -26,27 +26,44 @@
             </ul>
           </div>
           <div class="flex-col hide-for-medium flex-right">
-            <ul class="header-nav header-nav-main nav nav-right nav-uppercase">
-              <li
-                class="cart-item has-icon has-dropdown"
-                :class="false ? 'current-dropdown' : ''"
+            <div
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <ul
+                class="header-nav header-nav-main nav nav-right nav-uppercase"
               >
-                <a href="#" title="Giỏ hàng" class="header-cart-link is-small">
-                  <span class="header-cart-title">
-                    Giỏ hàng /&nbsp;
-                    <span class="cart-price">
-                      <span class="woocommerce-Price-amount amount">
-                        0&nbsp;
-                        <span class="woocommerce-Price-currencySymbol">₫</span>
-                      </span></span
-                    >
-                  </span>
-                  <span class="cart-icon image-icon">
-                    <strong>0</strong>
-                  </span>
-                </a>
-              </li>
-            </ul>
+                <li
+                  class="cart-item has-icon has-dropdown"
+                  :class="false ? 'current-dropdown' : ''"
+                >
+                  <a
+                    href="#"
+                    title="Giỏ hàng"
+                    class="header-cart-link is-small"
+                  >
+                    <span class="header-cart-title">
+                      Giỏ hàng /&nbsp;
+                      <span class="cart-price">
+                        <span class="woocommerce-Price-amount amount">
+                          0&nbsp;
+                          <span class="woocommerce-Price-currencySymbol"
+                            >₫</span
+                          >
+                        </span></span
+                      >
+                    </span>
+                    <span class="cart-icon image-icon">
+                      <strong>0</strong>
+                    </span>
+                  </a>
+                </li>
+                <div class="header-divider"></div>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
