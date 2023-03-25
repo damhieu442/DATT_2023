@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\DATT.K14_2023.API.props" />
+</Project>

@@ -12,7 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\DATT.2023_BL\DATT.2023.BL.csproj" />
+    <ProjectReference Include="..\DATT.2023_COMMOM\DATT.2023.COMMON.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\customer\" />
   </ItemGroup>
 
 </Project>

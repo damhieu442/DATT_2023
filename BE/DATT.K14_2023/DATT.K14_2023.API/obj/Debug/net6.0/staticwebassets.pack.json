@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\customer\\499750.jpg",
+      "PackagePath": "staticwebassets\\customer\\499750.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.DATT.K14_2023.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.DATT.K14_2023.API.props",
+      "PackagePath": "build\\DATT.K14_2023.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.DATT.K14_2023.API.props",
+      "PackagePath": "buildMultiTargeting\\DATT.K14_2023.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.DATT.K14_2023.API.props",
+      "PackagePath": "buildTransitive\\DATT.K14_2023.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
