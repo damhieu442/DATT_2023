@@ -234,7 +234,6 @@
 <script>
 export default {
   name: "Introduce",
-  /// 
   components: {},
 };
 </script>
