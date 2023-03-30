@@ -3,6 +3,7 @@ import DefaultLayout from "@/layouts/default.vue";
 
 import ContactPage from "@/views/BContact.vue";
 import IntroducePage from "@/views/BIntroduce.vue";
+import Homepage from "@/views/Homepage.vue";
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -12,7 +13,7 @@ export const router = createRouter({
 			component: DefaultLayout,
 
 			children: [
-				{ path: "", redirect: { name: "Introduce" } },
+				{ path: "", component: Homepage, name: "Homepage" },
 
 				{
 					path: "lien-he",
