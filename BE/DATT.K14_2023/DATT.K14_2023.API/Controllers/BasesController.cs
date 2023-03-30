@@ -4,6 +4,7 @@ using DATT.K14_2023.BL.BaseBL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DATT.k14_2023.COMMON.Enums;
+using System.IO;
 
 namespace DATT.K14_2023.API.Controllers
 {
@@ -216,6 +217,42 @@ namespace DATT.K14_2023.API.Controllers
         }
 
         /// <summary>
+        /// API lấy ảnh từ server
+        /// </summary>
+        /// <param name="imgName">Tên ảnh</param>
+        /// <returns>
+        /// Trả về ảnh nếu thành công
+        /// Trả về lỗi nếu thất bại
+        /// </returns>
+        /// Created By: DVHIEU (29/03/2023)
+        [HttpGet("imgName/{imgName}")]
+        public IActionResult GetImg([FromRoute] string imgName)
+        {
+            try
+            {
+                string path = urlImg();
+                var filePath = path + imgName + ".jpg";
+                if (System.IO.File.Exists(filePath))
+                {
+                    byte[] b = System.IO.File.ReadAllBytes(filePath);
+                    return File(b, "image/jpg");
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg,
+                    TraceId = HttpContext.TraceIdentifier
+                });
+            }
+        }
+
+        /// <summary>
         /// API sửa 1 bản ghi
         /// </summary>
         /// <param name="id">Id bản ghi cần sửa</param>
@@ -226,7 +263,7 @@ namespace DATT.K14_2023.API.Controllers
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
         [HttpPut("{id}")]
-        public IActionResult UpdateRecord(Guid id,[FromForm] T record)
+        public IActionResult UpdateRecord(Guid id, [FromForm] T record)
         {
             try
             {
@@ -278,7 +315,18 @@ namespace DATT.K14_2023.API.Controllers
         /// </summary>
         /// <param name="record">đối tượng muốn xử lý</param>
         /// <returns></returns>
+        /// Created By: DVHIEU (23/03/2023)
         protected internal virtual string CreatedAndUpdateImg(T? record)
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// Hàm lấy path ảnh
+        /// </summary>
+        /// <returns></returns>
+        /// Created By: DVHIEU (23/03/2023)
+        protected internal virtual dynamic urlImg()
         {
             return "";
         }

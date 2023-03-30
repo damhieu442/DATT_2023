@@ -53,9 +53,14 @@ namespace DATT.k14_2023.COMMON.Entities
         public Role? Role { get; set; }
 
         /// <summary>
-        /// Ảnh
+        /// File ảnh
         /// </summary>
-        public IFormFile ImgName { get; set; }
+        public IFormFile Img { get; set; }
+
+        /// <summary>
+        /// Tên ảnh
+        /// </summary>
+        public string? ImgName { get; set; }
 
         /// <summary>
         /// Ngày tạo

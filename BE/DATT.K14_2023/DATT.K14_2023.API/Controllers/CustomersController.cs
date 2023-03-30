@@ -3,6 +3,7 @@ using DATT.K14_2023.BL.BaseBL;
 using DATT.K14_2023.BL.CustomerBL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 namespace DATT.K14_2023.API.Controllers
 {
@@ -36,9 +37,9 @@ namespace DATT.K14_2023.API.Controllers
         protected internal override string CreatedAndUpdateImg(Customer customer)
         {
             string imgName = "";
-            if (customer.ImgName != null)
+            if (customer.Img != null)
             {
-                int count = _customerBL.CheckImgName(customer.ImgName.FileName);
+                int count = _customerBL.CheckImgName(customer.Img.FileName);
                 if (count == 0)
                 {
                     string path = _webHostEnvironment.WebRootPath + "\\customer\\";
@@ -46,19 +47,29 @@ namespace DATT.K14_2023.API.Controllers
                     {
                         Directory.CreateDirectory(path);
                     }
-                    using (FileStream fileStream = System.IO.File.Create(path + customer.ImgName.FileName))
+                    using (FileStream fileStream = System.IO.File.Create(path + customer.Img.FileName))
                     {
-                        customer.ImgName.CopyTo(fileStream);
-                        imgName = customer.ImgName.FileName;
+                        customer.Img.CopyTo(fileStream);
+                        imgName = customer.Img.FileName;
                         fileStream.Flush();
                     }
                 }
                 else
                 {
-                    imgName = customer.ImgName.FileName;
+                    imgName = customer.Img.FileName;
                 }
             }
             return imgName;
+        }
+
+        /// <summary>
+        /// Hàm lấy path ảnh
+        /// </summary>
+        /// <returns></returns>
+        /// Created By: DVHIEU (23/03/2023)
+        protected internal override dynamic urlImg()
+        {
+            return _webHostEnvironment.WebRootPath + "\\customer\\";
         }
         #endregion
 

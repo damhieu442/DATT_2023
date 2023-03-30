@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7qjfjPHwVtWipPq2zQjUk+NKdsfqsTohE4hSR2En+nk=",
+  "Hash": "hfTE8l+DPAkivohCSoQKAF/GKn/UVMUqIwNd8TlPDLs=",
   "Source": "DATT.K14_2023.API",
   "BasePath": "_content/DATT.K14_2023.API",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "DATT.K14_2023.API\\wwwroot",
       "Source": "DATT.K14_2023.API",
-      "ContentRoot": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\",
+      "ContentRoot": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\",
       "BasePath": "_content/DATT.K14_2023.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\customer\\499750.jpg",
+      "Identity": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\customer\\499750.jpg",
       "SourceId": "DATT.K14_2023.API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\",
+      "ContentRoot": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\",
       "BasePath": "_content/DATT.K14_2023.API",
       "RelativePath": "customer/499750.jpg",
       "AssetKind": "All",
