@@ -80,3 +80,8 @@ D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.API\obj\Debug\net6.0\refint\DATT.K14_202
 D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.API\obj\Debug\net6.0\DATT.K14_2023.API.pdb
 D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.API\obj\Debug\net6.0\DATT.K14_2023.API.genruntimeconfig.cache
 D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.API\obj\Debug\net6.0\ref\DATT.K14_2023.API.dll
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\omnisharp.json
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\Newtonsoft.Json.dll

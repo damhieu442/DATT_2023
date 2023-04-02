@@ -15,7 +15,7 @@ namespace DATT.k14_2023.COMMON.Entities
         /// Khóa chính
         /// </summary>
         [Key]
-        public Guid? CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
         /// <summary>
         /// Tên đăng nhập
@@ -66,5 +66,20 @@ namespace DATT.k14_2023.COMMON.Entities
         /// Ngày tạo
         /// </summary>
         public DateTime? CreatedDate { get; set; }
+
+        /// <summary>
+        /// Người tạo
+        /// </summary>
+        public string? CreatedBy { get; set; }
+
+        /// <summary>
+        /// Ngày sửa
+        /// </summary>
+        public DateTime? ModifiedDate { get; set; }
+
+        /// <summary>
+        /// Người sửa
+        /// </summary>
+        public string? ModifiedBy { get; set; }
     }
 }

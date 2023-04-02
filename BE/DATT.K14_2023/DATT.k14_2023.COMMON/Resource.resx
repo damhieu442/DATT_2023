@@ -129,6 +129,9 @@
   <data name="InvalidData" xml:space="preserve">
     <value>Dữ liệu đầu vào không hợp lệ</value>
   </data>
+  <data name="Msg_DuplicateEmpCode" xml:space="preserve">
+    <value>Mã &lt;{0}&gt; đã tồn tại. Vui lòng thử lại</value>
+  </data>
   <data name="Update_Failed" xml:space="preserve">
     <value>Sửa thất bại</value>
   </data>

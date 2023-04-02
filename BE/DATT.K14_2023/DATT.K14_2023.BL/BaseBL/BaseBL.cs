@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DATT.k14_2023.COMMON.Constants.Attribute;
+using static DATT.k14_2023.COMMON.Constants.BAttribute;
 
 namespace DATT.K14_2023.BL.BaseBL
 {
@@ -52,12 +52,12 @@ namespace DATT.K14_2023.BL.BaseBL
         /// Status500 nếu thất bại
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
-        public PagingResult GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyWord, long? minPrice, long? maxPrice)
+        public PagingResult<T> GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyWord, long? minPrice, long? maxPrice, long? CategoryCode)
         {
-            dynamic dataRecord = _baseDL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyWord, minPrice, maxPrice);
+            dynamic dataRecord = _baseDL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyWord, minPrice, maxPrice, CategoryCode);
             double totalPage = Convert.ToDouble(dataRecord[1]) / pageSize;
 
-            return new PagingResult
+            return new PagingResult<T>
             {
                 CurrentPage = pageNumber,
                 CurrentPageRecords = pageSize,
@@ -193,7 +193,16 @@ namespace DATT.K14_2023.BL.BaseBL
 
             foreach (var prop in props)
             {
-                
+                var propValue = prop.GetValue(record);
+                var notEmptyAttribute = (NotEmpty)prop.GetCustomAttributes(typeof(NotEmpty), false).FirstOrDefault();
+                if (notEmptyAttribute != null && propValue == null)
+                {
+                    validateFailures.Add(notEmptyAttribute.ErrorMessage);
+                }
+                else if (notEmptyAttribute != null && string.IsNullOrEmpty(propValue.ToString().Trim()))
+                {
+                    validateFailures.Add(notEmptyAttribute.ErrorMessage);
+                }
             }
 
             if (validateFailures.Count > 0)

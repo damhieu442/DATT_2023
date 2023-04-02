@@ -32,7 +32,7 @@ namespace DATT.k14_2023.DL.BaseDL
         /// Status500 nếu thất bại
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
-        dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, long? minPrice, long? maxPrice);
+        dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, long? minPrice, long? maxPrice, long? CategoryCode);
 
         /// <summary>
         /// API lấy dữ liệu 1 bản ghi

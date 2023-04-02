@@ -97,6 +97,15 @@ namespace DATT.k14_2023.COMMON {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mã &lt;{0}&gt; đã tồn tại. Vui lòng thử lại.
+        /// </summary>
+        public static string Msg_DuplicateEmpCode {
+            get {
+                return ResourceManager.GetString("Msg_DuplicateEmpCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sửa thất bại.
         /// </summary>
         public static string Update_Failed {

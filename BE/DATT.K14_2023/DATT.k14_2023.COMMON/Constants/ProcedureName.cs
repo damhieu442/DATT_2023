@@ -34,5 +34,10 @@ namespace DATT.k14_2023.COMMON.Constants
         public static string Delete = "Proc_{0}_DeleteOne";
 
         public static string Check = "Proc_{0}_Check{1}";
+
+        /// <summary>
+        /// Procedure Check Code
+        /// </summary>
+        public static string CheckCode = "Proc_{0}_Check{1}Code";
     }
 }

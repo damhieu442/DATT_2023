@@ -3,6 +3,10 @@ using DATT.K14_2023.BL.BaseBL;
 using DATT.k14_2023.DL.BaseDL;
 using DATT.K14_2023.BL.CustomerBL;
 using DATT.k14_2023.DL.CustomerDL;
+using DATT.K14_2023.BL.ShoeBL;
+using DATT.k14_2023.DL.ShoeDL;
+using DATT.K14_2023.BL.CategoryBL;
+using DATT.k14_2023.DL.CategoryDL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +26,12 @@ builder.Services.AddScoped(typeof(IBaseDL<>), typeof(BaseDL<>));
 
 builder.Services.AddScoped<ICustomerBL, CustomerBL>();
 builder.Services.AddScoped<ICustomerDL, CustomerDL>();
+
+builder.Services.AddScoped<IShoeBL, ShoeBL>();
+builder.Services.AddScoped<IShoeDL, ShoeDL>();
+
+builder.Services.AddScoped<ICategoryBL, CategoryBL>();
+builder.Services.AddScoped<ICategoryDL, CategoryDL>();
 
 DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MySql");
 

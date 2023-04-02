@@ -5,6 +5,54 @@
       "PackagePath": "staticwebassets\\customer\\499750.jpg"
     },
     {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\customer\\501627.jpg",
+      "PackagePath": "staticwebassets\\customer\\501627.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-classic-7-1-300x225.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-classic-7-1-300x225.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-classic-7-2-300x225.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-classic-7-2-300x225.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-classic-7.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-classic-7.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-classic-8-1-300x225.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-classic-8-1-300x225.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-classic-8-2-300x225.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-classic-8-2-300x225.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-classic-8-3-768x492.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-classic-8-3-768x492.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-classic-8-768x492.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-classic-8-768x492.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-sunbaked-4-1-300x225.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-sunbaked-4-1-300x225.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-sunbaked-4-2-300x225.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-sunbaked-4-2-300x225.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-sunbaked-4-3-300x225.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-sunbaked-4-3-300x225.jpg"
+    },
+    {
+      "Id": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\wwwroot\\shoe\\women-sunbaked-4.jpg",
+      "PackagePath": "staticwebassets\\shoe\\women-sunbaked-4.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.DATT.K14_2023.API.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

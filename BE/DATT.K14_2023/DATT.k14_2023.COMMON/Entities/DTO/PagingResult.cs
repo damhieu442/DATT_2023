@@ -9,7 +9,7 @@ namespace DATT.k14_2023.COMMON.Entities.DTO
     /// <summary>
     /// Dữ liệu trả về và phân trang
     /// </summary>
-    public class PagingResult
+    public class PagingResult<T>
     {
         /// <summary>
         /// Số trang
@@ -34,6 +34,6 @@ namespace DATT.k14_2023.COMMON.Entities.DTO
         /// <summary>
         /// Dữ liệu trả về
         /// </summary>
-        public List<dynamic> Data { get; set; }
+        public List<T> Data { get; set; }
     }
 }

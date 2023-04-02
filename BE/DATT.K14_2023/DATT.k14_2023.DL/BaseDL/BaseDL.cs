@@ -51,7 +51,7 @@ namespace DATT.k14_2023.DL.BaseDL
         /// Status500 nếu thất bại
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
-        public dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, long? minPrice, long? maxPrice)
+        public dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, long? minPrice, long? maxPrice, long? CategoryCode)
         {
             string storedProcedureName = String.Format(ProcedureName.Get, typeof(T).Name, "ByPagingAndFilter");
 
@@ -61,6 +61,7 @@ namespace DATT.k14_2023.DL.BaseDL
             parameters.Add("p_PageNumber", pageNumber);
             parameters.Add("p_MinPrice", minPrice);
             parameters.Add("p_MaxPrice", maxPrice);
+            parameters.Add("p_CategoryCode", CategoryCode);
 
             dynamic records;
             int totalRecord;
@@ -121,6 +122,9 @@ namespace DATT.k14_2023.DL.BaseDL
             foreach (var property in properties)
             {
                 if (property.Name == "ImgName")
+                {
+                    parameters.Add($"p_{property.Name}", imgName);
+                } else if (property.Name == "Img")
                 {
                     parameters.Add($"p_{property.Name}", imgName);
                 }

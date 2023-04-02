@@ -83,13 +83,14 @@ namespace DATT.K14_2023.API.Controllers
             [FromQuery] string? keyWord,
             [FromQuery] long? minPrice,
             [FromQuery] long? maxPrice,
+            [FromQuery] long? CategoryCode,
             [FromQuery] int pageSize = 20,
             [FromQuery] int pageNumber = 1
             )
         {
             try
             {
-                dynamic records = _baseBL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyWord, minPrice, maxPrice);
+                dynamic records = _baseBL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyWord, minPrice, maxPrice, CategoryCode);
 
                 if (records.Data.Count > 0)
                 {
@@ -198,7 +199,7 @@ namespace DATT.K14_2023.API.Controllers
                         ErrorCode = result.ErrorCode,
                         DevMsg = Resource.DevMsg,
                         UserMsg = Resource.UserMsg,
-                        MoreInfo = result.Message,
+                        MoreInfo = result.Data,
                         TraceId = HttpContext.TraceIdentifier
                     });
                 }

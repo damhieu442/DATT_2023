@@ -33,7 +33,7 @@ namespace DATT.K14_2023.BL.BaseBL
         /// Status500 nếu thất bại
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
-        PagingResult GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyWord, long? minPrice, long? maxPrice);
+        PagingResult<T> GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyWord, long? minPrice, long? maxPrice, long? CategoryCode);
 
         /// <summary>
         /// API lấy dữ liệu 1 bản ghi
