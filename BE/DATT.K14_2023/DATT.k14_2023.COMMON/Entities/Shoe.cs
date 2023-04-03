@@ -57,14 +57,9 @@ namespace DATT.k14_2023.COMMON.Entities
         public string? Material { get; set; }
 
         /// <summary>
-        /// Khóa phụ size
+        /// size detail
         /// </summary>
-        public Guid? SizeId { get; set; }
-
-        /// <summary>
-        /// Số lượng
-        /// </summary>
-        public long? Amount { get; set; }
+        public string? Size { get; set; }
 
         /// <summary>
         /// Khóa phụ danh mục
