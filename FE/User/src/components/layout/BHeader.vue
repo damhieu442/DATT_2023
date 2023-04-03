@@ -14,7 +14,7 @@
 							/>
 						</router-link>
 					</div>
-					<div class="flex-col hide-for-medium flex-left">
+					<div class="flex-col flex-left">
 						<ul class="header-nav header-nav-main nav nav-left nav-uppercase">
 							<li class="account-item has-icon">
 								<a href="#" class="nav-top-link nav-top-not-logged-in is-small">
@@ -23,7 +23,7 @@
 							</li>
 						</ul>
 					</div>
-					<div class="flex-col hide-for-medium flex-right">
+					<div class="flex-col flex-right">
 						<div style="display: flex; justify-content: center; align-items: center">
 							<ul class="header-nav header-nav-main nav nav-right nav-uppercase">
 								<li
@@ -53,55 +53,83 @@
 					</div>
 				</div>
 			</div>
-			<div class="header-bottom wide-nav flex-has-center hide-for-medium">
+			<div class="header-bottom wide-nav flex-has-center">
 				<div class="flex-row container">
-					<div class="flex-col hide-for-medium flex-center">
+					<div class="flex-col flex-center">
 						<ul
 							class="nav header-nav header-bottom-nav nav-center nav-size-medium nav-spacing-xlarge nav-uppercase"
 						>
 							<li
-								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-16 current_page_item active menu-item-24"
+								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
-								<a href="#" class="nav-top-link">Trang chủ</a>
+								<router-link
+									to="/"
+									class="nav-top-link"
+									exact-active-class="current-menu-item"
+								>
+									Trang chủ
+								</router-link>
 							</li>
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
-								<router-link class="nav-top-link" :to="{ name: 'Introduce' }">
+								<router-link
+									class="nav-top-link"
+									:to="{ name: 'Introduce' }"
+									active-class="current-menu-item"
+								>
 									Giới thiệu
 								</router-link>
 							</li>
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
-								<a href="#" class="nav-top-link">
+								<router-link
+									class="nav-top-link"
+									to="/danh-muc/nu"
+									active-class="current-menu-item"
+								>
 									Nữ
 									<i
 										class="fa-solid fa-angle-down icon-angle-down"
 										style="color: #5e5e5e"
 									></i>
-								</a>
+								</router-link>
 							</li>
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
-								<a href="#" class="nav-top-link">
+								<router-link
+									class="nav-top-link"
+									to="/danh-muc/nam"
+									active-class="current-menu-item"
+								>
 									Nam
 									<i
 										class="fa-solid fa-angle-down icon-angle-down"
 										style="color: #5e5e5e"
-									></i
-								></a>
+									></i>
+								</router-link>
 							</li>
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
-								<a href="#" class="nav-top-link">Trẻ em</a>
+								<router-link
+									class="nav-top-link"
+									to="/danh-muc/tre-em"
+									active-class="current-menu-item"
+								>
+									Trẻ em
+								</router-link>
 							</li>
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
-								<router-link class="nav-top-link" :to="{ name: 'Contact' }">
+								<router-link
+									class="nav-top-link"
+									:to="{ name: 'Contact' }"
+									active-class="current-menu-item"
+								>
 									Liên hệ
 								</router-link>
 							</li>

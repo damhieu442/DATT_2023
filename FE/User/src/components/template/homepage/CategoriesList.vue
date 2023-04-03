@@ -27,12 +27,13 @@
 		> ul {
 			display: flex;
 			justify-content: space-between;
+			gap: 2rem;
 
 			> li {
 				width: math.div(1, 3) * 100%;
 				position: relative;
 				margin: 0;
-				padding: 0 15px 30px;
+				padding: 0 0 30px;
 			}
 		}
 	}
