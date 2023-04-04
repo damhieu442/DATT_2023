@@ -52,6 +52,11 @@ namespace DATT.k14_2023.COMMON.Entities
         public int? Discount { get; set; }
 
         /// <summary>
+        /// Giá bán sau khi giảm giá
+        /// </summary>
+        public long? TotalPrice { get; set; }
+
+        /// <summary>
         /// Chất liệu
         /// </summary>
         public string? Material { get; set; }

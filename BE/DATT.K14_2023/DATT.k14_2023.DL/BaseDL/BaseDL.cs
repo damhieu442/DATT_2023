@@ -1,6 +1,7 @@
 ﻿
 using Dapper;
 using DATT.k14_2023.COMMON.Constants;
+using DATT.k14_2023.COMMON.ViewModel;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace DATT.k14_2023.DL.BaseDL
         /// Status500 nếu thất bại
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
-        public dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, long? minPrice, long? maxPrice, long? CategoryCode)
+        public dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, long? minPrice, long? maxPrice, long? categoryCode, string? queryString, string? type)
         {
             string storedProcedureName = String.Format(ProcedureName.Get, typeof(T).Name, "ByPagingAndFilter");
 
@@ -61,7 +62,9 @@ namespace DATT.k14_2023.DL.BaseDL
             parameters.Add("p_PageNumber", pageNumber);
             parameters.Add("p_MinPrice", minPrice);
             parameters.Add("p_MaxPrice", maxPrice);
-            parameters.Add("p_CategoryCode", CategoryCode);
+            parameters.Add("p_CategoryCode", categoryCode);
+            parameters.Add("p_CustomParam", queryString);
+            parameters.Add("p_Type", type);
 
             dynamic records;
             int totalRecord;

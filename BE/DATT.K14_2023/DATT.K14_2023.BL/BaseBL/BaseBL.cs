@@ -1,6 +1,7 @@
 ﻿using DATT.k14_2023.COMMON;
 using DATT.k14_2023.COMMON.Entities.DTO;
 using DATT.k14_2023.COMMON.Enums;
+using DATT.k14_2023.COMMON.ViewModel;
 using DATT.k14_2023.DL.BaseDL;
 using System;
 using System.Collections.Generic;
@@ -52,9 +53,13 @@ namespace DATT.K14_2023.BL.BaseBL
         /// Status500 nếu thất bại
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
-        public PagingResult<T> GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyWord, long? minPrice, long? maxPrice, long? CategoryCode)
+        public PagingResult<T> GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyWord, long? minPrice, long? maxPrice, long? CategoryCode, List<CustomParams>? customParams)
         {
-            dynamic dataRecord = _baseDL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyWord, minPrice, maxPrice, CategoryCode);
+            dynamic param = CustomParam(customParams);
+            string queryString = param[0];
+            string type = param[1];
+
+            dynamic dataRecord = _baseDL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyWord, minPrice, maxPrice, CategoryCode, queryString, type);
             double totalPage = Convert.ToDouble(dataRecord[1]) / pageSize;
 
             return new PagingResult<T>
@@ -224,6 +229,19 @@ namespace DATT.K14_2023.BL.BaseBL
         protected internal virtual ServiceResult ValidateCustom(T? record)
         {
             return new ServiceResult { IsSuccess = true };
+        }
+
+        /// <summary>
+        /// Hàm Custom filter riêng
+        /// </summary>
+        /// <param name="record">Đối tượng bản ghi</param>
+        /// <returns>
+        /// rỗng nếu không có lỗi
+        /// </returns>
+        /// Created By: DVHIEU (23/03/2023)
+        protected internal virtual dynamic CustomParam(List<CustomParams>? customParams)
+        {
+            return new List<string>() { "", ""};
         }
 
         /// <summary>

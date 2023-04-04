@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DATT.k14_2023.COMMON.Enums;
 using System.IO;
+using DATT.k14_2023.COMMON.ViewModel;
 
 namespace DATT.K14_2023.API.Controllers
 {
@@ -78,9 +79,10 @@ namespace DATT.K14_2023.API.Controllers
         /// Status500 nếu thất bại
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
-        [HttpGet("PagingAndFilter")]
+        [HttpPost("PagingAndFilter")]
         public IActionResult GetRecordByFilterAndPaging(
             [FromQuery] string? keyWord,
+            [FromBody] List<CustomParams>? customParams,
             [FromQuery] long? minPrice,
             [FromQuery] long? maxPrice,
             [FromQuery] long? CategoryCode,
@@ -90,7 +92,7 @@ namespace DATT.K14_2023.API.Controllers
         {
             try
             {
-                dynamic records = _baseBL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyWord, minPrice, maxPrice, CategoryCode);
+                dynamic records = _baseBL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyWord , minPrice, maxPrice, CategoryCode, customParams);
 
                 if (records.Data.Count > 0)
                 {
@@ -218,42 +220,6 @@ namespace DATT.K14_2023.API.Controllers
         }
 
         /// <summary>
-        /// API lấy ảnh từ server
-        /// </summary>
-        /// <param name="imgName">Tên ảnh</param>
-        /// <returns>
-        /// Trả về ảnh nếu thành công
-        /// Trả về lỗi nếu thất bại
-        /// </returns>
-        /// Created By: DVHIEU (29/03/2023)
-        [HttpGet("imgName/{imgName}")]
-        public IActionResult GetImg([FromRoute] string imgName)
-        {
-            try
-            {
-                string path = urlImg();
-                var filePath = path + imgName + ".jpg";
-                if (System.IO.File.Exists(filePath))
-                {
-                    byte[] b = System.IO.File.ReadAllBytes(filePath);
-                    return File(b, "image/jpg");
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
-                {
-                    ErrorCode = ErrorCode.Exception,
-                    DevMsg = ex.Message,
-                    UserMsg = Resource.UserMsg,
-                    TraceId = HttpContext.TraceIdentifier
-                });
-            }
-        }
-
-        /// <summary>
         /// API sửa 1 bản ghi
         /// </summary>
         /// <param name="id">Id bản ghi cần sửa</param>
@@ -318,16 +284,6 @@ namespace DATT.K14_2023.API.Controllers
         /// <returns></returns>
         /// Created By: DVHIEU (23/03/2023)
         protected internal virtual string CreatedAndUpdateImg(T? record)
-        {
-            return "";
-        }
-
-        /// <summary>
-        /// Hàm lấy path ảnh
-        /// </summary>
-        /// <returns></returns>
-        /// Created By: DVHIEU (23/03/2023)
-        protected internal virtual dynamic urlImg()
         {
             return "";
         }

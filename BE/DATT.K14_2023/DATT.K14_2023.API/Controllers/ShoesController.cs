@@ -1,4 +1,7 @@
-﻿using DATT.k14_2023.COMMON.Entities;
+﻿using DATT.k14_2023.COMMON;
+using DATT.k14_2023.COMMON.Entities;
+using DATT.k14_2023.COMMON.Entities.DTO;
+using DATT.k14_2023.COMMON.Enums;
 using DATT.K14_2023.BL.ShoeBL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +27,42 @@ namespace DATT.K14_2023.API.Controllers
         #endregion
 
         #region Method
+        /// <summary>
+        /// API lấy ảnh từ server
+        /// </summary>
+        /// <param name="imgName">Tên ảnh</param>
+        /// <returns>
+        /// Trả về ảnh nếu thành công
+        /// Trả về lỗi nếu thất bại
+        /// </returns>
+        /// Created By: DVHIEU (29/03/2023)
+        [HttpGet("imgName/{imgName}")]
+        public IActionResult GetImg([FromRoute] string imgName)
+        {
+            try
+            {
+                string path = _webHostEnvironment.WebRootPath + "\\shoe\\";
+                var filePath = path + imgName + ".jpg";
+                if (System.IO.File.Exists(filePath))
+                {
+                    byte[] b = System.IO.File.ReadAllBytes(filePath);
+                    return File(b, "image/jpg");
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg,
+                    TraceId = HttpContext.TraceIdentifier
+                });
+            }
+        }
+
         /// <summary>
         /// Hàm xử lý ảnh
         /// </summary>
@@ -62,16 +101,6 @@ namespace DATT.K14_2023.API.Controllers
                 }
             }
             return imgName;
-        }
-
-        /// <summary>
-        /// Hàm lấy path ảnh
-        /// </summary>
-        /// <returns></returns>
-        /// Created By: DVHIEU (23/03/2023)
-        protected internal override dynamic urlImg()
-        {
-            return _webHostEnvironment.WebRootPath + "\\shoe\\";
         }
         #endregion
     }

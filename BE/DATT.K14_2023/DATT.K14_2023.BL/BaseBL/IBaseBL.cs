@@ -1,4 +1,5 @@
 ﻿using DATT.k14_2023.COMMON.Entities.DTO;
+using DATT.k14_2023.COMMON.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace DATT.K14_2023.BL.BaseBL
         /// Status500 nếu thất bại
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
-        PagingResult<T> GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyWord, long? minPrice, long? maxPrice, long? CategoryCode);
+        PagingResult<T> GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyWord, long? minPrice, long? maxPrice, long? CategoryCode, List<CustomParams>? customParams);
 
         /// <summary>
         /// API lấy dữ liệu 1 bản ghi
