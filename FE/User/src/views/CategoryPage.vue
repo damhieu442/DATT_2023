@@ -5,6 +5,7 @@
 			<Sidebar class="main__content__aside" :widgetProducts="widgetProducts" />
 			<ProductList
 				class="main__content__main"
+				:products="products"
 				:pagination="pagination"
 				@update:page="pageChangeHandler"
 			/>
@@ -55,6 +56,17 @@
 			price: 1_600_000,
 		},
 	]);
+
+	const products = ref(
+		new Array(12).fill("").map((_, i) => ({
+			id: i + 1,
+			name: "Chuck 70 Archive Prints Hi",
+			price: (1_250_000 * i) / 2,
+			image: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-classic-2-300x225.jpg",
+			hoverImage:
+				"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-classic-2-1-300x225.jpg",
+		})),
+	);
 
 	const pagination = reactive({
 		current: 1,

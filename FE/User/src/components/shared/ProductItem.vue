@@ -14,7 +14,7 @@
 		/>
 
 		<figcaption class="product-item__info">
-			<router-link :to="{ path: '/san-pham', params: product.id }" class="product-item__link">
+			<router-link :to="{ path: '/san-pham/' + product.id }" class="product-item__link">
 				<p class="product-item__name">{{ product.name }}</p>
 			</router-link>
 			<div class="product-item__price">
@@ -33,7 +33,7 @@
 					class="product-item__actions__add-to-cart"
 					>Thêm vào giỏ hàng</a-button
 				>
-				<router-link to="/cart" v-else class="product-item__go-to-cart"
+				<router-link to="/gio-hang" v-else class="product-item__go-to-cart"
 					>Xem giỏ hàng <ArrowRightOutlined
 				/></router-link>
 			</div>

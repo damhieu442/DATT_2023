@@ -5,6 +5,7 @@ import ContactPage from "@/views/BContact.vue";
 import IntroducePage from "@/views/BIntroduce.vue";
 import Homepage from "@/views/Homepage.vue";
 import CategoryPage from "@/views/CategoryPage.vue";
+import ProductDetailPage from "@/views/ProductDetail.vue";
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -40,6 +41,17 @@ export const router = createRouter({
 									component: CategoryPage,
 								},
 							],
+						},
+					],
+				},
+				{
+					path: "san-pham",
+					name: "Product",
+					redirect: "/",
+					children: [
+						{
+							path: ":id",
+							component: ProductDetailPage,
 						},
 					],
 				},

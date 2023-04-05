@@ -20,50 +20,56 @@
 	import Promotion from "@/components/template/homepage/Promotion.vue";
 	import { UpCircleOutlined } from "@ant-design/icons-vue";
 
+	import caroselImg1 from "@/assets/img/slide-1.jpg";
+	import caroselImg2 from "@/assets/img/slide-2.jpg";
+	import caroselImg3 from "@/assets/img/slide-5.jpg";
+
+	import categoryTitleImg1 from "@/assets/img/title_block_03.png";
+	import categoryTitleImg2 from "@/assets/img/title_block_05.png";
+	import categoryTitleImg3 from "@/assets/img/title_block_07.png";
+
+	import categoryIllusImg1 from "@/assets/img/product_block_03.jpg";
+	import categoryIllusImg2 from "@/assets/img/product_block_05.jpg";
+	import categoryIllusImg3 from "@/assets/img/product_block_07.jpg";
+
 	const caroselList = ref([
 		{
 			id: "1",
 			description:
 				"Chào mừng bạn đến với ngôi nhà Converse! Tại đây, mỗi một dòng chữ, mỗi chi tiết và hình ảnh đều là những bằng chứng mang dấu ấn lịch sử Converse 100 năm, và đang không ngừng phát triển lớn mạnh.",
-			imgURL: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/slide-1.jpg",
+			imgURL: caroselImg1,
 		},
 		{
 			id: "2",
 			description:
 				"Chào mừng bạn đến với ngôi nhà Converse! Tại đây, mỗi một dòng chữ, mỗi chi tiết và hình ảnh đều là những bằng chứng mang dấu ấn lịch sử Converse 100 năm, và đang không ngừng phát triển lớn mạnh.",
-			imgURL: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/slide-2.jpg",
+			imgURL: caroselImg2,
 		},
 		{
 			id: "3",
 			description:
 				"Chào mừng bạn đến với ngôi nhà Converse! Tại đây, mỗi một dòng chữ, mỗi chi tiết và hình ảnh đều là những bằng chứng mang dấu ấn lịch sử Converse 100 năm, và đang không ngừng phát triển lớn mạnh.",
-			imgURL: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/slide-5.jpg",
+			imgURL: caroselImg3,
 		},
 	]);
 
 	const categoryList = ref([
 		{
 			id: "1",
-			titleImg:
-				"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/title_block_03.png",
-			backgroundImg:
-				"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/product_block_03.jpg",
+			titleImg: categoryTitleImg1,
+			backgroundImg: categoryIllusImg1,
 			url: "/danh-muc/nam",
 		},
 		{
 			id: "2",
-			titleImg:
-				"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/title_block_05.png",
-			backgroundImg:
-				"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/product_block_05.jpg",
+			titleImg: categoryTitleImg2,
+			backgroundImg: categoryIllusImg2,
 			url: "/danh-muc/nu",
 		},
 		{
 			id: "3",
-			titleImg:
-				"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/title_block_07.png",
-			backgroundImg:
-				"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/product_block_07.jpg",
+			titleImg: categoryTitleImg3,
+			backgroundImg: categoryIllusImg3,
 			url: "/danh-muc/tre-em",
 		},
 	]);
