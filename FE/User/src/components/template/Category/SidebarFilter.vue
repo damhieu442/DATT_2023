@@ -6,8 +6,8 @@
 				class="sidebar-filter__section__slider"
 				v-model:value="priceRange"
 				range
-				:min="1120000"
-				:max="2800000"
+				:min="0"
+				:max="10000000"
 				:step="1000"
 			/>
 
@@ -25,9 +25,19 @@
 		<div class="sidebar-filter__section">
 			<h4 class="sidebar-filter__section__title">SẢN PHẨM</h4>
 			<ul class="sidebar-filter__section__prod-list">
-				<li v-for="product in widgetProducts" :key="product.id">
-					<ProductWidgetItem :product="product" />
-				</li>
+				<template v-if="loading">
+					<li v-for="i in 5" :key="i">
+						<a-space>
+							<a-skeleton-image active />
+							<a-skeleton :paragraph="{ rows: 1 }" style="width: 150px" />
+						</a-space>
+					</li>
+				</template>
+				<template v-else>
+					<li v-for="product in widgetProducts" :key="product.id">
+						<ProductWidgetItem :product="product" />
+					</li>
+				</template>
 			</ul>
 		</div>
 	</aside>
@@ -36,13 +46,11 @@
 <script setup>
 	import { computed, ref } from "vue";
 	import ProductWidgetItem from "@/components/shared/ProductWidgetItem.vue";
-	import { useRouter } from "vue-router";
 
-	const props = defineProps(["widgetProducts"]);
+	const props = defineProps(["widgetProducts", "loading"]);
+	const emit = defineEmits(["filter"]);
 
-	const priceRange = ref([1_120_000, 2_800_000]);
-
-	const router = useRouter();
+	const priceRange = ref([0, 10_000_000]);
 
 	const formattedPriceRange = computed(() => {
 		const numberFormatter = new Intl.NumberFormat();
@@ -54,9 +62,7 @@
 	});
 
 	const filterProductInRangeHandler = () => {
-		router.push({
-			query: { from: priceRange.value[0], to: priceRange.value[1] },
-		});
+		emit("filter", priceRange.value);
 	};
 </script>
 

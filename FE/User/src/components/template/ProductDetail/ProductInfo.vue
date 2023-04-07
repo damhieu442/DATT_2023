@@ -161,7 +161,7 @@
 		</a-row>
 
 		<div class="product-info__meta">
-			<p>Mã: {{ id }}</p>
+			<p>Mã: {{ code }}</p>
 			<p>
 				Danh mục:
 
@@ -195,6 +195,9 @@
 				},
 			},
 			promotionAmount: Number,
+			code: String,
+			discount: Number,
+			totalPrice: Number,
 		},
 		setup(props) {
 			const buyNumber = ref(1);

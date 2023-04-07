@@ -14,7 +14,7 @@
 			<img
 				v-if="product.hoverImage"
 				:src="product.hoverImage"
-				class="category-product__image-hover"
+				class="category-product__image category-product__image-hover"
 				alt=""
 				width="300"
 				height="225"
@@ -23,7 +23,7 @@
 
 		<figcaption class="category-product__info">
 			<router-link :to="{ path: '/san-pham/' + product.id }" class="category-product__link">
-				<p class="category-product__name">{{ product.name }}</p>
+				<p class="category-product__name" :title="product.name">{{ product.name }}</p>
 			</router-link>
 			<div class="category-product__price">
 				<del v-if="!!product.promotionAmount" class="category-product__price--origin-price"
@@ -101,6 +101,11 @@
 	.category-product {
 		box-shadow: 0 1px 3px -2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 		font-size: 1rem;
+		border: 1px solid transparent;
+
+		&:hover {
+			border-color: #ddd;
+		}
 
 		&__avatar {
 			position: relative;
@@ -111,6 +116,7 @@
 		}
 
 		&__image {
+			height: 160px;
 			width: 100%;
 			object-fit: cover;
 			object-position: center;
@@ -152,6 +158,12 @@
 			color: #334862;
 			margin-top: 0.1em;
 			margin-bottom: 0.1em;
+			min-height: 3rem;
+
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
 		}
 
 		&__price {

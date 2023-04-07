@@ -1,12 +1,18 @@
 <template>
 	<main class="main">
-		<PageTitle />
+		<PageTitle :orderBy="filter.orderBy" @filter="sortProductHandler" />
 		<div class="main__content">
-			<Sidebar class="main__content__aside" :widgetProducts="widgetProducts" />
+			<Sidebar
+				class="main__content__aside"
+				:widgetProducts="widgetProducts"
+				:loading="isLoadingPromotedProducts"
+				@filter="filterProductInRange"
+			/>
 			<ProductList
 				class="main__content__main"
 				:products="products"
 				:pagination="pagination"
+				:loading="isLoadingData"
 				@update:page="pageChangeHandler"
 			/>
 		</div>
@@ -14,69 +20,173 @@
 </template>
 
 <script setup>
+	import { useStore } from "vuex";
+	import { useRoute } from "vue-router";
+	import { computed, onMounted, reactive, ref, watch } from "vue";
 	import PageTitle from "@/components/template/Category/PageTitle.vue";
 	import Sidebar from "@/components/template/Category/SidebarFilter.vue";
 	import ProductList from "@/components/template/Category/ProductList.vue";
-	import { reactive, ref } from "vue";
+	import { product as productAPI } from "@/api";
+	import productFactory from "@/utils/productFactory.js";
 
-	const widgetProducts = ref([
-		{
-			id: 1,
-			link: "/san-pham/1",
-			image: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/men-psy-1-100x100.jpg",
-			name: "Chuck 70 Psy-Kicks Ox",
-			price: 2_800_000,
-		},
-		{
-			id: 2,
-			link: "/san-pham/2",
-			image: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-psy-2-100x100.jpg",
-			name: "Chuck 70 Psy-Kicks Ox",
-			price: 1_800_000,
-		},
-		{
-			id: 3,
-			link: "/san-pham/3",
-			image: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-sunbaked-1-100x100.jpg",
-			name: "One Star Sunbaked",
-			price: 1_600_000,
-		},
-		{
-			id: 4,
-			link: "/san-pham/4",
-			image: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-sunbaked-2-100x100.jpg",
-			name: "One Star Sunbaked",
-			price: 1_600_000,
-		},
-		{
-			id: 5,
-			link: "/san-pham/5",
-			image: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-sunbaked-3-100x100.jpg",
-			name: "One Star Sunbaked",
-			price: 1_600_000,
-		},
-	]);
+	const store = useStore();
+	const route = useRoute();
 
-	const products = ref(
-		new Array(12).fill("").map((_, i) => ({
-			id: i + 1,
-			name: "Chuck 70 Archive Prints Hi",
-			price: (1_250_000 * i) / 2,
-			image: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-classic-2-300x225.jpg",
-			hoverImage:
-				"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-classic-2-1-300x225.jpg",
-		})),
-	);
+	const widgetProducts = ref([]);
+	const products = ref([]);
+	const isLoadingData = ref(false);
+	const isLoadingPromotedProducts = ref(false);
+
+	const filter = reactive({
+		orderBy: "",
+		minPrice: 0,
+		maxPrice: 10_000_000,
+	});
 
 	const pagination = reactive({
 		current: 1,
-		total: 200,
-		pageSize: 10,
+		total: 0,
+		pageSize: 12,
 	});
+
+	const category = computed(() => {
+		if ("category" in route.params) {
+			const rootCategory = store.state.category.rootCategories[route.params.slug];
+
+			const category = rootCategory.children?.find?.(
+				(category) => category.id === route.params.category,
+			);
+
+			return category || "";
+		} else {
+			const category = store.state.category.rootCategories[route.params.slug];
+			return category || "";
+		}
+	});
+
+	const getProductListHandler = async () => {
+		try {
+			isLoadingData.value = true;
+			const query = {
+				keyWord: "",
+				minPrice: filter.minPrice,
+				maxPrice: filter.maxPrice,
+				CategoryCode: category.categoryCode,
+				pageSize: pagination.pageSize,
+				pageNumber: pagination.current,
+			};
+
+			const body = {
+				Field: "Id",
+				Order: "ASC",
+				operation: "",
+				DataType: "",
+				Type: "sort",
+			};
+
+			switch (filter.orderBy) {
+				case "":
+					body.Field = "CreatedDate";
+					body.Order = "DESC";
+					break;
+				// TODO
+				case "popularity":
+					body.Field = "Price";
+					body.Order = "ASC";
+					break;
+				// TODO
+				case "rating":
+					body.Field = "Price";
+					body.Order = "DESC";
+					break;
+				case "date":
+					body.Field = "CreatedDate";
+					body.Order = "DESC";
+					break;
+				case "price":
+					body.Field = "Price";
+					body.Order = "ASC";
+					break;
+				case "price-desc":
+					body.Field = "Price";
+					body.Order = "DESC";
+					break;
+
+				default:
+					break;
+			}
+
+			const response = await productAPI.getFilteredList(query, [body]);
+
+			pagination.total = response.data.TotalRecord;
+
+			products.value = response.data.Data.map(
+				productFactory.transformProductAPIResponseToCategoryProduct,
+			);
+		} catch (error) {}
+
+		isLoadingData.value = false;
+	};
+
+	const getPromotedProducts = async () => {
+		isLoadingPromotedProducts.value = true;
+
+		try {
+			const query = {
+				keyWord: "",
+				minPrice: 0,
+				maxPrice: 10_000_000,
+				CategoryCode: category.categoryCode,
+				pageSize: 5,
+				pageNumber: 1,
+			};
+
+			const body = {
+				Field: "CreatedDate",
+				Order: "DESC",
+				operation: "",
+				DataType: "",
+				Type: "sort",
+			};
+
+			const response = await productAPI.getFilteredList(query, [body]);
+
+			widgetProducts.value = response.data.Data.map(
+				productFactory.transformProductAPIResponseToPromotedProduct,
+			);
+		} catch (error) {}
+		isLoadingPromotedProducts.value = false;
+	};
 
 	const pageChangeHandler = (page) => {
 		pagination.current = page;
+		getProductListHandler();
 	};
+
+	const sortProductHandler = (orderBy) => {
+		filter.orderBy = orderBy;
+		getProductListHandler();
+	};
+
+	const filterProductInRange = ([minPrice, maxPrice]) => {
+		filter.minPrice = minPrice;
+		filter.maxPrice = maxPrice;
+		getProductListHandler();
+	};
+
+	watch(
+		() => route.params,
+		() => {
+			getProductListHandler();
+			getPromotedProducts();
+		},
+		{ deep: true },
+	);
+
+	onMounted(() => {
+		getProductListHandler();
+		getPromotedProducts();
+	});
 </script>
 
 <style lang="scss" scoped>
@@ -97,6 +207,11 @@
 
 			&__main {
 				flex: 1 1 auto;
+
+				> :deep(div):first-child {
+					min-height: 1020px;
+					align-content: flex-start;
+				}
 			}
 		}
 	}

@@ -28,13 +28,17 @@
 <script>
 	import { useRoute, useRouter } from "vue-router";
 	import { ECategoriesName } from "@/constants/Category.js";
-	import { computed, ref, watch } from "vue";
+	import { computed, watch } from "vue";
+	import { useStore } from "vuex";
 
 	export default {
-		name: "PageTitle",
-		setup() {
+		emits: ["filter"],
+		props: { orderBy: String },
+		setup(props, context) {
+			const store = useStore();
 			const route = useRoute();
 			const router = useRouter();
+
 			const breadcrumbs = computed(() => {
 				const breadcrumbs = [
 					{
@@ -42,14 +46,21 @@
 						name: "Trang chủ",
 					},
 				];
+
 				if ("category" in route.params) {
+					const rootCategory = store.state.category.rootCategories[route.params.slug];
+
+					const category = rootCategory.children?.find?.(
+						(category) => category.id === route.params.category,
+					);
+
 					breadcrumbs.push(
 						{
 							link: `/danh-muc/${route.params.slug}`,
 							name: ECategoriesName[route.params.slug] || route.params.slug,
 						},
 						{
-							name: route.params.category,
+							name: category?.name || route.params.category,
 						},
 					);
 				} else {
@@ -88,18 +99,25 @@
 				},
 			];
 
-			const seletedFilter = ref("");
+			const seletedFilter = computed({
+				get() {
+					return props.orderBy;
+				},
+
+				set(value) {
+					context.emit("filter", value);
+				},
+			});
 
 			watch(seletedFilter, (orderBy) => {
 				const query = { ...route.query };
-
-				console.log("Order: ", orderBy);
 
 				if (orderBy) {
 					query.orderBy = orderBy;
 				} else {
 					delete query.orderBy;
 				}
+
 				router.push({ query });
 			});
 

@@ -1,8 +1,8 @@
 <template>
-	<div id="wrapper">
-		<Header />
-		<router-view />
-		<Footer />
+	<div id="wrapper" class="page-wrapper">
+		<Header class="page-header" />
+		<router-view class="page-content" />
+		<Footer class="page-footer" />
 	</div>
 </template>
 
@@ -16,6 +16,16 @@
 	};
 </script>
 
-<style>
+<style lang="scss">
 	@import url(@/css/app.css);
+
+	.page-wrapper#wrapper {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+
+		> .page-content {
+			flex: 1 1 auto;
+		}
+	}
 </style>

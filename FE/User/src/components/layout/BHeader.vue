@@ -17,9 +17,7 @@
 					<div class="flex-col flex-left">
 						<ul class="header-nav header-nav-main nav nav-left nav-uppercase">
 							<li class="account-item has-icon">
-								<a href="#" class="nav-top-link nav-top-not-logged-in is-small">
-									<span> ĐĂNG NHẬP / ĐĂNG KÝ </span>
-								</a>
+								<Authentication />
 							</li>
 						</ul>
 					</div>
@@ -84,43 +82,17 @@
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
-								<router-link
-									class="nav-top-link"
-									to="/danh-muc/nu"
-									active-class="current-menu-item"
-								>
-									Nữ
-									<i
-										class="fa-solid fa-angle-down icon-angle-down"
-										style="color: #5e5e5e"
-									></i>
-								</router-link>
+								<CategoryItem categoryCode="nu" />
 							</li>
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
-								<router-link
-									class="nav-top-link"
-									to="/danh-muc/nam"
-									active-class="current-menu-item"
-								>
-									Nam
-									<i
-										class="fa-solid fa-angle-down icon-angle-down"
-										style="color: #5e5e5e"
-									></i>
-								</router-link>
+								<CategoryItem categoryCode="nam" />
 							</li>
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
-								<router-link
-									class="nav-top-link"
-									to="/danh-muc/tre-em"
-									active-class="current-menu-item"
-								>
-									Trẻ em
-								</router-link>
+								<CategoryItem categoryCode="tre-em" />
 							</li>
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
@@ -141,11 +113,9 @@
 	</div>
 </template>
 
-<script>
-	export default {
-		name: "Header",
-		components: {},
-	};
+<script setup>
+	import CategoryItem from "./Header/CategoryItem.vue";
+	import Authentication from "./Header/Authentication.vue";
 </script>
 
 <style scoped>

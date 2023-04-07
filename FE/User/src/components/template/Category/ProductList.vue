@@ -1,9 +1,19 @@
 <template>
 	<section class="product-list">
 		<a-row type="flex" :gutter="[16, 16]">
-			<a-col :span="6" v-for="product in products" :key="product.id">
-				<CategoryProduct :product="product" />
-			</a-col>
+			<template v-if="loading">
+				<a-col v-for="i in 12" :key="i" :span="6">
+					<div class="product-list__skeleton">
+						<a-skeleton-image active />
+						<a-skeleton :paragraph="{ rows: 2 }" style="width: 100%" />
+					</div>
+				</a-col>
+			</template>
+			<template v-else>
+				<a-col v-for="product in products" :key="product.id" :span="6">
+					<CategoryProduct :product="product" />
+				</a-col>
+			</template>
 		</a-row>
 
 		<a-pagination
@@ -34,6 +44,8 @@
 		},
 
 		products: { type: Array },
+
+		loading: Boolean,
 	});
 
 	const pageChangeHandler = (page) => {
@@ -43,6 +55,18 @@
 
 <style lang="scss" scoped>
 	.product-list {
+		&__skeleton {
+			> .ant-skeleton {
+				width: 100%;
+			}
+
+			:deep(.ant-skeleton-image) {
+				width: 100%;
+				height: 160px;
+				padding: 0.25rem;
+			}
+		}
+
 		&__pagination {
 			width: max-content;
 			margin: 1rem auto 0;
