@@ -7,7 +7,7 @@
 			destroyInactiveTabPane
 		>
 			<a-tab-pane key="additional-info" tab="Thông tin bổ sung">
-				<ProductAdditionInfo v-bind="productInfo" />
+				<ProductAdditionInfo v-bind="infos" />
 			</a-tab-pane>
 			<a-tab-pane key="comment" tab="Đánh giá">
 				<Comments name="Chuck Taylor Classic" />
@@ -21,7 +21,10 @@
 	import ProductAdditionInfo from "./ProductAdditionInfo.vue";
 	import Comments from "./Comments.vue";
 
-	const productInfo = ref({ sku: "M5039V", material: "Canvas", gender: "Women, Men" });
+	const props = defineProps({
+		infos: { type: Object },
+	});
+
 	const activeTab = ref("additional-info");
 </script>
 

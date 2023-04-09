@@ -16,7 +16,7 @@
 			<tr>
 				<th>Giới tính</th>
 				<td>
-					<p>{{ gender }}</p>
+					<p>{{ target }}</p>
 				</td>
 			</tr>
 		</tbody>
@@ -27,7 +27,7 @@
 	const props = defineProps({
 		sku: String,
 		material: String,
-		gender: String,
+		target: String,
 	});
 </script>
 

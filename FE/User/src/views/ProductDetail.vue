@@ -10,7 +10,7 @@
 					<ProductInfo v-bind="productInfo" />
 				</a-col>
 			</a-row>
-			<ProductTabs />
+			<ProductTabs :infos="productInfo?.additionInfos" />
 			<RelatedProducts :products="relatedProducts" />
 		</div>
 	</main>
@@ -91,6 +91,7 @@
 				info.categories = categories;
 
 				productInfo.value = info;
+				productInfo.value.additionInfos.target = categories[0].name;
 			}
 		} catch (error) {}
 
