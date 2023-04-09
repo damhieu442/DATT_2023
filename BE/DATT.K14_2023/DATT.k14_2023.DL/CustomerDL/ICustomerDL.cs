@@ -1,4 +1,5 @@
 ﻿using DATT.k14_2023.COMMON.Entities;
+using DATT.k14_2023.COMMON.Enums;
 using DATT.k14_2023.DL.BaseDL;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,10 @@ namespace DATT.k14_2023.DL.CustomerDL
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
         int CheckImgName(string? imgName);
+
+        int CheckUserName(Guid? id, string? userName);
+
+        dynamic isUserName(string userName, string passWord, int role);
         #endregion
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace DATT.k14_2023.COMMON.Constants
 {
-    /*[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]*/
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizeAttribute : Attribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)

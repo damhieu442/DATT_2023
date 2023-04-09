@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DATT.k14_2023.COMMON.Entities
@@ -20,12 +21,13 @@ namespace DATT.k14_2023.COMMON.Entities
         /// <summary>
         /// Tên đăng nhập
         /// </summary>
-        public string? UserName { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// Mật khẩu
         /// </summary>
-        public string? Password { get; set; }
+        [JsonIgnore]
+        public string Password { get; set; }
 
         /// <summary>
         /// Tên hiển thị

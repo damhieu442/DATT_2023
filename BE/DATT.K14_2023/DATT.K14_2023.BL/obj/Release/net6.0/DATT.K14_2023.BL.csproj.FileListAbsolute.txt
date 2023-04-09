@@ -1,0 +1,17 @@
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\bin\Release\net6.0\DATT.K14_2023.BL.deps.json
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\bin\Release\net6.0\DATT.K14_2023.BL.dll
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\bin\Release\net6.0\DATT.K14_2023.BL.pdb
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\bin\Release\net6.0\DATT.k14_2023.COMMON.dll
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\bin\Release\net6.0\DATT.k14_2023.DL.dll
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\bin\Release\net6.0\DATT.k14_2023.COMMON.pdb
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\bin\Release\net6.0\DATT.k14_2023.DL.pdb
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\DATT.K14_2023.BL.csproj.AssemblyReference.cache
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\DATT.K14_2023.BL.GeneratedMSBuildEditorConfig.editorconfig
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\DATT.K14_2023.BL.AssemblyInfoInputs.cache
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\DATT.K14_2023.BL.AssemblyInfo.cs
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\DATT.K14_2023.BL.csproj.CoreCompileInputs.cache
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\DATT.K14_2023.BL.csproj.CopyComplete
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\DATT.K14_2023.BL.dll
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\refint\DATT.K14_2023.BL.dll
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\DATT.K14_2023.BL.pdb
+D:\Shoes\BE\DATT.K14_2023\DATT.K14_2023.BL\obj\Release\net6.0\ref\DATT.K14_2023.BL.dll

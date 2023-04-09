@@ -184,6 +184,10 @@
             "Microsoft.AspNetCore.Mvc.Formatters.Json": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.28.1, )"
             }
           },
           "imports": [

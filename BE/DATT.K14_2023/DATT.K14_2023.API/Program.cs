@@ -7,6 +7,9 @@ using DATT.K14_2023.BL.ShoeBL;
 using DATT.k14_2023.DL.ShoeDL;
 using DATT.K14_2023.BL.CategoryBL;
 using DATT.k14_2023.DL.CategoryDL;
+using DATT.k14_2023.COMMON.Constants;
+using DATT.K14_2023.BL.EvaluateBL;
+using DATT.k14_2023.DL.EvaluateDL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,20 +24,25 @@ builder.Services.AddControllers(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped(typeof(IBaseBL<>), typeof(BaseBL<>));
-builder.Services.AddScoped(typeof(IBaseDL<>), typeof(BaseDL<>));
+builder.Services.AddTransient(typeof(IBaseBL<>), typeof(BaseBL<>));
+builder.Services.AddTransient(typeof(IBaseDL<>), typeof(BaseDL<>));
 
-builder.Services.AddScoped<ICustomerBL, CustomerBL>();
-builder.Services.AddScoped<ICustomerDL, CustomerDL>();
+builder.Services.AddTransient<ICustomerBL, CustomerBL>();
+builder.Services.AddTransient<ICustomerDL, CustomerDL>();
 
-builder.Services.AddScoped<IShoeBL, ShoeBL>();
-builder.Services.AddScoped<IShoeDL, ShoeDL>();
+builder.Services.AddTransient<IShoeBL, ShoeBL>();
+builder.Services.AddTransient<IShoeDL, ShoeDL>();
 
-builder.Services.AddScoped<ICategoryBL, CategoryBL>();
-builder.Services.AddScoped<ICategoryDL, CategoryDL>();
+builder.Services.AddTransient<ICategoryBL, CategoryBL>();
+builder.Services.AddTransient<ICategoryDL, CategoryDL>();
+
+builder.Services.AddTransient<IEvaluateBL, EvaluateBL>();
+builder.Services.AddTransient<IEvaluateDL, EvaluateDL>();
 
 DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MySql");
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 // Add Cors
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
@@ -62,6 +70,8 @@ app.UseHttpsRedirection();
 app.UseCors("corspolicy");
 
 app.UseAuthorization();
+
+app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 

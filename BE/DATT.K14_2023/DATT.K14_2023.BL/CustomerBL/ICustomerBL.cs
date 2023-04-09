@@ -11,6 +11,10 @@ namespace DATT.K14_2023.BL.CustomerBL
     public interface ICustomerBL : IBaseBL<Customer>
     {
         #region Method
+        public Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
+
+        public Task<object> CustomerInfo();
+
         /// <summary>
         /// Hàm kiểm tra ảnh đã tồn tại
         /// </summary>

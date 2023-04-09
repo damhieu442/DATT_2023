@@ -7,6 +7,7 @@ using DATT.K14_2023.BL.CustomerBL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using System.Reflection;
 
 namespace DATT.K14_2023.API.Controllers
 {
@@ -28,6 +29,38 @@ namespace DATT.K14_2023.API.Controllers
         #endregion
 
         #region Method
+        [HttpPost("authenticate")]
+        public async Task<object> Authenticate([FromBody] AuthenticateRequest model)
+        {
+            var response = await _customerBL.Authenticate(model);
+
+            if (response == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(response);
+        }
+
+        [HttpGet("user-info")]
+        [k14_2023.COMMON.Constants.Authorize]
+        public async Task<IActionResult> CustomerInfo()
+        {
+            try
+            {
+                dynamic res = await _customerBL.CustomerInfo();
+                return StatusCode(StatusCodes.Status200OK, res);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+        }
+
         /// <summary>
         /// API lấy ảnh từ server
         /// </summary>

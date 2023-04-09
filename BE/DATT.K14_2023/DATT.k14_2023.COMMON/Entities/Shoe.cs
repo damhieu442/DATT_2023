@@ -72,6 +72,11 @@ namespace DATT.k14_2023.COMMON.Entities
         public Guid? CategoryId { get; set; }
 
         /// <summary>
+        /// Số lượng đã bán
+        /// </summary>
+        public int? SoldNumber { get; set; }
+
+        /// <summary>
         /// Ngày tạo
         /// </summary>
         public DateTime? CreatedDate { get; set; }
