@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uZ5YH+9S5DgxObGPrtxJqp40mdPaiZO4jEr53tZ7Egkz67zuY6Iy4JQ8nxCbMbXeaCzCITgN3dp3wLiNMznirQ==",
+  "dgSpecHash": "WwLHVWHJMicn2M+MJhgdeZuydbrUo53twFWmzR0CLex5kzRyl0LnkaPkeSAIbEb9PrHw3HT4Cx95obh25yq8Ug==",
   "success": true,
-  "projectFilePath": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
+  "projectFilePath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hieud\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\hieud\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

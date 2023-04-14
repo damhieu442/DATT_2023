@@ -1,6 +1,6 @@
 ﻿using DATT.k14_2023.COMMON.Entities.DTO;
 using DATT.k14_2023.COMMON;
-using DATT.K14_2023.BL.BaseBL;
+using DATT.K14_2023.BL.IBaseBL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DATT.k14_2023.COMMON.Enums;
@@ -325,6 +325,42 @@ namespace DATT.K14_2023.API.Controllers
                 {
                     ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
                     DevMsg = Resource.DevMsg.ToString(),
+                    UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+        }
+
+        /// <summary>
+        /// API xóa nhiều bản ghi
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <returns></returns>
+        [HttpDelete("deleteMany")]
+        public IActionResult DeleteRecordMany(List<Guid> listId)
+        {
+            try
+            {
+                int numberOfAffectedRows = _baseBL.DeleteRecordMany(listId);
+
+                if (numberOfAffectedRows == listId.Count)
+                {
+                    return StatusCode(StatusCodes.Status200OK, numberOfAffectedRows);
+                }
+
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
+                    DevMsg = numberOfAffectedRows.ToString(),
+                    UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
+                    DevMsg = ex.Message,
                     UserMsg = Resource.UserMsg.ToString(),
                 });
             }

@@ -22,6 +22,7 @@ namespace DATT.k14_2023.DL.CategoryDL
         /// </returns>
         /// Created By: DVHIEU (02/04/2023)
         int CheckEmployeeCode(int? CategoryCode, Guid? CategoryId);
+        List<Category> ExportExcel(List<Guid>? listId);
         #endregion
     }
 }

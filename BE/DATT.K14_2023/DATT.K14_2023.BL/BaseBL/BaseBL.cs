@@ -3,15 +3,18 @@ using DATT.k14_2023.COMMON.Entities.DTO;
 using DATT.k14_2023.COMMON.Enums;
 using DATT.k14_2023.COMMON.ViewModel;
 using DATT.k14_2023.DL.BaseDL;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static DATT.k14_2023.COMMON.Constants.BAttribute;
 
-namespace DATT.K14_2023.BL.BaseBL
+namespace DATT.K14_2023.BL.IBaseBL
 {
     public class BaseBL<T> : IBaseBL<T>
     {
@@ -167,6 +170,8 @@ namespace DATT.K14_2023.BL.BaseBL
 
             if (numberOfAffectedRows > 0)
             {
+                int number = AfterSave(id, record);
+
                 return new ServiceResult
                 {
                     IsSuccess = true,
@@ -181,6 +186,11 @@ namespace DATT.K14_2023.BL.BaseBL
                     Message = errorMessage,
                 };
             }
+        }
+
+        protected virtual dynamic AfterSave(Guid? id, T? record)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -256,6 +266,11 @@ namespace DATT.K14_2023.BL.BaseBL
         public int DeleteRecordOne(Guid id)
         {
             return _baseDL.DeleteRecordOne(id);
+        }
+
+        public int DeleteRecordMany(List<Guid> listId)
+        {
+            return _baseDL.DeleteRecordMany(listId);
         }
         #endregion
     }

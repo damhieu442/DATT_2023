@@ -1,7 +1,7 @@
 ﻿using DATT.k14_2023.COMMON.Entities;
 using DATT.k14_2023.COMMON.ViewModel;
 using DATT.k14_2023.DL.ShoeDL;
-using DATT.K14_2023.BL.BaseBL;
+using DATT.K14_2023.BL.IBaseBL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,8 +51,6 @@ namespace DATT.K14_2023.BL.ShoeBL
             string sql;
             string queryString = "";
             string type = "";
-            long? minPrice;
-            long? maxPrice;
             foreach (var item in customParams)
             {
                 queryString =  String.Format("ORDER BY {0} {1}", item.Field, item.Order);

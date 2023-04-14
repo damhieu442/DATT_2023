@@ -1,5 +1,5 @@
 using DATT.k14_2023.DL;
-using DATT.K14_2023.BL.BaseBL;
+using DATT.K14_2023.BL.IBaseBL;
 using DATT.k14_2023.DL.BaseDL;
 using DATT.K14_2023.BL.CustomerBL;
 using DATT.k14_2023.DL.CustomerDL;
@@ -10,6 +10,11 @@ using DATT.k14_2023.DL.CategoryDL;
 using DATT.k14_2023.COMMON.Constants;
 using DATT.K14_2023.BL.EvaluateBL;
 using DATT.k14_2023.DL.EvaluateDL;
+using DATT.k14_2023.DL.CartDL;
+using DATT.K14_2023.BL.SizeBL;
+using DATT.k14_2023.DL.SizeDL;
+using DATT.K14_2023.BL.FeedBackBL;
+using DATT.k14_2023.DL.FeedBackDL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +43,14 @@ builder.Services.AddTransient<ICategoryDL, CategoryDL>();
 
 builder.Services.AddTransient<IEvaluateBL, EvaluateBL>();
 builder.Services.AddTransient<IEvaluateDL, EvaluateDL>();
+
+builder.Services.AddTransient<ICartDL, CartDL>();
+
+builder.Services.AddTransient<ISizeBL, SizeBL>();
+builder.Services.AddTransient<ISizeDL, SizeDL>();
+
+builder.Services.AddTransient<IFeedBackBL, FeedBackBL>();
+builder.Services.AddTransient<IFeedBackDL, FeedBackDL>();
 
 DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MySql");
 

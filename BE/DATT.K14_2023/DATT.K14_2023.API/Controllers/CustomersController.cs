@@ -2,7 +2,7 @@
 using DATT.k14_2023.COMMON.Entities;
 using DATT.k14_2023.COMMON.Entities.DTO;
 using DATT.k14_2023.COMMON.Enums;
-using DATT.K14_2023.BL.BaseBL;
+using DATT.K14_2023.BL.IBaseBL;
 using DATT.K14_2023.BL.CustomerBL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

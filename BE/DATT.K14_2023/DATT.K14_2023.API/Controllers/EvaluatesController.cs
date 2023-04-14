@@ -202,5 +202,46 @@ namespace DATT.K14_2023.API.Controllers
                 });
             }
         }
+
+        [HttpDelete("deleteMany")]
+        public IActionResult DeleteRecordMany(List<Guid> listId)
+        {
+            try
+            {
+                int numberOfAffectedRows = _evaluateBL.DeleteRecordMany(listId);
+
+                if (numberOfAffectedRows == listId.Count)
+                {
+                    return StatusCode(StatusCodes.Status200OK, numberOfAffectedRows);
+                }
+
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
+                    DevMsg = numberOfAffectedRows.ToString(),
+                    UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+        }
+
+        [HttpPost("exportv2")]
+        public async Task<IActionResult> ExportV2(CancellationToken cancellationToken, List<Guid>? listId)
+        {
+            await Task.Yield();
+            var stream = _evaluateBL.ExportExcel(listId);
+            string excelName = "Bao_cao.xlsx";
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {}
+    "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {}
   },
   "projects": {
-    "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
+    "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
+        "projectUniqueName": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
         "projectName": "DATT.k14_2023.COMMON",
-        "projectPath": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
+        "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
         "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-        "outputPath": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\obj\\",
+        "outputPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",

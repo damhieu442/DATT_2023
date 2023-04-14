@@ -81,6 +81,8 @@ namespace DATT.k14_2023.DL.BaseDL
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
         int DeleteRecordOne(Guid id);
+
+        int DeleteRecordMany(List<Guid> listId);
         #endregion
     }
 }

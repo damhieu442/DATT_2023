@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DATT.K14_2023.BL.BaseBL
+namespace DATT.K14_2023.BL.IBaseBL
 {
     public interface IBaseBL<T>
     {
@@ -82,6 +82,8 @@ namespace DATT.K14_2023.BL.BaseBL
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
         int DeleteRecordOne(Guid id);
+
+        int DeleteRecordMany(List<Guid> listId);
         #endregion
     }
 }

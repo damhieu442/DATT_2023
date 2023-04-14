@@ -1,7 +1,7 @@
 ﻿using DATT.k14_2023.COMMON.Constants;
 using DATT.k14_2023.COMMON.Entities;
 using DATT.k14_2023.DL.CustomerDL;
-using DATT.K14_2023.BL.BaseBL;
+using DATT.K14_2023.BL.IBaseBL;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -12,6 +12,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using DATT.k14_2023.DL.CartDL;
+using DATT.k14_2023.COMMON.Entities.DTO;
+using DATT.k14_2023.COMMON;
 
 namespace DATT.K14_2023.BL.CustomerBL
 {
@@ -21,14 +24,16 @@ namespace DATT.K14_2023.BL.CustomerBL
         private ICustomerDL _customerDL;
         private readonly AppSettings _appSettings;
         private IHttpContextAccessor _httpContextAccessor;
+        private ICartDL _cartDL;
         #endregion
 
         #region Constructor
-        public CustomerBL(ICustomerDL customerDL, IHttpContextAccessor httpContextAccessor,  IOptions<AppSettings> appSettings) : base(customerDL)
+        public CustomerBL(ICustomerDL customerDL, IHttpContextAccessor httpContextAccessor,  IOptions<AppSettings> appSettings, ICartDL cartDL) : base(customerDL)
         {
             _customerDL = customerDL;
             _appSettings = appSettings.Value;
             _httpContextAccessor = httpContextAccessor;
+            _cartDL = cartDL;
         }
         #endregion
 
@@ -57,6 +62,15 @@ namespace DATT.K14_2023.BL.CustomerBL
             customerInfo.Add("CustomerId", customer.CustomerId);
             
             return customerInfo;
+        }
+
+        protected override dynamic AfterSave(Guid? id, Customer record)
+        {
+            Cart cart = new Cart();
+            cart.CartId = record.CustomerId;
+            cart.CustomerId = record.CustomerId;
+
+            return _cartDL.InsertRecord(cart);
         }
 
         private string generateJwtToken(Customer customer)

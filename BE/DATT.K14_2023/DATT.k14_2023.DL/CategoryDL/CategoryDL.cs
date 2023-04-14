@@ -2,6 +2,7 @@
 using DATT.k14_2023.COMMON.Constants;
 using DATT.k14_2023.COMMON.Entities;
 using DATT.k14_2023.DL.BaseDL;
+using DATT.k14_2023.DL.FeedBackDL;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,35 @@ namespace DATT.k14_2023.DL.CategoryDL
             }
 
             return numberOfAffectedRows;
+        }
+        protected override string queryDeleteMany()
+        {
+            return "DELETE FROM category WHERE CategoryId IN ('{0}')";
+        }
+        public List<Category> ExportExcel(List<Guid> listId)
+        {
+            dynamic category;
+
+            if (listId.Count > 0)
+            {
+                string sql = "SELECT * FROM category WHERE CategoryId IN ('{0}')";
+                using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+                {
+                    var result = mySqlConnection.QueryMultiple(string.Format(sql, string.Join("','", listId)));
+                    category = result.Read<Category>().ToList();
+                }
+            }
+            else
+            {
+                string storedProcedureName = String.Format(ProcedureName.Get, typeof(Category).Name, "All");
+
+                using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+                {
+                    var result = mySqlConnection.QueryMultiple(storedProcedureName, commandType: CommandType.StoredProcedure);
+                    category = result.Read<Category>().ToList();
+                }
+            }
+            return category;
         }
         #endregion
     }

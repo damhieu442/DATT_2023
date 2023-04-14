@@ -1,5 +1,6 @@
 ﻿
 using Dapper;
+using DATT.k14_2023.COMMON;
 using DATT.k14_2023.COMMON.Constants;
 using DATT.k14_2023.COMMON.ViewModel;
 using MySqlConnector;
@@ -235,6 +236,38 @@ namespace DATT.k14_2023.DL.BaseDL
                     }
                 }
             }
+        }
+
+        public int DeleteRecordMany(List<Guid> listId)
+        {
+            string sql = queryDeleteMany();
+            int numberOfAffectedRows = 0;
+
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                mySqlConnection.Open();
+                using (var transaction = mySqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        numberOfAffectedRows = mySqlConnection.Execute(string.Format(sql, string.Join("','", listId)), transaction: transaction);
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        transaction.Rollback();
+                    }
+                }
+                mySqlConnection.Close();
+            }
+
+            return numberOfAffectedRows;
+        }
+
+        protected virtual string queryDeleteMany()
+        {
+            return "";
         }
         #endregion
     }

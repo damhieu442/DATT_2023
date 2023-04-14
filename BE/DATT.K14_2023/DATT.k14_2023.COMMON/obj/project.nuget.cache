@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZpORqWa1TxIbknuWBFZ6TQtFKYdOkVhz2y06fbZRencTktg865dkjxxZyArhoUb84jmz8TPHDTrIUy8dtdECZg==",
+  "dgSpecHash": "TTFZNPP6Yqd/dtC3AiZ2GdkEpPtNrNP6LihbH5yfXEMT8tFyiGXLDDmBuai2iL8RYoA/bsm2j9d1Vd9fHZnPaw==",
   "success": true,
-  "projectFilePath": "D:\\Shoes\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
+  "projectFilePath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hieud\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\hieud\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",

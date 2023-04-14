@@ -127,5 +127,59 @@ namespace DATT.k14_2023.DL.EvaluateDL
                 }
             }
         }
+
+        public int DeleteRecordMany(List<Guid> listId)
+        {
+            string sql = "DELETE FROM evaluate WHERE EvaluateId IN ('{0}')";
+            int numberOfAffectedRows = 0;
+
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                mySqlConnection.Open();
+                using (var transaction = mySqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        numberOfAffectedRows = mySqlConnection.Execute(string.Format(sql, string.Join("','", listId)), transaction: transaction);
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        transaction.Rollback();
+                    }
+                }
+                mySqlConnection.Close();
+            }
+
+            return numberOfAffectedRows;
+        }
+
+        public List<Evaluate> ExportExcel(List<Guid> listId)
+        {
+            dynamic evaluate;
+
+            if (listId.Count > 0)
+            {
+                string sql = "SELECT e.EvaluateId,e.Star,e.FullName,e.Email,e.Comment,e.ShoeId,s.ShoeName FROM evaluate e LEFT JOIN shoe s ON e.ShoeId = s.ShoeId WHERE EvaluateId IN ('{0}')";
+                using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+                {
+                    var result = mySqlConnection.QueryMultiple(string.Format(sql, string.Join("','", listId)));
+                    evaluate = result.Read<Evaluate>().ToList();
+                }
+            }
+            else
+            {
+                string sql = "SELECT e.EvaluateId,e.Star,e.FullName,e.Email,e.Comment,e.ShoeId,s.ShoeName FROM evaluate e LEFT JOIN shoe s ON e.ShoeId = s.ShoeId";
+
+                using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+                {
+                    var result = mySqlConnection.QueryMultiple(sql);
+                    evaluate = result.Read<Evaluate>().ToList();
+                }
+            }
+
+            return evaluate;
+        }
     }
 }

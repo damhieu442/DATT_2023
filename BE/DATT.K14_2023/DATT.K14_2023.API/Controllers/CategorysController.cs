@@ -1,5 +1,5 @@
 ﻿using DATT.k14_2023.COMMON.Entities;
-using DATT.K14_2023.BL.BaseBL;
+using DATT.K14_2023.BL.IBaseBL;
 using DATT.K14_2023.BL.CategoryBL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +22,15 @@ namespace DATT.K14_2023.API.Controllers
         #endregion
 
         #region Method
+        [HttpPost("exportv2")]
+        public async Task<IActionResult> ExportV2(CancellationToken cancellationToken, List<Guid>? listId)
+        {
+            await Task.Yield();
+            var stream = _categoryBL.ExportExcel(listId);
+            string excelName = "Bao_cao.xlsx";
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
         #endregion
     }
 }

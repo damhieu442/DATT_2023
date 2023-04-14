@@ -15,5 +15,7 @@ namespace DATT.K14_2023.BL.EvaluateBL
         dynamic GetRecordById(Guid id);
         ServiceResult InsertRecord(Evaluate record);
         int DeleteRecordOne(Guid id);
+        int DeleteRecordMany(List<Guid> listId);
+        dynamic ExportExcel(List<Guid>? listId);
     }
 }
