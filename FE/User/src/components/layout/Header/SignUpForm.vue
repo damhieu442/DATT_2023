@@ -3,30 +3,42 @@
 		:model="form"
 		name="sign-up-form"
 		autocomplete="off"
-		@finish="onSignin"
+		@finish="onSignUp"
 		layout="vertical"
 		class="sign-up-form"
 	>
 		<h5>ĐĂNG KÝ</h5>
 		<a-form-item
-			label="Địa chỉ email"
-			name="email"
-			:rules="[{ required: true, message: 'Please input your username!' }]"
+			label="Họ tên"
+			name="name"
+			:rules="[{ required: true, message: 'Vui lòng nhập họ tên của bạn' }]"
 		>
-			<a-input v-model:value="form.email" />
+			<a-input :disabled="disabled || loading" v-model:value="form.name" />
+		</a-form-item>
+		<a-form-item
+			label="Tên tài khoản"
+			name="email"
+			:rules="[{ required: true, message: 'Vui lòng nhập tài khoản' }]"
+		>
+			<a-input :disabled="disabled || loading" v-model:value="form.email" />
 		</a-form-item>
 
 		<a-form-item
 			label="Mật khẩu"
 			name="password"
-			:rules="[{ required: true, message: 'Please input your password!' }]"
+			:rules="[{ required: true, message: 'Vui lòng nhập mật khẩu của bạn!' }]"
 		>
-			<a-input-password v-model:value="form.password" />
+			<a-input-password :disabled="disabled || loading" v-model:value="form.password" />
 		</a-form-item>
 
 		<a-row type="flex"
 			><a-col :span="24">
-				<a-button type="primary" html-type="submit" class="sign-up-form__submit"
+				<a-button
+					type="primary"
+					html-type="submit"
+					class="sign-up-form__submit"
+					:loading="loading"
+					:disabled="disabled"
 					>Đăng ký</a-button
 				>
 			</a-col>
@@ -37,13 +49,19 @@
 <script setup>
 	import { reactive } from "vue";
 
+	const props = defineProps({ loading: Boolean, disabled: Boolean });
+
 	const form = reactive({
 		email: "",
 		password: "",
-		isRemeberPassword: false,
+		name: "",
 	});
 
-	const onSignin = () => {};
+	const emit = defineEmits(["submit"]);
+
+	const onSignUp = (form) => {
+		emit("submit", { ...form });
+	};
 </script>
 
 <style lang="scss" scoped>

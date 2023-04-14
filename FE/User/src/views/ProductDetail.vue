@@ -10,14 +10,20 @@
 					<ProductInfo v-bind="productInfo" />
 				</a-col>
 			</a-row>
-			<ProductTabs :infos="productInfo?.additionInfos" />
+			<ProductTabs
+				ref="rfProductInfoTabs"
+				:infos="productInfo?.additionInfos"
+				:comments="productEvalutes"
+				:is-logged-in="isLoggedIn"
+				@create-comment="createNewEvaluateHandler"
+			/>
 			<RelatedProducts :products="relatedProducts" />
 		</div>
 	</main>
 </template>
 
 <script setup>
-	import { onMounted, ref } from "vue";
+	import { computed, onMounted, ref } from "vue";
 
 	import ProductGallery from "@/components/template/ProductDetail/ProductGallery.vue";
 	import ProductInfo from "@/components/template/ProductDetail/ProductInfo.vue";
@@ -25,9 +31,10 @@
 	import RelatedProducts from "@/components/template/ProductDetail/RelatedProducts.vue";
 	import PageLoader from "@/components/shared/PageLoader.vue";
 	import { useRoute } from "vue-router";
-	import { product as productAPI } from "@/api";
+	import { evaluate, product as productAPI } from "@/api";
 	import productFactory from "@/utils/productFactory";
 	import { useStore } from "vuex";
+	import { notification } from "ant-design-vue";
 
 	const route = useRoute();
 	const store = useStore();
@@ -35,6 +42,8 @@
 	const isLoadingData = ref(false);
 
 	const productImages = ref([]);
+
+	const productEvalutes = ref([]);
 
 	const productInfo = ref(undefined);
 
@@ -48,6 +57,10 @@
 				"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-classic-2-1-300x225.jpg",
 		})),
 	);
+
+	const rfProductInfoTabs = ref(null);
+
+	const isLoggedIn = computed(() => !!store.state.user.uid);
 
 	const getProductDetailData = async () => {
 		isLoadingData.value = true;
@@ -98,8 +111,45 @@
 		isLoadingData.value = false;
 	};
 
+	const getProductEvaluate = async () => {
+		try {
+			const response = await evaluate.getList(route.params.id);
+			if (response.status > 199 && response.status < 300) {
+				productEvalutes.value = response.data.map(
+					productFactory.transformEvaluateResponseToEvaluate,
+				);
+			}
+		} catch (error) {}
+	};
+
+	const createNewEvaluateHandler = async (form) => {
+		const formData = new FormData();
+
+		formData.append("Star", form.rating);
+		formData.append("FullName", form.username);
+		formData.append("Email", form.email);
+		formData.append("Comment", form.comment);
+		formData.append("ShoeId", route.params.id || "");
+		formData.append("CreatedBy", store.state.user.username);
+
+		try {
+			const response = await evaluate.createItem(formData);
+
+			if (response.status > 199 && response.status < 300) {
+				notification.success({ message: "Đánh giá thành công" });
+				rfProductInfoTabs.value.resetCommentForm();
+				getProductEvaluate();
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
+		}
+	};
+
 	onMounted(() => {
 		getProductDetailData();
+		getProductEvaluate();
 	});
 </script>
 

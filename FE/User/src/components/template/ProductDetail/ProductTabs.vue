@@ -10,7 +10,13 @@
 				<ProductAdditionInfo v-bind="infos" />
 			</a-tab-pane>
 			<a-tab-pane key="comment" tab="Đánh giá">
-				<Comments name="Chuck Taylor Classic" />
+				<Comments
+					ref="rfComment"
+					name="Chuck Taylor Classic"
+					:comments="comments"
+					:disabled="!isLoggedIn"
+					@submit="createComment"
+				/>
 			</a-tab-pane>
 		</a-tabs>
 	</section>
@@ -23,9 +29,27 @@
 
 	const props = defineProps({
 		infos: { type: Object },
+		comments: Array,
+		isLoggedIn: Boolean,
 	});
 
+	const emits = defineEmits(["create-comment"]);
+
 	const activeTab = ref("additional-info");
+
+	const rfComment = ref(null);
+
+	const resetCommentForm = () => {
+		rfComment.value.resetForm();
+	};
+
+	const createComment = (form) => {
+		emits("create-comment", form);
+	};
+
+	defineExpose({
+		resetCommentForm,
+	});
 </script>
 
 <style lang="scss" scoped>

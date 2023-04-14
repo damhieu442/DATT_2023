@@ -27,15 +27,11 @@
 				<a-button
 					type="primary"
 					danger
-					@click="addProductToCart"
-					v-if="!isAddedToCart"
 					:loading="isAddingProductToCart"
 					class="product-item__actions__add-to-cart"
-					>Thêm vào giỏ hàng</a-button
+					@click="addProductToCart"
+					>Xem chi tiết</a-button
 				>
-				<router-link to="/gio-hang" v-else class="product-item__go-to-cart"
-					>Xem giỏ hàng <ArrowRightOutlined
-				/></router-link>
 			</div>
 		</figcaption>
 	</figure>
@@ -45,6 +41,7 @@
 	import { computed, ref } from "vue";
 	import { useStore } from "vuex";
 	import { ArrowRightOutlined } from "@ant-design/icons-vue";
+	import { useRouter } from "vue-router";
 
 	export default {
 		name: "ProductItem",
@@ -52,7 +49,7 @@
 		components: { ArrowRightOutlined },
 
 		setup(props) {
-			const store = useStore();
+			const router = useRouter();
 			const isAddingProductToCart = ref(false);
 
 			const productPrice = props.product.promotionAmount
@@ -75,23 +72,14 @@
 				);
 			});
 
-			const isAddedToCart = computed(() => {
-				return store.state.cart.productList.find(
-					(product) => product.id === props.product.id,
-				);
-			});
-
-			const addProductToCart = async () => {
-				isAddingProductToCart.value = true;
-				await store.dispatch("cart/addProductToCart", props.product);
-				isAddingProductToCart.value = false;
+			const addProductToCart = () => {
+				router.push({ path: "/san-pham/" + props.product.id });
 			};
 
 			return {
 				productSrcSets,
 				productPrice,
 				formattedCurrentPrice,
-				isAddedToCart,
 				isAddingProductToCart,
 				formattedOriginPrice,
 				addProductToCart,

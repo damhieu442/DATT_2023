@@ -10,31 +10,67 @@
 			class="authentication__modal"
 		>
 			<a-row justify="space-around">
-				<a-col :span="11"> <SignInForm @submit="signInHandler" /> </a-col>
+				<a-col :span="11">
+					<SignInForm
+						@submit="signInHandler"
+						:loading="isLoggingIn"
+						:disabled="isSigningUp"
+					/>
+				</a-col>
 				<a-divider type="vertical" class="authentication__divider" />
-				<a-col :span="11"> <SignUpForm @submit="signUpHandler" /> </a-col>
+				<a-col :span="11">
+					<SignUpForm
+						@submit="signUpHandler"
+						:loading="isSigningUp"
+						:disabled="isLoggingIn"
+					/>
+				</a-col>
 			</a-row>
 		</a-modal>
 	</div>
 </template>
 
 <script setup>
+	import { notification } from "ant-design-vue";
 	import { ref } from "vue";
+	import { useStore } from "vuex";
 	import SignInForm from "./SignInForm.vue";
 	import SignUpForm from "./SignUpForm.vue";
 
+	const store = useStore();
+
 	const isShowModal = ref(false);
+	const isLoggingIn = ref(false);
+	const isSigningUp = ref(false);
 
 	const showAuthenticationModal = () => {
 		isShowModal.value = true;
 	};
 
-	const signInHandler = (form) => {
-		console.log("Sign in: ", form);
+	const signInHandler = async (form) => {
+		isLoggingIn.value = true;
+		const isLoggedIn = await store.dispatch("user/signIn", form);
+		if (isLoggedIn) {
+			isShowModal.value = false;
+		} else {
+			notification.error({
+				message: "Có lỗi xảy ra, đăng nhập không thành công, vui lòng thử lại",
+			});
+		}
+		isLoggingIn.value = false;
 	};
 
-	const signUpHandler = (form) => {
-		console.log("Sign up: ", form);
+	const signUpHandler = async (form) => {
+		isSigningUp.value = true;
+		const isSignedUp = await store.dispatch("user/signUp", form);
+		if (isSignedUp) {
+			isShowModal.value = false;
+		} else {
+			notification.error({
+				message: "Có lỗi xảy ra, đăng ký không thành công, vui lòng thử lại",
+			});
+		}
+		isSigningUp.value = false;
 	};
 </script>
 

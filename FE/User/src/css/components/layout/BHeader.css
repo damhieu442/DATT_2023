@@ -177,37 +177,6 @@ span.amount {
 	font-weight: bold;
 }
 
-.image-icon {
-	height: auto;
-	vertical-align: middle;
-	position: relative;
-}
-
-.cart-icon {
-	display: inline-block;
-}
-
-span + .image-icon {
-	margin-left: 10px;
-}
-
-.cart-icon strong {
-	border-radius: 0;
-	font-weight: bold;
-	margin: 0.3em 0;
-	border: 2px solid #446084;
-	color: #446084;
-	position: relative;
-	display: inline-block;
-	vertical-align: middle;
-	text-align: center;
-	width: 2.2em;
-	height: 2.2em;
-	font-size: 1em;
-	line-height: 1.9em;
-	font-family: Helvetica, Arial, Sans-serif;
-}
-
 .nav-dark .cart-icon strong {
 	color: #fff;
 	border-color: #fff;
@@ -217,23 +186,6 @@ span + .image-icon {
 .nav-dark .cart-icon:hover strong {
 	background-color: #fff;
 	color: #446084;
-}
-
-.cart-icon strong:after {
-	transition: height 0.1s ease-out;
-	bottom: 100%;
-	margin-bottom: 0;
-	margin-left: -9px;
-	height: 8px;
-	width: 14px;
-	left: 50%;
-	content: " ";
-	position: absolute;
-	pointer-events: none;
-	border: 2px solid #446084;
-	border-top-left-radius: 99px;
-	border-top-right-radius: 99px;
-	border-bottom: 0;
 }
 
 .nav-dark .cart-icon strong:after {

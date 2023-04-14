@@ -35,26 +35,23 @@
 			</div>
 			<div class="category-product__actions">
 				<a-button
-					v-if="!isAddedToCart"
 					type="primary"
 					danger
 					@click="addProductToCart"
 					:loading="isAddingProductToCart"
 					class="category-product__actions__add-to-cart"
-					>Thêm vào giỏ hàng</a-button
+					>Xem chi tiết</a-button
 				>
-				<router-link to="/gio-hang" v-else class="category-product__go-to-cart"
-					>Xem giỏ hàng <ArrowRightOutlined
-				/></router-link>
 			</div>
 		</figcaption>
 	</figure>
 </template>
 
 <script setup>
-	import { ArrowRightOutlined } from "@ant-design/icons-vue";
-	import { computed, ref } from "vue";
-	import { useStore } from "vuex";
+	import { ref } from "vue";
+	import { useRouter } from "vue-router";
+
+	const router = useRouter();
 
 	const props = defineProps({
 		product: {
@@ -73,7 +70,6 @@
 		},
 	});
 
-	const store = useStore();
 	const isAddingProductToCart = ref(false);
 
 	const productPrice = props.product.promotionAmount
@@ -85,14 +81,8 @@
 	const formattedCurrentPrice = numberFormatter.format(productPrice);
 	const formattedOriginPrice = numberFormatter.format(props.product.price);
 
-	const isAddedToCart = computed(() => {
-		return !!store.state.cart.productList.find((product) => product.id === props.product.id);
-	});
-
-	const addProductToCart = async () => {
-		isAddingProductToCart.value = true;
-		await store.dispatch("cart/addProductToCart", props.product);
-		isAddingProductToCart.value = false;
+	const addProductToCart = () => {
+		router.push({ path: "/san-pham/" + props.product.id });
 	};
 </script>
 

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 const ROOT_URL = process.env.VUE_APP_API_URL;
 
 class ProductFactory {
@@ -38,8 +39,6 @@ class ProductFactory {
 			image ? ROOT_URL.concat("/api/Shoes/imgName/", image.split(".")[0]) : "",
 		);
 
-		console.log("Data: ", data);
-
 		if (!images[images.length - 1]) {
 			images.pop();
 		}
@@ -63,8 +62,53 @@ class ProductFactory {
 					material: data.Material,
 					target: "-",
 				},
+				image: images[0],
 			},
 			images,
+		};
+	}
+
+	/**
+	 * @typedef {Object} IEvaluate
+	 * @property {string} id
+	 * @property {string} comment
+	 * @property {string} shoeID
+	 * @property {number} rate
+	 * @property {Object} user
+	 * @property {string} user.fullname
+	 * @property {string} user.username
+	 * @property {string} user.email
+	 * @property {string} createAt
+	 *
+	 * @typedef {Object} IAPIResponse
+	 * @property {string} EvaluateId
+	 * @property {number} Star
+	 * @property {string} FullName
+	 * @property {string} Email
+	 * @property {string} Comment
+	 * @property {string} ShoeId
+	 * @property {string} CreatedDate
+	 * @property {string} CreatedBy
+	 * @property {string} ShoeName
+	 *
+	 * @param {IAPIResponse} data
+	 *
+	 * @returns {IEvaluate}
+	 */
+	transformEvaluateResponseToEvaluate(data) {
+		const createAt = dayjs(data.CreatedDate).format("DD/MM/YYYY HH:mm");
+
+		return {
+			id: data.EvaluateId,
+			comment: data.Comment,
+			rate: data.Star,
+			shoeID: data.ShoeId,
+			user: {
+				email: data.Email,
+				fullname: data.FullName || "",
+				username: data.CreatedBy || "",
+			},
+			createAt,
 		};
 	}
 }

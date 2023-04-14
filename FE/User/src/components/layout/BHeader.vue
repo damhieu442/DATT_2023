@@ -17,37 +17,16 @@
 					<div class="flex-col flex-left">
 						<ul class="header-nav header-nav-main nav nav-left nav-uppercase">
 							<li class="account-item has-icon">
-								<Authentication />
+								<AuthenticatedMenu
+									v-if="userAuthInfo.uid"
+									:userAuthInfo="userAuthInfo"
+								/>
+								<Authentication v-else />
 							</li>
 						</ul>
 					</div>
 					<div class="flex-col flex-right">
-						<div style="display: flex; justify-content: center; align-items: center">
-							<ul class="header-nav header-nav-main nav nav-right nav-uppercase">
-								<li
-									class="cart-item has-icon has-dropdown"
-									:class="false ? 'current-dropdown' : ''"
-								>
-									<a href="#" title="Giỏ hàng" class="header-cart-link is-small">
-										<span class="header-cart-title">
-											Giỏ hàng /&nbsp;
-											<span class="cart-price">
-												<span class="woocommerce-Price-amount amount">
-													0&nbsp;
-													<span class="woocommerce-Price-currencySymbol"
-														>₫</span
-													>
-												</span></span
-											>
-										</span>
-										<span class="cart-icon image-icon">
-											<strong>0</strong>
-										</span>
-									</a>
-								</li>
-								<div class="header-divider"></div>
-							</ul>
-						</div>
+						<CartMenu />
 					</div>
 				</div>
 			</div>
@@ -114,10 +93,37 @@
 </template>
 
 <script setup>
+	import { computed, onMounted } from "vue";
+	import { useStore } from "vuex";
 	import CategoryItem from "./Header/CategoryItem.vue";
 	import Authentication from "./Header/Authentication.vue";
+	import AuthenticatedMenu from "./Header/AuthenticatedMenu.vue";
+	import CartMenu from "./Header/CartMenu.vue";
+
+	const store = useStore();
+
+	const userAuthInfo = computed(() => store.getters["user/authInfo"]);
+
+	onMounted(() => {
+		store.dispatch("user/tryLogInUser");
+	});
 </script>
 
 <style scoped>
 	@import url(@/css/components/layout/BHeader.css);
+
+	.header {
+		position: sticky;
+		top: 0;
+		left: 0;
+	}
+
+	.username {
+		color: #fffc;
+		font-weight: 700;
+		font-family: "Roboto", sans-serif;
+		font-size: 0.8rem;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
 </style>

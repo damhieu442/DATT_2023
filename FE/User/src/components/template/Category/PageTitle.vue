@@ -33,13 +33,20 @@
 
 	export default {
 		emits: ["filter"],
-		props: { orderBy: String },
+		props: {
+			orderBy: String,
+			breadcrumbs: { type: Array, required: false, default: null },
+		},
 		setup(props, context) {
 			const store = useStore();
 			const route = useRoute();
 			const router = useRouter();
 
 			const breadcrumbs = computed(() => {
+				if (props.breadcrumbs) {
+					return props.breadcrumbs;
+				}
+
 				const breadcrumbs = [
 					{
 						link: "/",

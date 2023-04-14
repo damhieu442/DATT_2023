@@ -1,5 +1,5 @@
 <template>
-	<a-popover trigger="hover" overlayClassName="category-dropdown">
+	<a-popover trigger="hover" overlayClassName="category-dropdown" placement="bottom">
 		<router-link
 			class="nav-top-link"
 			:to="'/danh-muc/' + categoryCode"

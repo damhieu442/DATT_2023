@@ -9,27 +9,29 @@
 	>
 		<h5>ĐĂNG NHẬP</h5>
 		<a-form-item
-			label="Tên tài khoản hoặc địa chỉ email"
+			label="Tên tài khoản"
 			name="email"
-			:rules="[
-				{ required: true, message: 'Vui lòng nhập địa chỉ email của bạn!' },
-				{ type: 'email', message: '' },
-			]"
+			:rules="[{ required: true, message: 'Vui lòng nhập tài khoản của bạn!' }]"
 		>
-			<a-input v-model:value="form.email" />
+			<a-input :disabled="disabled || loading" v-model:value="form.email" />
 		</a-form-item>
 
 		<a-form-item
 			label="Mật khẩu"
 			name="password"
-			:rules="[{ required: true, message: 'Please input your password!' }]"
+			:rules="[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]"
 		>
-			<a-input-password v-model:value="form.password" />
+			<a-input-password :disabled="disabled || loading" v-model:value="form.password" />
 		</a-form-item>
 
 		<a-row type="flex"
 			><a-col :span="10">
-				<a-button type="primary" html-type="submit" class="sign-in-form__submit"
+				<a-button
+					type="primary"
+					html-type="submit"
+					class="sign-in-form__submit"
+					:loading="loading"
+					:disabled="disabled"
 					>Đăng nhập</a-button
 				>
 			</a-col>
@@ -38,6 +40,7 @@
 					<a-checkbox
 						v-model:checked="form.isRemeberPassword"
 						class="sign-in-form__remember"
+						:disabled="disabled || loading"
 						>Ghi nhớ mật khẩu</a-checkbox
 					>
 				</a-form-item>
@@ -51,6 +54,8 @@
 
 <script setup>
 	import { reactive } from "vue";
+
+	const props = defineProps({ loading: Boolean, disabled: Boolean });
 
 	const form = reactive({
 		email: "",

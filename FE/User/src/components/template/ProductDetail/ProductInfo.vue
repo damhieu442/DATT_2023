@@ -66,9 +66,10 @@
 				>Mua ngay</a-button
 			>
 			<a-button
-				@click="addToCartHandler"
 				class="product-info__btns product-info__add-to-cart"
+				:loading="isAddingToCart"
 				:disabled="!selectedSize || selectedSize.amount === 0"
+				@click="addToCartHandler"
 				>Thêm vào giỏ hàng</a-button
 			>
 		</div>
@@ -177,6 +178,7 @@
 <script>
 	import { notification } from "ant-design-vue";
 	import { computed, ref } from "vue";
+	import { useStore } from "vuex";
 	export default {
 		props: {
 			categories: {
@@ -198,10 +200,14 @@
 			code: String,
 			discount: Number,
 			totalPrice: Number,
+			image: String,
 		},
 		setup(props) {
+			const store = useStore();
+
 			const buyNumber = ref(1);
 			const selectedSize = ref(null);
+			const isAddingToCart = ref(false);
 
 			const breadcrumbs = computed(() => {
 				const breadcrumbs = [
@@ -233,8 +239,6 @@
 			const formattedOriginPrice = numberFormatter.format(props.price);
 
 			const increaseProductQuality = () => {
-				console.log("Click");
-
 				if (buyNumber.value < selectedSize.value.amount) {
 					buyNumber.value++;
 				}
@@ -255,13 +259,30 @@
 				}
 			};
 
-			const addToCartHandler = () => {
+			const addToCartHandler = async () => {
 				if (!selectedSize.value) {
 					notification.error({
 						message: "Vui lòng chọn kích thước giày",
 					});
 					return;
 				}
+
+				isAddingToCart.value = true;
+
+				const product = {
+					id: props.id,
+					name: props.name,
+					price: props.price,
+					size: selectedSize.value.code,
+					image: props.image,
+					amount: buyNumber.value,
+				};
+
+				await store.dispatch("cart/addProductToCart", product);
+				isAddingToCart.value = false;
+				notification.success({
+					message: "Thêm sản phẩm vào giỏ hàng thành công",
+				});
 			};
 
 			return {
@@ -270,6 +291,7 @@
 				breadcrumbs,
 				formattedCurrentPrice,
 				formattedOriginPrice,
+				isAddingToCart,
 				increaseProductQuality,
 				decreaseProductQuality,
 				buyNowHandler,
