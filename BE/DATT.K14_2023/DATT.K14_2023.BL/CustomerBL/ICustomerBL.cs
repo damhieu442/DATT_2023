@@ -1,4 +1,5 @@
 ﻿using DATT.k14_2023.COMMON.Entities;
+using DATT.k14_2023.COMMON.Entities.DTO;
 using DATT.K14_2023.BL.IBaseBL;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ namespace DATT.K14_2023.BL.CustomerBL
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
         int CheckImgName(string? imgName);
+
+        ServiceResult UpdatePassWord(Guid id, string passWord);
+
+        dynamic ExportExcel(List<Guid>? listId);
         #endregion
     }
 }

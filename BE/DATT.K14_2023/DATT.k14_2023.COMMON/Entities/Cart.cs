@@ -13,5 +13,6 @@ namespace DATT.k14_2023.COMMON.Entities
         public Guid? CartId { get; set; }
         public Guid? CustomerId { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public string? CreatedBy { get; set; }
     }
 }

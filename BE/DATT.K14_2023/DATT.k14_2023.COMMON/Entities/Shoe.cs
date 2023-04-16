@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DATT.k14_2023.COMMON.Constants.BAttribute;
 
 namespace DATT.k14_2023.COMMON.Entities
 {
@@ -19,17 +20,19 @@ namespace DATT.k14_2023.COMMON.Entities
         /// <summary>
         /// Mã giày
         /// </summary>
+        [NotEmpty("Mã giày không được để trống")]
         public string? ShoeCode { get; set; }
 
         /// <summary>
         /// Tên giày
         /// </summary>
+        [NotEmpty("Tên giày không được để trống")]
         public string? ShoeName { get; set; }
 
         /// <summary>
         /// Mô tả
         /// </summary>
-        public string? Description { get; set; }
+        public string? Descriptions { get; set; }
 
         /// <summary>
         /// Tên ảnh
@@ -39,11 +42,13 @@ namespace DATT.k14_2023.COMMON.Entities
         /// <summary>
         /// Source ảnh
         /// </summary>
+        [NotEmpty("Ảnh không được để trống")]
         public List<IFormFile> Img { get; set; }
 
         /// <summary>
         /// Giá bán
         /// </summary>
+        [NotEmpty("Giá không được để trống")]
         public long? Price { get; set; }
 
         /// <summary>
@@ -64,17 +69,34 @@ namespace DATT.k14_2023.COMMON.Entities
         /// <summary>
         /// size detail
         /// </summary>
+        [NotEmpty("Size không được để trống")]
         public string? Size { get; set; }
 
         /// <summary>
         /// Khóa phụ danh mục
         /// </summary>
+        [NotEmpty("Mã danh mục không được để trống")]
         public Guid? CategoryId { get; set; }
+
+        public int? CategoryCode { get; set; }
+
+        public string? CategoryName { get; set; }
+
+        public string? Description { get; set; }
+
+        public int? ParentId { get; set; }
+
+        public string? Code { get; set; }
 
         /// <summary>
         /// Số lượng đã bán
         /// </summary>
         public int? SoldNumber { get; set; }
+
+        /// <summary>
+        /// Điểm đánh giá trung bình
+        /// </summary>
+        public int? AvgStar { get; set; }
 
         /// <summary>
         /// Ngày tạo

@@ -1,4 +1,5 @@
 ﻿using DATT.k14_2023.COMMON.Entities;
+using DATT.k14_2023.COMMON.Entities.DTO;
 using DATT.k14_2023.COMMON.Enums;
 using DATT.k14_2023.DL.BaseDL;
 using System;
@@ -25,7 +26,13 @@ namespace DATT.k14_2023.DL.CustomerDL
 
         int CheckUserName(Guid? id, string? userName);
 
+        int CheckPassWord(Guid? id, string? password);
+
+        int UpdatePassWord(Guid id, string passWord);
+
         dynamic isUserName(string userName, string passWord, int role);
+
+        List<Customer> ExportExcel(List<Guid>? listId);
         #endregion
     }
 }

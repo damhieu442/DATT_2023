@@ -160,6 +160,7 @@ namespace DATT.K14_2023.BL.IBaseBL
                 numberOfAffectedRows = _baseDL.InsertRecord(record, imgName);
                 errorCode = k14_2023.COMMON.Enums.ErrorCode.InsertFailed;
                 errorMessage = Resource.Insert_Failed;
+                int number = AfterSave(id, record);
             }
             else
             {
@@ -170,8 +171,6 @@ namespace DATT.K14_2023.BL.IBaseBL
 
             if (numberOfAffectedRows > 0)
             {
-                int number = AfterSave(id, record);
-
                 return new ServiceResult
                 {
                     IsSuccess = true,

@@ -39,6 +39,37 @@ namespace DATT.k14_2023.DL.ShoeDL
 
             return count;
         }
+
+        protected override string queryDeleteMany()
+        {
+            return "DELETE FROM shoe WHERE CustomerId IN ('{0}')";
+        }
+
+        public List<Shoe> ExportExcel(List<Guid> listId)
+        {
+            dynamic shoe;
+
+            if (listId.Count > 0)
+            {
+                string sql = "SELECT ShoeCode, ShoeName, Descriptions, Price, Discount, (s.Price - (s.Price * (s.Discount / 100)))  AS TotalPrice, Material, SoldNumber, CategoryCode, CategoryName, s.CreatedDate, s.ModifiedDate FROM shoe s LEFT JOIN category c ON s.CategoyId = c.CategoryId WHERE CategoryId IN ('{0}')";
+                using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+                {
+                    var result = mySqlConnection.QueryMultiple(string.Format(sql, string.Join("','", listId)));
+                    shoe = result.Read<Shoe>().ToList();
+                }
+            }
+            else
+            {
+                string storedProcedureName = String.Format(ProcedureName.Get, typeof(Shoe).Name, "All");
+
+                using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+                {
+                    var result = mySqlConnection.QueryMultiple(storedProcedureName, commandType: CommandType.StoredProcedure);
+                    shoe = result.Read<Shoe>().ToList();
+                }
+            }
+            return shoe;
+        }
         #endregion
     }
 }

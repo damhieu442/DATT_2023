@@ -36,44 +36,6 @@ namespace DATT.k14_2023.DL.CartDL
             return numberOfAffectedRows;
         }
 
-        public int UpdateRecord(Guid id, Cart record)
-        {
-            string storedProcedureName = String.Format(ProcedureName.Update, typeof(Cart).Name);
-
-            var parameters = new DynamicParameters();
-            var properties = typeof(Cart).GetProperties();
-            foreach (var property in properties)
-            {
-                parameters.Add($"p_{property.Name}", property.GetValue(record));
-            }
-            GeneratePrimaryKeyValue(parameters, properties, id);
-
-            int numberOfAffectedRows;
-            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
-            {
-                numberOfAffectedRows = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
-            }
-
-            return numberOfAffectedRows;
-        }
-
-        public int DeleteRecordOne(Guid id)
-        {
-            string storedProcedureName = String.Format(ProcedureName.Delete, typeof(Cart).Name);
-
-            var parameters = new DynamicParameters();
-            var properties = typeof(Cart).GetProperties();
-            GeneratePrimaryKeyValue(parameters, properties, id);
-
-            int numberOfAffectedRows;
-            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
-            {
-                numberOfAffectedRows = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
-            }
-
-            return numberOfAffectedRows;
-        }
-
         protected virtual void GeneratePrimaryKeyValue(DynamicParameters parameters, PropertyInfo[] properties, Guid? id)
         {
             foreach (var property in properties)

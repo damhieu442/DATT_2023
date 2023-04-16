@@ -133,6 +133,63 @@ namespace DATT.K14_2023.API.Controllers
             }
             return imgName;
         }
+
+        [HttpPost("exportv2")]
+        public async Task<IActionResult> ExportV2(CancellationToken cancellationToken, List<Guid>? listId)
+        {
+            await Task.Yield();
+            var stream = _customerBL.ExportExcel(listId);
+            string excelName = "Bao_cao.xlsx";
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
+
+        [HttpPut("update-password/{id}")]
+        public IActionResult UpdateRecord(Guid id, [FromBody] string passWord)
+        {
+            try
+            {
+                var result = _customerBL.UpdatePassWord(id, passWord);
+
+                if (result.IsSuccess)
+                {
+                    return StatusCode(StatusCodes.Status201Created);
+                }
+                else if (!result.IsSuccess && result.ErrorCode == k14_2023.COMMON.Enums.ErrorCode.APIParameterNullOrInvalid)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                    {
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = Resource.Validate,
+                        UserMsg = Resource.UserMsg,
+                        MoreInfo = result.Data,
+                        TraceId = HttpContext.TraceIdentifier
+                    });
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                    {
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = Resource.DevMsg,
+                        UserMsg = Resource.UserMsg,
+                        MoreInfo = result.Message,
+                        TraceId = HttpContext.TraceIdentifier
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg,
+                    TraceId = HttpContext.TraceIdentifier
+                });
+            }
+        }
         #endregion
 
     }

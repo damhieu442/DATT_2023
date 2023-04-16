@@ -75,21 +75,21 @@ namespace DATT.K14_2023.BL.CategoryBL
 
         private void FomatStyleExcel(List<Category> listCategory, ExcelWorksheet workSheet)
         {
-            workSheet.Cells["A:D"].Style.Font.SetFromFont("Times New Roman", 11);
+            workSheet.Cells["A:F"].Style.Font.SetFromFont("Times New Roman", 11);
 
-            workSheet.Cells["A1:D1"].Merge = true;
-            workSheet.Cells["A1:D1"].Style.Font.SetFromFont("Arial", 16);
-            workSheet.Cells["A1:D1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            workSheet.Cells["A1:F1"].Merge = true;
+            workSheet.Cells["A1:F1"].Style.Font.SetFromFont("Arial", 16);
+            workSheet.Cells["A1:F1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             workSheet.Cells[1, 1].Value = "DANH SÁCH DANH MỤC";
-            workSheet.Cells["A2:D2"].Merge = true;
+            workSheet.Cells["A2:F2"].Merge = true;
             workSheet.Cells[2, 1].Value = "";
-            workSheet.Cells["A3:D3"].Style.Font.Bold = true;
+            workSheet.Cells["A3:F3"].Style.Font.Bold = true;
 
             int number = listCategory.Count + 3;
-            workSheet.Cells[$"A3:D{number}"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-            workSheet.Cells[$"A3:D{number}"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-            workSheet.Cells[$"A3:D{number}"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-            workSheet.Cells[$"A3:D{number}"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            workSheet.Cells[$"A3:F{number}"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+            workSheet.Cells[$"A3:F{number}"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+            workSheet.Cells[$"A3:F{number}"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            workSheet.Cells[$"A3:F{number}"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
             // Tạo header
             workSheet.Cells[3, 1].Value = "STT";
@@ -97,9 +97,11 @@ namespace DATT.K14_2023.BL.CategoryBL
             workSheet.Cells[3, 2].Value = "Mã danh mục";
             workSheet.Cells[3, 3].Value = "Tên danh mục";
             workSheet.Cells[3, 4].Value = "Mô tả";
-            workSheet.Cells["E:J"].Clear();
+            workSheet.Cells[3, 5].Value = "Ngày tạo";
+            workSheet.Cells[3, 6].Value = "Ngày sửa";
+            workSheet.Cells["G:L"].Clear();
 
-            using (var range = workSheet.Cells["A3:D3"])
+            using (var range = workSheet.Cells["A3:F3"])
             {
                 range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 range.Style.Font.SetFromFont("Arial", 10);
@@ -118,7 +120,14 @@ namespace DATT.K14_2023.BL.CategoryBL
                 workSheet.Cells[i + 4, 2].Value = item.CategoryCode;
                 workSheet.Cells[i + 4, 3].Value = item.CategoryName;
                 workSheet.Cells[i + 4, 4].Value = item.Description;
+                workSheet.Cells[i + 4, 5].Value = item.CreatedDate;
+                workSheet.Cells[i + 4, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[i + 4, 6].Value = item.ModifiedDate;
+                workSheet.Cells[i + 4, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             }
+
+            workSheet.Cells[4, 7, listCategory.Count + 4, 5].Style.Numberformat.Format = "DD/MM/YYYY";
+            workSheet.Cells[4, 8, listCategory.Count + 4, 6].Style.Numberformat.Format = "DD/MM/YYYY";
         }
         #endregion
     }

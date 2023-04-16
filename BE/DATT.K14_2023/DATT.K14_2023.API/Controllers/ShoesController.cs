@@ -102,6 +102,16 @@ namespace DATT.K14_2023.API.Controllers
             }
             return imgName;
         }
+
+        [HttpPost("exportv2")]
+        public async Task<IActionResult> ExportV2(CancellationToken cancellationToken, List<Guid>? listId)
+        {
+            await Task.Yield();
+            var stream = _shoeBL.ExportExcel(listId);
+            string excelName = "Bao_cao.xlsx";
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
         #endregion
     }
 }

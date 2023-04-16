@@ -15,6 +15,8 @@ using DATT.K14_2023.BL.SizeBL;
 using DATT.k14_2023.DL.SizeDL;
 using DATT.K14_2023.BL.FeedBackBL;
 using DATT.k14_2023.DL.FeedBackDL;
+using DATT.K14_2023.BL.CartDetailBL;
+using DATT.k14_2023.DL.CartDetailDL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +53,9 @@ builder.Services.AddTransient<ISizeDL, SizeDL>();
 
 builder.Services.AddTransient<IFeedBackBL, FeedBackBL>();
 builder.Services.AddTransient<IFeedBackDL, FeedBackDL>();
+
+builder.Services.AddTransient<ICartDetailBL, CartDetailBL>();
+builder.Services.AddTransient<ICartDetailDL, CartDetailDL>();
 
 DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MySql");
 

@@ -58,6 +58,22 @@ namespace DATT.k14_2023.DL.CustomerDL
             return count;
         }
 
+        public int CheckPassWord(Guid? id, string? passWord)
+        {
+            string storedProcedureName = String.Format(ProcedureName.Check, typeof(Customer).Name, "CheckPassWord");
+            var parameters = new DynamicParameters();
+            parameters.Add("p_CustomerId", id);
+            parameters.Add("p_PassWord", passWord);
+
+            int count;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                count = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return count;
+        }
+
         public dynamic isUserName(string userName, string passWord, int role)
         {
             string storedProcedureName = String.Format(ProcedureName.Check, typeof(Customer).Name, "Authen");
@@ -75,6 +91,54 @@ namespace DATT.k14_2023.DL.CustomerDL
             }
 
             return record;
+        }
+
+        protected override string queryDeleteMany()
+        {
+            return "DELETE FROM customer WHERE CustomerId IN ('{0}')";
+        }
+
+        public List<Customer> ExportExcel(List<Guid> listId)
+        {
+            dynamic customer;
+
+            if (listId.Count > 0)
+            {
+                string sql = "SELECT CustomerId, UserName, FullName, Email, PhoneNumber, Address, CreatedDate, ModifiedDate Role FROM customer WHERE CustomerId IN ('{0}')";
+                using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+                {
+                    var result = mySqlConnection.QueryMultiple(string.Format(sql, string.Join("','", listId)));
+                    customer = result.Read<Customer>().ToList();
+                }
+            }
+            else
+            {
+                string storedProcedureName = String.Format(ProcedureName.Get, typeof(Customer).Name, "All");
+
+                using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+                {
+                    var result = mySqlConnection.QueryMultiple(storedProcedureName, commandType: CommandType.StoredProcedure);
+                    customer = result.Read<Customer>().ToList();
+                }
+            }
+            return customer;
+        }
+
+        public int UpdatePassWord(Guid id, string passWord)
+        {
+            string storedProcedureName = String.Format("Proc_{0}_UpdatePassWord", typeof(Customer).Name);
+            var parameters = new DynamicParameters();
+            parameters.Add("p_CustomerId", id);
+            parameters.Add("p_Password", passWord);
+
+            int numberOfAffectedRows;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                numberOfAffectedRows = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return numberOfAffectedRows;
+
         }
         #endregion
     }

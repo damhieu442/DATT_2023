@@ -21,6 +21,7 @@ namespace DATT.K14_2023.BL.ShoeBL
         /// </returns>
         /// Created By: DVHIEU (23/03/2023)
         int CheckImgName(string? imgName);
+        dynamic ExportExcel(List<Guid>? listId);
         #endregion
     }
 }
