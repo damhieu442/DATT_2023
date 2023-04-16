@@ -1,7 +1,15 @@
 <template>
 	<aside class="sidebar">
 		<div class="sidebar__user-info">
-			<!-- <img src="{avatar}" alt="" class="h-12 w-12 rounded-3xl object-cover" /> -->
+			<img
+				v-if="!!avatar"
+				:src="avatar"
+				alt=""
+				class="sidebar__user-info__avatar"
+				width="48"
+				height="48"
+			/>
+			<i v-else class="sidebar__user-info__avatar fa-solid fa-user"></i>
 			<div class="sidebar__user-info__name">
 				<p>Tài khoản của</p>
 				<p>{{ username }}</p>
@@ -9,31 +17,21 @@
 		</div>
 		<ul class="sidebar__nav">
 			<li>
-				<router-link to="/tai-khoan" activeClass="active">
-					<!-- <FontAwesomeIcon
-                    class="w-4 h-4 mr-4 leading-none"
-                    icon={['fas', 'user']}
-                /> --><i class="icon fa-solid fa-user"></i>
+				<router-link to="/tai-khoan" exactActiveClass="active">
+					<i class="icon fa-solid fa-user"></i>
 					<span>Thông tin tài khoản</span>
 				</router-link>
 			</li>
 
 			<li>
 				<router-link activeClass="active" to="/tai-khoan/don-hang">
-					<!-- <FontAwesomeIcon
-                        class="w-4 h-4 mr-4 leading-none"
-                        icon={['fas', 'bag-shopping']}
-                    /> --><i class="icon fa-solid fa-bag-shopping"></i>
+					<i class="icon fa-solid fa-bag-shopping"></i>
 					<span>Quản lý đơn hàng</span>
 				</router-link>
 			</li>
 			<li>
 				<router-link activeClass="active" to="/tai-khoan/doi-mat-khau">
-					<!-- c 
-                <FontAwesomeIcon
-                    class="w-4 h-4 mr-4 leading-none"
-                    icon={['fas', 'lock']}
-                /> --><i class="icon fa-solid fa-lock"></i>
+					<i class="icon fa-solid fa-lock"></i>
 					<span>Đổi mật khẩu</span>
 				</router-link>
 			</li>
@@ -42,12 +40,13 @@
 </template>
 
 <script setup>
+	import { computed } from "vue";
 	import { useStore } from "vuex";
 
 	const store = useStore();
 
-	const username = store.state.user.username; //useSelector((store) => store.user.username);
-	// const avatar = useSelector((store) => store.user.avatar);
+	const username = computed(() => store.state.user.username);
+	const avatar = computed(() => store.state.user.image);
 </script>
 
 <style lang="scss" scoped>
@@ -59,8 +58,6 @@
 			margin-bottom: 1.25rem;
 
 			&__name {
-				margin-left: 1rem;
-
 				> p {
 					font-size: 0.75rem;
 					margin: 0;
@@ -72,11 +69,19 @@
 					}
 				}
 			}
+
+			&__avatar {
+				height: 3rem;
+				width: 3rem;
+				object-fit: cover;
+				border-radius: 1.5rem;
+				margin-right: 1rem;
+				font-size: 3rem;
+				text-align: center;
+			}
 		}
 
 		&__nav {
-			/* flex items-center text-current cursor-pointer px-5 py-2 hover:bg-gray-300 hover:text-current */
-
 			> li {
 				> a {
 					display: flex;
@@ -84,6 +89,7 @@
 					color: currentColor;
 					cursor: pointer;
 					padding: 0.5rem 1.25rem;
+					transition: 0.5s;
 
 					&:hover {
 						background-color: rgb(94 234 212);

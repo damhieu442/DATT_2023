@@ -11,6 +11,7 @@ import ProductListPage from "@/views/ProductListPage.vue";
 import CartPage from "@/views/CartPage.vue";
 import PaymentPage from "@/views/PaymentPage.vue";
 import UserPage from "@/views/UserPage.vue";
+import ChangePasswordPage from "@/views/ChangePasswordPage.vue";
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -72,9 +73,15 @@ export const router = createRouter({
 				},
 				{
 					path: "tai-khoan",
-
 					component: UserAccountLayout,
-					children: [{ path: "", name: "Account", component: UserPage }],
+					children: [
+						{ path: "", name: "Account", component: UserPage },
+						{
+							path: "doi-mat-khau",
+							name: "ChangePassword",
+							component: ChangePasswordPage,
+						},
+					],
 				},
 			],
 		},

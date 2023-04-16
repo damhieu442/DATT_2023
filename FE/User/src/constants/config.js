@@ -3,6 +3,9 @@ export const EKeys = {
 	username: "name",
 	userEmail: "email",
 	fullName: "full-name",
+	phone: "phoneNumber",
+	address: "address",
+	image: "image",
 	uid: "uid",
 };
 

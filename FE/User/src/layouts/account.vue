@@ -1,8 +1,8 @@
 <template>
-	<main class="main">
-		<UserSidebar class="main__sidebar" />
+	<main class="page-layout">
+		<UserSidebar class="page-layout__sidebar" />
 
-		<div class="main__main">
+		<div class="page-layout__main">
 			<router-view />
 		</div>
 	</main>
@@ -10,10 +10,32 @@
 
 <script setup>
 	import UserSidebar from "@/components/layout/UserSidebar.vue";
+	import { EKeys } from "@/constants/config";
+	import { computed } from "@vue/reactivity";
+	import Cookie from "js-cookie";
+	import { watch } from "vue";
+	import { useRouter } from "vue-router";
+	import { useStore } from "vuex";
+
+	const store = useStore();
+	const router = useRouter();
+	const isLoggedIn = computed(() => !!store.state.user.uid);
+
+	watch(isLoggedIn, (isLoggedIn) => {
+		if (!isLoggedIn) {
+			router.replace("/");
+		}
+	});
+
+	const token = Cookie.get(EKeys.accessToken);
+
+	if (!token) {
+		router.replace("/");
+	}
 </script>
 
 <style lang="scss" scoped>
-	.main {
+	.page-layout {
 		max-width: 1230px;
 		width: 100%;
 		margin: 0 auto;
