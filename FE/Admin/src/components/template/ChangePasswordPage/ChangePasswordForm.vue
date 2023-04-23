@@ -35,9 +35,15 @@
 </template>
 
 <script setup>
-	import { Form, notification } from "ant-design-vue";
+	import { Form } from "ant-design-vue";
 	import { reactive, ref } from "vue";
 	import { useStore } from "vuex";
+
+	const props = defineProps({
+		loading: Boolean,
+	});
+
+	const emits = defineEmits(["submit"]);
 
 	const store = useStore();
 	const isLoading = ref(false);
@@ -46,7 +52,7 @@
 		password: "",
 		confirmPassword: "",
 	});
-	const formRule = reactive({
+	const formRule = {
 		oldPassword: [
 			{
 				required: true,
@@ -56,6 +62,7 @@
 		],
 		password: [
 			{
+				required: true,
 				validator(_, password) {
 					if (!password || password.trim() === "") {
 						return Promise.reject(new Error("Mật khẩu không được để trống"));
@@ -82,34 +89,18 @@
 				trigger: "change",
 			},
 		],
-	});
+	};
 	const form = Form.useForm(formState, formRule);
 
 	const submitNewPassword = async () => {
-		isLoading.value = true;
 		try {
 			await form.validate();
 
-			const { password: newPassword } = formState;
+			const { password: newPassword, oldPassword } = formState;
 			const customerId = store.state.user.uid;
-			const sendData = { customerId, newPassword };
-			console.log("Send data: ", sendData);
-			const isSuccess = await store.dispatch("user/updateUserPassword", sendData);
-			if (isSuccess) {
-				notification.success({ message: "Cập nhật mật khẩu thành công" });
-				form.resetFields();
-			} else {
-				throw new Error();
-			}
-		} catch (error) {
-			console.log(error);
-
-			if (!"errorFields" in error) {
-				notification.error({ message: "Có lỗi xảy ra, thử lại sau" });
-			}
-		} finally {
-			isLoading.value = false;
-		}
+			const sendData = { customerId, newPassword, oldPassword };
+			emits("submit", sendData);
+		} catch (error) {}
 	};
 </script>
 

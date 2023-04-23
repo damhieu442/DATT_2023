@@ -37,6 +37,8 @@
 
 				break;
 			case EMenuCommandKeys.BILL:
+				router.push("/tai-khoan/don-hang");
+
 				break;
 			case EMenuCommandKeys.LOGOUT:
 				store.dispatch("user/signOut");

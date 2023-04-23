@@ -1,0 +1,98 @@
+<template>
+	<div>
+		<div class="flex relative pt-5">
+			<p class="text-sm absolute top-0 left-0">Số đơn</p>
+			<LineChart
+				:chartdata="chartdata"
+				:options="options"
+				style="width: 100%; height: 650px"
+			/>
+		</div>
+	</div>
+</template>
+
+<script>
+	import _forOwn from "lodash/_baseForOwn";
+	import LineChart from "@/components/shared/charts/Line.vue";
+
+	export default {
+		name: "CompleteOrderStatisticLineChart",
+		components: { LineChart },
+		props: {
+			growthStatistic: {
+				type: Object,
+				required: true,
+			},
+		},
+		data() {
+			const lineColor = "#22d3ee";
+			const bgColor = "#f00";
+
+			const labels = [];
+			const datasets = [
+				{
+					data: [],
+					backgroundColor: bgColor,
+					borderColor: lineColor,
+					pointBackgroundColor: "#fff",
+					pointBorderColor: lineColor,
+					pointRadius: 5,
+					pointHoverRadius: 7,
+					lineTension: 0,
+				},
+			];
+			_forOwn(this.growthStatistic, (statistic, month) => {
+				if (!parseInt(month, 10)) {
+					return;
+				}
+
+				datasets[0].data.push(statistic);
+				labels.push(month);
+			});
+
+			return {
+				chartdata: {
+					labels,
+					datasets,
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+
+					scales: {
+						y: {
+							beginAtZero: true,
+							padding: 10,
+							ticks: {},
+						},
+					},
+					plugins: {
+						legend: {
+							display: false,
+						},
+						tooltip: {
+							displayColors: false,
+							callbacks: {
+								title: (tooltipItem) => {
+									const { label: month } = tooltipItem[0];
+									return `Tháng ${month}`;
+								},
+								label: (tooltipItem) => {
+									return `${tooltipItem.parsed.y} đơn`;
+								},
+							},
+						},
+					},
+					layout: {
+						padding: {
+							left: 30,
+							right: 0,
+							top: 20,
+							bottom: 0,
+						},
+					},
+				},
+			};
+		},
+	};
+</script>

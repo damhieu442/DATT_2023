@@ -12,6 +12,7 @@ import CartPage from "@/views/CartPage.vue";
 import PaymentPage from "@/views/PaymentPage.vue";
 import UserPage from "@/views/UserPage.vue";
 import ChangePasswordPage from "@/views/ChangePasswordPage.vue";
+import OrderManagementPage from "@/views/OrderManagementPage.vue";
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -80,6 +81,11 @@ export const router = createRouter({
 							path: "doi-mat-khau",
 							name: "ChangePassword",
 							component: ChangePasswordPage,
+						},
+						{
+							path: "don-hang",
+							name: "OrderManagement",
+							component: OrderManagementPage,
 						},
 					],
 				},

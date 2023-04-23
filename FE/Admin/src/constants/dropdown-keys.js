@@ -1,0 +1,5 @@
+export const HEADER_KEYS = {
+    DETAIL: 'DETAIL',
+    CHANGE_PASSWORD: 'CHANGE_PASSWORD',
+    LOGOUT: 'LOGOUT',
+};
