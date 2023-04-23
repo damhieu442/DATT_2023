@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using static DATT.k14_2023.COMMON.Constants.BAttribute;
 
 namespace DATT.k14_2023.COMMON.Entities
 {
@@ -21,22 +22,26 @@ namespace DATT.k14_2023.COMMON.Entities
         /// <summary>
         /// Tên đăng nhập
         /// </summary>
+        [NotEmpty("Tên đăng nhập không được để trống")]
         public string UserName { get; set; }
 
         /// <summary>
         /// Mật khẩu
         /// </summary>
         [JsonIgnore]
+        [NotEmpty("Mật khẩu không được để trống")]
         public string Password { get; set; }
 
         /// <summary>
         /// Tên hiển thị
         /// </summary>
+        [NotEmpty("Họ và tên không được để trống")]
         public string? FullName { get; set; }
 
         /// <summary>
         /// Email
         /// </summary>
+        [NotEmpty("Email không được để trống")]
         public string? Email { get; set; }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace DATT.k14_2023.COMMON.Entities
         /// <summary>
         /// File ảnh
         /// </summary>
-        public IFormFile Img { get; set; }
+        public IFormFile? Img { get; set; }
 
         /// <summary>
         /// Tên ảnh

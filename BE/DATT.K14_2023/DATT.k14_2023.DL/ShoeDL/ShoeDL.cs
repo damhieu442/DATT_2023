@@ -70,6 +70,23 @@ namespace DATT.k14_2023.DL.ShoeDL
             }
             return shoe;
         }
+
+        public int UpdateSoldNumber(Guid id, int soldNumber)
+        {
+            string storedProcedureName = "Proc_Shoe_UpdateSoldNumber";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("p_ShoeId", id);
+            parameters.Add("p_SoldNumber", soldNumber);
+
+            int count;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                count = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return count;
+        }
         #endregion
     }
 }

@@ -171,6 +171,10 @@ namespace DATT.k14_2023.DL.BaseDL
                 {
                     parameters.Add($"p_{property.Name}", imgName);
                 }
+                else if (property.Name == "Img")
+                {
+                    parameters.Add($"p_{property.Name}", imgName);
+                }
                 else
                 {
                     parameters.Add($"p_{property.Name}", property.GetValue(record));

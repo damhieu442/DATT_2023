@@ -89,11 +89,6 @@ namespace DATT.k14_2023.COMMON.Entities
         public string? Code { get; set; }
 
         /// <summary>
-        /// Số lượng đã bán
-        /// </summary>
-        public int? SoldNumber { get; set; }
-
-        /// <summary>
         /// Điểm đánh giá trung bình
         /// </summary>
         public int? AvgStar { get; set; }

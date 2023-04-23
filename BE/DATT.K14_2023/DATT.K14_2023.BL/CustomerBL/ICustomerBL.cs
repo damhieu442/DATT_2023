@@ -27,9 +27,12 @@ namespace DATT.K14_2023.BL.CustomerBL
         /// Created By: DVHIEU (23/03/2023)
         int CheckImgName(string? imgName);
 
-        ServiceResult UpdatePassWord(Guid id, string passWord);
+        ServiceResult UpdatePassWord(Guid id, string oldPass, string newPass);
 
         dynamic ExportExcel(List<Guid>? listId);
+        int FogotPassword(string password);
+        int UpdateToken(string email, string token, DateTime tokenDate);
+        int ConfirmToken(string email, string token, DateTime date);
         #endregion
     }
 }

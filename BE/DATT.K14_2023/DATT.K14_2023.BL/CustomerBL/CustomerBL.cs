@@ -72,15 +72,6 @@ namespace DATT.K14_2023.BL.CustomerBL
             return customerInfo;
         }
 
-        protected override dynamic AfterSave(Guid? id, Customer record)
-        {
-            Cart cart = new Cart();
-            cart.CartId = record.CustomerId;
-            cart.CustomerId = record.CustomerId;
-
-            return _cartDL.InsertRecord(cart);
-        }
-
         private string generateJwtToken(Customer customer)
         {
             // generate token that is valid for 7 days
@@ -191,9 +182,9 @@ namespace DATT.K14_2023.BL.CustomerBL
             workSheet.Cells[4, 8, listCustomer.Count + 4, 8].Style.Numberformat.Format = "DD/MM/YYYY";
         }
 
-        public ServiceResult UpdatePassWord(Guid id, string passWord)
+        public ServiceResult UpdatePassWord(Guid id, string oldPass, string newPass)
         {
-            int res = _customerDL.CheckPassWord(id, passWord);
+            int res = _customerDL.CheckPassWord(id, oldPass);
 
             if(res == 0)
             {
@@ -205,7 +196,7 @@ namespace DATT.K14_2023.BL.CustomerBL
                 };
             }
 
-            int numberOfAffectedRows = _customerDL.UpdatePassWord(id, passWord);
+            int numberOfAffectedRows = _customerDL.UpdatePassWord(id, newPass);
             if (numberOfAffectedRows > 0)
             {
                 return new ServiceResult
@@ -223,6 +214,46 @@ namespace DATT.K14_2023.BL.CustomerBL
                 };
             }
 
+        }
+        protected internal override ServiceResult ValidateCustom(Customer? record)
+        {
+            int numberOfAffectedRows = _customerDL.CheckUserName(record.CustomerId, record.UserName);
+            int numberOfAffectedRow = _customerDL.CheckEmailUnique(record.CustomerId, record.Email);
+            if (numberOfAffectedRows > 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Duplicate,
+                    Data = new List<string>() { string.Format(Resource.Msg_DuplicateEmpCode, record.UserName) }
+                };
+            }
+            if (numberOfAffectedRow > 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Duplicate,
+                    Data = new List<string>() { string.Format(Resource.Msg_DuplicateEmpCode, record.Email) }
+                };
+            }
+
+            return new ServiceResult { IsSuccess = true };
+        }
+
+        public int FogotPassword(string password)
+        {
+            return _customerDL.CheckEmail(password);
+        }
+
+        public int UpdateToken(string email, string token, DateTime tokenDate)
+        {
+            return _customerDL.UpdateToken(email, token, tokenDate);
+        }
+
+        public int ConfirmToken(string email, string token, DateTime date)
+        {
+            return _customerDL.ConfirmToken(email, token, date);
         }
         #endregion
     }

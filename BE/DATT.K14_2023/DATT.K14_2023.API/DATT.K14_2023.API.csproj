@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DATT.K14_2023.BL\DATT.K14_2023.BL.csproj" />
     <ProjectReference Include="..\DATT.k14_2023.COMMON\DATT.k14_2023.COMMON.csproj" />
+    <ProjectReference Include="..\EmailService\EmailService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

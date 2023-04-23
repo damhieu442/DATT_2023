@@ -112,6 +112,34 @@ namespace DATT.K14_2023.API.Controllers
 
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
+
+        [HttpPut("update-sold-number/{id}")]
+        public IActionResult UpdateSoldNumber(Guid id, int soldNumber)
+        {
+            try
+            {
+                int res = _shoeBL.UpdateSoldNumber(id, soldNumber);
+                if (res > 0) 
+                {
+                    return StatusCode(StatusCodes.Status201Created);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg,
+                    TraceId = HttpContext.TraceIdentifier
+                });
+            }
+        }
         #endregion
     }
 }

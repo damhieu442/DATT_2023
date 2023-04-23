@@ -23,6 +23,8 @@ namespace DATT.k14_2023.DL.ShoeDL
         int CheckImgName(string? imgName);
 
         List<Shoe> ExportExcel(List<Guid>? listId);
+
+        int UpdateSoldNumber(Guid id, int soldNumber);
         #endregion
     }
 }

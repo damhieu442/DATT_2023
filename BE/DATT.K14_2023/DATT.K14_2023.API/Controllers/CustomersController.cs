@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Reflection;
+using EmailService;
+using DATT.k14_2023.DL.CustomerDL;
 
 namespace DATT.K14_2023.API.Controllers
 {
@@ -18,13 +20,15 @@ namespace DATT.K14_2023.API.Controllers
         #region Field
         private ICustomerBL _customerBL;
         public static IWebHostEnvironment _webHostEnvironment;
+        private readonly IEmailSender _emailSender;
         #endregion
 
         #region Constructor
-        public CustomersController(ICustomerBL customerBL, IWebHostEnvironment webHostEnvironment) : base(customerBL)
+        public CustomersController(ICustomerBL customerBL, IEmailSender emailSender, IWebHostEnvironment webHostEnvironment) : base(customerBL)
         {
             _customerBL = customerBL;
             _webHostEnvironment = webHostEnvironment;
+            _emailSender = emailSender;
         }
         #endregion
 
@@ -145,11 +149,11 @@ namespace DATT.K14_2023.API.Controllers
         }
 
         [HttpPut("update-password/{id}")]
-        public IActionResult UpdateRecord(Guid id, [FromBody] string passWord)
+        public IActionResult UpdateRecord(Guid id, string passWordOld, string passWordNew)
         {
             try
             {
-                var result = _customerBL.UpdatePassWord(id, passWord);
+                var result = _customerBL.UpdatePassWord(id, passWordOld, passWordNew);
 
                 if (result.IsSuccess)
                 {
@@ -190,7 +194,69 @@ namespace DATT.K14_2023.API.Controllers
                 });
             }
         }
-        #endregion
 
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPassword(string email)
+        {
+            try
+            {
+                dynamic record = _customerBL.FogotPassword(email);
+
+                if (record == 1)
+                {
+                    Random rd = new Random();
+                    int token = rd.Next(10000,99999);
+                    var tokenDate = DateTime.Now.AddMinutes(10);
+                    _ = _customerBL.UpdateToken(email, token.ToString(), tokenDate);
+                    var message = new Message(new string[] { email }, "Mã xác nhận", token.ToString());
+                    _emailSender.SendEmail(message);
+                    return StatusCode(StatusCodes.Status200OK, true);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, false);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+        }
+
+        [HttpPost("confirm-token-password")]
+        public IActionResult ConfirmPassword(string email, string token)
+        {
+            try
+            {
+                var date = DateTime.Now;
+                dynamic record = _customerBL.ConfirmToken(email, token, date);
+
+                if (record == 1)
+                {
+                    return StatusCode(StatusCodes.Status200OK, true);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+        }
+        #endregion
     }
 }

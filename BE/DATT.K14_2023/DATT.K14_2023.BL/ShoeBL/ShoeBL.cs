@@ -138,7 +138,6 @@ namespace DATT.K14_2023.BL.ShoeBL
                 workSheet.Cells[i + 4, 6].Value = item.Discount;
                 workSheet.Cells[i + 4, 7].Value = item.TotalPrice;
                 workSheet.Cells[i + 4, 8].Value = item.Material;
-                workSheet.Cells[i + 4, 9].Value = item.SoldNumber;
                 workSheet.Cells[i + 4, 10].Value = item.CreatedDate;
                 workSheet.Cells[i + 4, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 workSheet.Cells[i + 4, 11].Value = item.ModifiedDate;
@@ -147,6 +146,11 @@ namespace DATT.K14_2023.BL.ShoeBL
 
             workSheet.Cells[4, 7, listShoe.Count + 4, 10].Style.Numberformat.Format = "DD/MM/YYYY";
             workSheet.Cells[4, 8, listShoe.Count + 4, 11].Style.Numberformat.Format = "DD/MM/YYYY";
+        }
+
+        public int UpdateSoldNumber(Guid id, int soldNumber)
+        {
+            return _shoeDL.UpdateSoldNumber(id, soldNumber);
         }
         #endregion
     }

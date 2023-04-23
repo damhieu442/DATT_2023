@@ -64,5 +64,7 @@ namespace DATT.k14_2023.COMMON.Entities
         /// Người sửa
         /// </summary>
         public string? ModifiedBy { get; set; }
+        public int? Status { get; set; }
+        public string? Reply { get; set; }
     }
 }

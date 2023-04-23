@@ -219,6 +219,54 @@ namespace DATT.K14_2023.API.Controllers
             }
         }
 
+        [HttpPost("v2")]
+        public IActionResult InsertRecordv2([FromBody] T record)
+        {
+            try
+            {
+                string imgName = CreatedAndUpdateImg(record);
+                var result = _baseBL.InsertRecord(record, imgName);
+
+                if (result.IsSuccess)
+                {
+                    return StatusCode(StatusCodes.Status201Created);
+                }
+                else if (!result.IsSuccess && result.ErrorCode == k14_2023.COMMON.Enums.ErrorCode.APIParameterNullOrInvalid)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                    {
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = Resource.Validate,
+                        UserMsg = Resource.UserMsg,
+                        MoreInfo = result.Data,
+                        TraceId = HttpContext.TraceIdentifier
+                    });
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                    {
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = Resource.DevMsg,
+                        UserMsg = Resource.UserMsg,
+                        MoreInfo = result.Data,
+                        TraceId = HttpContext.TraceIdentifier
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg,
+                    TraceId = HttpContext.TraceIdentifier
+                });
+            }
+        }
+
         /// <summary>
         /// API sửa 1 bản ghi
         /// </summary>
@@ -231,6 +279,54 @@ namespace DATT.K14_2023.API.Controllers
         /// Created By: DVHIEU (23/03/2023)
         [HttpPut("{id}")]
         public IActionResult UpdateRecord(Guid id, [FromForm] T record)
+        {
+            try
+            {
+                string imgName = CreatedAndUpdateImg(record);
+                var result = _baseBL.UpdateRecord(id, record, imgName);
+
+                if (result.IsSuccess)
+                {
+                    return StatusCode(StatusCodes.Status201Created);
+                }
+                else if (!result.IsSuccess && result.ErrorCode == k14_2023.COMMON.Enums.ErrorCode.APIParameterNullOrInvalid)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                    {
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = Resource.Validate,
+                        UserMsg = Resource.UserMsg,
+                        MoreInfo = result.Data,
+                        TraceId = HttpContext.TraceIdentifier
+                    });
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                    {
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = Resource.DevMsg,
+                        UserMsg = Resource.UserMsg,
+                        MoreInfo = result.Message,
+                        TraceId = HttpContext.TraceIdentifier
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg,
+                    TraceId = HttpContext.TraceIdentifier
+                });
+            }
+        }
+
+        [HttpPut("v2/{id}")]
+        public IActionResult UpdateRecordv2(Guid id, [FromBody] T record)
         {
             try
             {

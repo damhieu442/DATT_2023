@@ -36,7 +36,8 @@ namespace DATT.k14_2023.DL.CustomerDL
             int count;
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
             {
-                count = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                count = result.Read<int>().Single();
             }
 
             return count;
@@ -52,7 +53,8 @@ namespace DATT.k14_2023.DL.CustomerDL
             int count;
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
             {
-                count = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                count = result.Read<int>().Single();
             }
 
             return count;
@@ -60,7 +62,7 @@ namespace DATT.k14_2023.DL.CustomerDL
 
         public int CheckPassWord(Guid? id, string? passWord)
         {
-            string storedProcedureName = String.Format(ProcedureName.Check, typeof(Customer).Name, "CheckPassWord");
+            string storedProcedureName = String.Format(ProcedureName.Check, typeof(Customer).Name, "PassWord");
             var parameters = new DynamicParameters();
             parameters.Add("p_CustomerId", id);
             parameters.Add("p_PassWord", passWord);
@@ -68,7 +70,8 @@ namespace DATT.k14_2023.DL.CustomerDL
             int count;
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
             {
-                count = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                count = result.Read<int>().Single();
             }
 
             return count;
@@ -134,11 +137,81 @@ namespace DATT.k14_2023.DL.CustomerDL
             int numberOfAffectedRows;
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
             {
-                numberOfAffectedRows = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                numberOfAffectedRows = result.Read<int>().Single();
             }
 
             return numberOfAffectedRows;
 
+        }
+
+        public int CheckEmailUnique(Guid id, string email)
+        {
+            string storedProcedureName = String.Format(ProcedureName.Check, typeof(Customer).Name, "EmailUnique");
+            var parameters = new DynamicParameters();
+            parameters.Add("p_CustomerId", id);
+            parameters.Add("p_Email", email);
+
+            int count;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                count = result.Read<int>().Single();
+            }
+
+            return count;
+        }
+
+        public int CheckEmail(string email)
+        {
+            string storedProcedureName = String.Format(ProcedureName.Check, typeof(Customer).Name, "Email");
+            var parameters = new DynamicParameters();
+            parameters.Add("p_Email", email);
+
+            int count;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                count = result.Read<int>().Single();
+            }
+
+            return count;
+        }
+
+        public int UpdateToken(string email, string token, DateTime tokenDate)
+        {
+            string storedProcedureName = "Proc_Customer_UpdateToken";
+            var parameters = new DynamicParameters();
+            parameters.Add("p_Email", email);
+            parameters.Add("p_Token", token);
+            parameters.Add("p_TokenDate", tokenDate);
+
+            int count;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                count = result.Read<int>().Single();
+            }
+
+            return count;
+        }
+
+        public int ConfirmToken(string email, string token, DateTime date)
+        {
+            string storedProcedureName = "Proc_Customer_ConfirmToken";
+            var parameters = new DynamicParameters();
+            parameters.Add("p_Email", email);
+            parameters.Add("p_Token", token);
+            parameters.Add("p_TokenDate", date);
+
+            int count;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+                count = result.Read<int>().Single();
+            }
+
+            return count;
         }
         #endregion
     }

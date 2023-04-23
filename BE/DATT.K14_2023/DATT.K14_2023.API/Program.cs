@@ -17,6 +17,11 @@ using DATT.K14_2023.BL.FeedBackBL;
 using DATT.k14_2023.DL.FeedBackDL;
 using DATT.K14_2023.BL.CartDetailBL;
 using DATT.k14_2023.DL.CartDetailDL;
+using DATT.K14_2023.BL.BillDetailBL;
+using DATT.k14_2023.DL.BillDetailDL;
+using DATT.K14_2023.BL.BillBL;
+using DATT.k14_2023.DL.BillDL;
+using EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,8 +62,17 @@ builder.Services.AddTransient<IFeedBackDL, FeedBackDL>();
 builder.Services.AddTransient<ICartDetailBL, CartDetailBL>();
 builder.Services.AddTransient<ICartDetailDL, CartDetailDL>();
 
-DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MySql");
+builder.Services.AddTransient<IBillDetailBL, BillDetailBL>();
+builder.Services.AddTransient<IBillDetailDL, BillDetailDL>();
 
+builder.Services.AddTransient<IBillBL, BillBL>();
+builder.Services.AddTransient<IBillDL, BillDL>();
+
+DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MySql");
+var email = builder.Configuration.GetSection("EmailConfiguration")
+    .Get<EmailConfiguration>();
+builder.Services.AddSingleton(email);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 // Add Cors
