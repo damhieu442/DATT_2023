@@ -32,6 +32,7 @@ namespace DATT.K14_2023.BL.CustomerBL
         dynamic ExportExcel(List<Guid>? listId);
         int FogotPassword(string password);
         int UpdateToken(string email, string token, DateTime tokenDate);
+        int resetPass(string email, string passWord);
         int ConfirmToken(string email, string token, DateTime date);
         #endregion
     }

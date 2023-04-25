@@ -5,6 +5,7 @@ using DATT.k14_2023.COMMON.Enums;
 using DATT.k14_2023.DL.BaseDL;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -45,7 +46,7 @@ namespace DATT.k14_2023.DL.CustomerDL
 
         public int CheckUserName(Guid? id, string? userName)
         {
-            string storedProcedureName = String.Format(ProcedureName.Check, typeof(Customer).Name, "CheckUserName");
+            string storedProcedureName = String.Format(ProcedureName.Check, typeof(Customer).Name, "UserName");
             var parameters = new DynamicParameters();
             parameters.Add("p_CustomerId", id);
             parameters.Add("p_UserName", userName);
@@ -184,7 +185,22 @@ namespace DATT.k14_2023.DL.CustomerDL
             var parameters = new DynamicParameters();
             parameters.Add("p_Email", email);
             parameters.Add("p_Token", token);
-            parameters.Add("p_TokenDate", tokenDate);
+
+            int numberOfAffectedRows;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                numberOfAffectedRows = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return numberOfAffectedRows;
+        }
+
+        public int ConfirmToken(string email, string token, DateTime date)
+        {
+            string storedProcedureName = "Proc_Customer_ConfirmToken";
+            var parameters = new DynamicParameters();
+            parameters.Add("p_Email", email);
+            parameters.Add("p_Token", token);
 
             int count;
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
@@ -196,22 +212,20 @@ namespace DATT.k14_2023.DL.CustomerDL
             return count;
         }
 
-        public int ConfirmToken(string email, string token, DateTime date)
+        public int resetPass(string email, string passWord)
         {
-            string storedProcedureName = "Proc_Customer_ConfirmToken";
+            string storedProcedureName = "Proc_Customer_ResetPass";
             var parameters = new DynamicParameters();
             parameters.Add("p_Email", email);
-            parameters.Add("p_Token", token);
-            parameters.Add("p_TokenDate", date);
+            parameters.Add("p_Password", passWord);
 
-            int count;
+            int numberOfAffectedRows;
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
             {
-                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
-                count = result.Read<int>().Single();
+                numberOfAffectedRows = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
             }
 
-            return count;
+            return numberOfAffectedRows;
         }
         #endregion
     }

@@ -255,6 +255,11 @@ namespace DATT.K14_2023.BL.CustomerBL
         {
             return _customerDL.ConfirmToken(email, token, date);
         }
+
+        public int resetPass(string email, string passWord)
+        {
+            return _customerDL.resetPass(email, passWord);
+        }
         #endregion
     }
 }

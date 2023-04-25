@@ -207,7 +207,7 @@ namespace DATT.K14_2023.API.Controllers
                     Random rd = new Random();
                     int token = rd.Next(10000,99999);
                     var tokenDate = DateTime.Now.AddMinutes(10);
-                    _ = _customerBL.UpdateToken(email, token.ToString(), tokenDate);
+                    int number = _customerBL.UpdateToken(email, token.ToString(), tokenDate);
                     var message = new Message(new string[] { email }, "Mã xác nhận", token.ToString());
                     _emailSender.SendEmail(message);
                     return StatusCode(StatusCodes.Status200OK, true);
@@ -225,6 +225,34 @@ namespace DATT.K14_2023.API.Controllers
                     ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
                     DevMsg = ex.Message,
                     UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+        }
+        [HttpPut("reset-pass")]
+        public IActionResult resetPass(string email, string passWord) 
+        {
+            try
+            {
+                var result = _customerBL.resetPass(email, passWord);
+
+                if (result == 1)
+                {
+                    return StatusCode(StatusCodes.Status201Created, true);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg,
+                    TraceId = HttpContext.TraceIdentifier
                 });
             }
         }

@@ -35,6 +35,7 @@ namespace DATT.k14_2023.DL.CustomerDL
         int ConfirmToken(string email, string token, DateTime date);
 
         dynamic isUserName(string userName, string passWord, int role);
+        int resetPass(string email, string passWord);
 
         List<Customer> ExportExcel(List<Guid>? listId);
         #endregion
