@@ -53,6 +53,7 @@
 			type="primary"
 			class="order-overview__order"
 			:disabled="!isLoggedIn"
+			:loading="loading"
 			@click="submitOrderHandler"
 			>Đặt hàng</a-button
 		>
@@ -78,6 +79,8 @@
 				};
 			},
 		},
+
+		loading: Boolean,
 
 		isLoggedIn: Boolean,
 	});

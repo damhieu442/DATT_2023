@@ -7,7 +7,7 @@
 					<ProductGallery :images="productImages" />
 				</a-col>
 				<a-col :span="12">
-					<ProductInfo v-bind="productInfo" />
+					<ProductInfo v-bind="productInfo" @reset="getProductDetailData(false)" />
 				</a-col>
 			</a-row>
 			<ProductTabs
@@ -62,8 +62,8 @@
 
 	const isLoggedIn = computed(() => !!store.state.user.uid);
 
-	const getProductDetailData = async () => {
-		isLoadingData.value = true;
+	const getProductDetailData = async (loading = true) => {
+		loading && (isLoadingData.value = true);
 
 		try {
 			const response = await productAPI.getDetail(route.params.id);
@@ -106,9 +106,10 @@
 				productInfo.value = info;
 				productInfo.value.additionInfos.target = categories[0].name;
 			}
-		} catch (error) {}
-
-		isLoadingData.value = false;
+		} catch (error) {
+		} finally {
+			loading && (isLoadingData.value = false);
+		}
 	};
 
 	const getProductEvaluate = async () => {

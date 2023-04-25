@@ -1,6 +1,6 @@
 <template>
 	<main class="main">
-		<div v-if="isLoadingData" class="main__loader"><PageLoader /></div>
+		<div v-if="isGettingUserCart" class="main__loader"><PageLoader /></div>
 		<div v-else-if="productList.length === 0" class="main__empty">
 			<p>Chưa có sản phẩm nào trong giỏ hàng</p>
 			<router-link to="/san-pham">Quay lại cửa hàng</router-link>
@@ -19,16 +19,20 @@
 <script setup>
 	import { useStore } from "vuex";
 	import PageLoader from "@/components/shared/PageLoader.vue";
-	import { computed, ref } from "vue";
+	import { computed } from "vue";
 	import ShopTable from "@/components/template/CartPage/ShopTable.vue";
 	import CartTotal from "@/components/template/CartPage/CartTotal.vue";
 
 	const store = useStore();
 
 	const productList = store.state.cart.productList;
-	const isLoadingData = ref(false);
+	const isGettingUserCart = store.state.cart.isLoadingData;
 	const totalProduct = computed(() => store.getters["cart/totalProduct"]);
 	const totalPrice = computed(() => store.getters["cart/totalPrice"]);
+
+	const getCartProduct = () => {
+		store.dispatch("cart/getUserCart");
+	};
 </script>
 
 <style lang="scss" scoped>

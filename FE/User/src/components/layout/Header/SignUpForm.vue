@@ -3,9 +3,9 @@
 		:model="form"
 		name="sign-up-form"
 		autocomplete="off"
-		@finish="onSignUp"
 		layout="vertical"
 		class="sign-up-form"
+		@finish="onSignUp"
 	>
 		<h5>ĐĂNG KÝ</h5>
 		<a-form-item
@@ -17,8 +17,17 @@
 		</a-form-item>
 		<a-form-item
 			label="Tên tài khoản"
-			name="email"
+			name="username"
 			:rules="[{ required: true, message: 'Vui lòng nhập tài khoản' }]"
+		>
+			<a-input :disabled="disabled || loading" v-model:value="form.username" />
+		</a-form-item>
+		<a-form-item
+			label="Địa chỉ Email"
+			name="email"
+			:rules="[
+				{ required: true, type: 'email', message: 'Vui lòng nhập địa chỉ email hợp lệ' },
+			]"
 		>
 			<a-input :disabled="disabled || loading" v-model:value="form.email" />
 		</a-form-item>
@@ -55,6 +64,7 @@
 		email: "",
 		password: "",
 		name: "",
+		username: "",
 	});
 
 	const emit = defineEmits(["submit"]);

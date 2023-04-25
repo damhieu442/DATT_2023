@@ -87,12 +87,19 @@ const cart = {
 			}
 		},
 
-		async signUp({ state }, form) {
+		async signUp({ state }, signUpForm) {
 			try {
-				const token = await new Promise((resolve) => setTimeout(resolve, 1500, 123456));
+				const form = new FormData();
+				form.append("Email", signUpForm.email);
+				form.append("UserName", signUpForm.username);
+				form.append("FullName", signUpForm.name);
+				form.append("Password", signUpForm.password);
+				form.append("Role", 0);
 
-				state.username = form.name;
-				state.userEmail = form.email;
+				const token = await auth.signUp(form);
+
+				state.username = signUpForm.name;
+				state.userEmail = signUpForm.email;
 
 				sessionStorage.setItem(EKeys.username, state.username);
 				sessionStorage.setItem(EKeys.userEmail, state.userEmail);

@@ -106,6 +106,7 @@
 
 	onMounted(() => {
 		store.dispatch("user/tryLogInUser");
+		store.dispatch("cart/getUserCart");
 	});
 </script>
 

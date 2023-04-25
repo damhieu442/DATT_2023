@@ -8,25 +8,38 @@
 				<OrderReview
 					:products="productList"
 					:isLoggedIn="isLoggedIn"
+					:loading="isGettingCheckoutKey"
 					@submit="orderHandler"
 				/>
+				<p v-if="!!paymentId">
+					Mã giao dịch: {{ paymentId }}
+					<br />
+					Vui lòng lưu giữ mã giao dịch cẩn thận
+				</p>
 			</a-col>
 		</a-row>
+		<CheckoutModal ref="rfCheckoutModal" v-if="isShowCheckout" @success="successPayment" />
 	</main>
 </template>
 
 <script setup>
+	import { ref, computed, nextTick } from "vue";
+	import { useStore } from "vuex";
 	import BillingForm from "@/components/template/PaymentPage/BillingForm.vue";
 	import OrderReview from "@/components/template/PaymentPage/OrderReview.vue";
-	import { computed } from "@vue/reactivity";
-	import { ref } from "vue";
-	import { useStore } from "vuex";
+	import CheckoutModal from "@/components/shared/CheckoutModal.vue";
+	import { notification } from "ant-design-vue";
+	import { EPaymentMethod } from "@/constants/payment";
 
 	const store = useStore();
 
 	const productList = store.state.cart.productList;
 
 	const deliveryAddress = ref(null);
+	const rfCheckoutModal = ref(null);
+	const isShowCheckout = ref(false);
+	const isGettingCheckoutKey = ref(false);
+	const paymentId = ref("");
 
 	const isLoggedIn = computed(() => !!store.state.user.uid);
 
@@ -36,6 +49,20 @@
 		if (!form) {
 			return;
 		}
+
+		if (paymentMethod === EPaymentMethod.OFFLINE) {
+			return;
+		}
+
+		isShowCheckout.value = true;
+		await nextTick();
+		rfCheckoutModal.value.open(form);
+	};
+
+	const successPayment = (payId) => {
+		paymentId.value = payId;
+		notification.success({ message: `Thanh toán thành công, mã giao dịch ${paymentId}` });
+		rfCheckoutModal.value.close();
 	};
 </script>
 

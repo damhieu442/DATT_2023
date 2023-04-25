@@ -65,6 +65,7 @@
 		const isSignedUp = await store.dispatch("user/signUp", form);
 		if (isSignedUp) {
 			isShowModal.value = false;
+			notification.success({ message: "Đăng ký tài khoản thành công" });
 		} else {
 			notification.error({
 				message: "Có lỗi xảy ra, đăng ký không thành công, vui lòng thử lại",

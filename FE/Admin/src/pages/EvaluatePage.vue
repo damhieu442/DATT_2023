@@ -17,8 +17,8 @@
 </template>
 
 <script setup>
-	import dayjs from "dayjs";
-	import { feedback } from "@/api";
+	import { feedback, mics } from "@/api";
+	import { useStore } from "vuex";
 	import { useRoute } from "vue-router";
 	import { onMounted, reactive, ref, watch } from "vue";
 	import { notification } from "ant-design-vue";
@@ -29,10 +29,13 @@
 	import EditModal from "@/components/template/EvaluatePage/EditModal.vue";
 	import DeleteFeedback from "@/components/template/EvaluatePage/ConfirmDeleteFeedbackModal.vue";
 
+	import { feedbackAdapter } from "@/utils/feedback";
+
 	const MAX_RECORD = 12;
 	const DEFAULT_PAGE = 1;
 
 	const route = useRoute();
+	const store = useStore();
 
 	const isGettingData = ref(false);
 	const feedbacks = ref([]);
@@ -76,22 +79,7 @@
 				if ("Data" in response.data) {
 					const data = response.data;
 
-					feedbacks.value = data.Data.map((feedback) => ({
-						id: feedback.FeedBackId,
-						username: feedback.FullName,
-						email: feedback.Email,
-						address: feedback.Address,
-						content: feedback.Description,
-						phone: feedback.PhoneNumber,
-						note: "",
-						status: "OPEN",
-						createAt: feedback.CreatedDate
-							? dayjs(feedback.CreatedDate).format("YYYY/MM/DD HH:mm")
-							: "-",
-						updateAt: feedback.ModifiedDate
-							? dayjs(feedback.ModifiedDate).format("YYYY/MM/DD HH:mm")
-							: "-",
-					}));
+					feedbacks.value = data.Data.map(feedbackAdapter.mapFeedbacksResponseToData);
 
 					Object.assign(pagination, {
 						page: Number(data.CurrentPage),
@@ -122,14 +110,10 @@
 
 	const updateFeedBackHandler = async (updateFeedback) => {
 		try {
-			const sendForm = {
-				FeedBackId: updateFeedback.id,
-				FullName: updateFeedback.username,
-				Email: updateFeedback.email,
-				PhoneNumber: updateFeedback.phone,
-				Address: updateFeedback.address,
-				Description: updateFeedback.content,
-			};
+			const sendForm = feedbackAdapter.transformUpdatedFeedbackToRequestBody(
+				updateFeedback,
+				store.state.user.username,
+			);
 
 			const response = await feedback.updateFeedBack(updateFeedback.id, sendForm);
 			if (response.status > 199 && response.status < 300) {
@@ -138,6 +122,7 @@
 				});
 				rfEditModal.value.close();
 				getEvaluateList();
+				mics.sendEmail(feedbackAdapter.generateFeedbackEmail(updateFeedback));
 			}
 		} catch (error) {
 			if (error.name === "AxiosError") {

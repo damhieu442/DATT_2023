@@ -4,3 +4,4 @@ export { default as feedback } from "./feedback";
 export { default as auth } from "./auth";
 export { default as evaluate } from "./evaluate";
 export { default as customer } from "./customer";
+export { default as mics } from "./mics";

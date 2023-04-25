@@ -17,6 +17,7 @@ import ProductDetail from "@/pages/Product/ProductDetail.vue";
 import AddProduct from "@/pages/Product/AddProduct.vue";
 import EditProduct from "@/pages/Product/EditProduct.vue";
 import OrderList from "@/pages/OrderPage/OrderList.vue";
+import OrderDetail from "@/pages/OrderPage/OrderDetail.vue";
 import UserInfoPage from "@/pages/UserInfo.vue";
 import ChangePasswordPage from "@/pages/ChangePassword.vue";
 
@@ -48,6 +49,7 @@ export const router = createRouter({
 				{ path: "/san-pham/:id", component: ProductDetail },
 				{ path: "/san-pham/:id/chinh-sua", component: EditProduct },
 				{ path: "/don-hang", component: OrderList },
+				{ path: "/don-hang/:id", component: OrderDetail },
 				{ path: "/khach-hang", component: CustomerPage },
 				{ path: "/khach-hang/them-moi", component: AddCustomer },
 				{ path: "/khach-hang/:id", component: CustomerDetail },

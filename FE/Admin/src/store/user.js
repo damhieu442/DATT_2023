@@ -40,7 +40,7 @@ const cart = {
 				state.phone = userInfo.PhoneNumber;
 				state.address = userInfo.Address;
 				state.image = userInfo.ImgName
-					? ROOT_URL.concat("/api/Shoes/imgName/", userInfo.ImgName)
+					? ROOT_URL.concat("/api/Customers/imgName/", userInfo.ImgName.split(".")[0])
 					: "";
 
 				if (form.isRemeberPassword) {
@@ -137,7 +137,7 @@ const cart = {
 				uid,
 				phone,
 				address,
-				image,
+				image: image ? ROOT_URL.concat("/api/Customers/imgName/", image.split(".")[0]) : "",
 			});
 		},
 

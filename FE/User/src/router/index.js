@@ -13,6 +13,7 @@ import PaymentPage from "@/views/PaymentPage.vue";
 import UserPage from "@/views/UserPage.vue";
 import ChangePasswordPage from "@/views/ChangePasswordPage.vue";
 import OrderManagementPage from "@/views/OrderManagementPage.vue";
+import ForgotPasswordPage from "@/views/ForgotPasswordPage.vue";
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -33,6 +34,11 @@ export const router = createRouter({
 					path: "gioi-thieu",
 					component: IntroducePage,
 					name: "Introduce",
+				},
+				{
+					path: "quen-mat-khau",
+					component: ForgotPasswordPage,
+					name: "ForgotPassword",
 				},
 				{
 					path: "danh-muc",

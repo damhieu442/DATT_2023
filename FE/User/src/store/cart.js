@@ -1,3 +1,5 @@
+import { cart as cartAPI } from "@/api";
+
 export const EMutationTypes = {
 	UPDATE_PRODUCT_AMOUNT: "UPDATE_PRODUCT_AMOUNT",
 	REMOVE_PRODUCT: "REMOVE_PRODUCT",
@@ -70,18 +72,39 @@ const cart = {
 		},
 	},
 	actions: {
-		async addProductToCart({ state }, product) {
-			await new Promise((resolve) => setTimeout(resolve, 1500));
+		async addProductToCart({ state, rootState }, product) {
 			const { id, image, name, price, size, amount } = product;
+			const uid = rootState.user.uid;
 
-			const prod = state.productList.find(
-				(product) => product.id === id && product.size === size,
-			);
+			const sendForm = {
+				ShoeId: id,
+				ShoeName: name,
+				Price: price,
+				Amount: amount,
+				Size: size,
+				CreatedBy: rootState.user.username,
+				ModifiedBy: rootState.user.username,
+			};
+			try {
+				const response = await cartAPI.addProductToCart(sendForm, uid); //new Promise((resolve) => setTimeout(resolve, 1500));
 
-			if (prod) {
-				prod.quantity += amount;
-			} else {
-				state.productList.push({ id, image, name, price, size, quantity: amount });
+				if (response.status < 300 && response.status > 199) {
+					const prod = state.productList.find(
+						(product) => product.id === id && product.size === size,
+					);
+
+					if (prod) {
+						prod.quantity += amount;
+					} else {
+						state.productList.push({ id, image, name, price, size, quantity: amount });
+					}
+				} else {
+					return false;
+				}
+
+				return true;
+			} catch (error) {
+				return false;
 			}
 		},
 
@@ -99,11 +122,16 @@ const cart = {
 			}
 		},
 
-		async getUserCart({ state }) {
+		async getUserCart({ state, rootState }) {
 			state.isLoadingData = true;
-			await new Promise((resolve) => setTimeout(resolve, 1500));
-
-			state.isLoadingData = false;
+			const uid = rootState.user.uid;
+			try {
+				const response = await cartAPI.getUserCart(uid);
+				console.log("Response: ", response);
+			} catch (error) {
+			} finally {
+				state.isLoadingData = false;
+			}
 		},
 	},
 };

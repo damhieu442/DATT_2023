@@ -44,8 +44,8 @@
 				</template>
 			</a-input-number>
 			<span v-if="!!selectedSize">
-				{{ selectedSize.amount > 0 ? "Còn hàng" : "Hết hàng" }}
-				<!-- Số lượng: {{ selectedSize.amount }} -->
+				<!-- {{ selectedSize.amount > 0 ? "Còn hàng" : "Hết hàng" }} -->
+				Còn lại: {{ selectedSize.amount }}
 			</span>
 		</div>
 
@@ -202,7 +202,8 @@
 			totalPrice: Number,
 			image: String,
 		},
-		setup(props) {
+		emits: ["reset"],
+		setup(props, { emit }) {
 			const store = useStore();
 
 			const buyNumber = ref(1);
@@ -278,11 +279,18 @@
 					amount: buyNumber.value,
 				};
 
-				await store.dispatch("cart/addProductToCart", product);
+				const isSuccess = await store.dispatch("cart/addProductToCart", product);
+				if (isSuccess) {
+					notification.success({
+						message: "Thêm sản phẩm vào giỏ hàng thành công",
+					});
+					emit("reset");
+				} else {
+					notification.error({
+						message: "Có lỗi xảy ra, vui lòng thử lại",
+					});
+				}
 				isAddingToCart.value = false;
-				notification.success({
-					message: "Thêm sản phẩm vào giỏ hàng thành công",
-				});
 			};
 
 			return {
