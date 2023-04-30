@@ -2,21 +2,21 @@
 	<table class="additional-info">
 		<tbody>
 			<tr>
-				<th>SKU</th>
-				<td>
-					<p>{{ sku }}</p>
-				</td>
-			</tr>
-			<tr>
 				<th>Chất liệu</th>
 				<td>
 					<p>{{ material }}</p>
 				</td>
 			</tr>
 			<tr>
-				<th>Giới tính</th>
+				<th>Phân loại</th>
 				<td>
 					<p>{{ target }}</p>
+				</td>
+			</tr>
+			<tr>
+				<th>Mô tả</th>
+				<td>
+					<p>{{ description }}</p>
 				</td>
 			</tr>
 		</tbody>
@@ -28,6 +28,7 @@
 		sku: String,
 		material: String,
 		target: String,
+		description: String,
 	});
 </script>
 
@@ -50,6 +51,8 @@
 			letter-spacing: 0.05rem;
 			text-transform: uppercase;
 			padding-left: 0;
+			min-width: 250px;
+			vertical-align: middle;
 		}
 
 		td {

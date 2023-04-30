@@ -65,7 +65,7 @@
 
 	const formRules = reactive({
 		fullName: [{ required: true, message: "Vui lòng nhập họ tên người nhận!" }],
-		age: [{ required: true, message: "Vui lòng nhập tuổi người nhận!" }],
+		age: [],
 		country: [{ required: true, message: "Vui lòng nhập quốc gia nhận!" }],
 		address: [{ required: true, message: "Vui lòng nhập địa chỉ người nhận!" }],
 		city: [{ required: true, message: "Vui lòng nhập thành phố nhận!" }],

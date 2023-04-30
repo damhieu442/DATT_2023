@@ -26,7 +26,7 @@
 				<p class="category-product__name" :title="product.name">{{ product.name }}</p>
 			</router-link>
 			<div class="category-product__price">
-				<del v-if="!!product.promotionAmount" class="category-product__price--origin-price"
+				<del v-if="!!product.discount" class="category-product__price--origin-price"
 					>{{ formattedOriginPrice }} đ</del
 				>
 				<strong class="category-product__price--new-price"
@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-	import { ref } from "vue";
+	import { ref, computed } from "vue";
 	import { useRouter } from "vue-router";
 
 	const router = useRouter();
@@ -64,7 +64,7 @@
 					image: "http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-classic-2-300x225.jpg",
 					hoverImage:
 						"http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/women-classic-2-1-300x225.jpg",
-					promotionAmount: 10,
+					discount: 10,
 				};
 			},
 		},
@@ -72,14 +72,16 @@
 
 	const isAddingProductToCart = ref(false);
 
-	const productPrice = props.product.promotionAmount
-		? Math.ceil((props.product.price * (100 - props.product.promotionAmount)) / 100)
-		: props.product.price;
-
 	const numberFormatter = new Intl.NumberFormat();
 
-	const formattedCurrentPrice = numberFormatter.format(productPrice);
-	const formattedOriginPrice = numberFormatter.format(props.product.price);
+	const formattedCurrentPrice = computed(() =>
+		numberFormatter.format(
+			props.product.discount
+				? Math.ceil((props.product.price * (100 - props.product.discount)) / 100)
+				: props.product.price,
+		),
+	);
+	const formattedOriginPrice = computed(() => numberFormatter.format(props.product.price));
 
 	const addProductToCart = () => {
 		router.push({ path: "/san-pham/" + props.product.id });

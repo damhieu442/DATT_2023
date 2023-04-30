@@ -51,8 +51,13 @@ class Request {
 		return this.instance.post(url, data, config);
 	};
 
-	put = (url, data) => {
-		return this.instance.put(url, data);
+	/**
+	 * @param {string} url - API URL
+	 * @param {Object} data - API body
+	 * @param {import("axios").AxiosRequestConfig=} config - additional config
+	 */
+	put = (url, data, config) => {
+		return this.instance.put(url, data, config);
 	};
 
 	patch = (url, data) => {

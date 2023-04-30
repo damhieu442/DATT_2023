@@ -32,4 +32,8 @@ export default {
 	getDetail(id) {
 		return axios.get(`/api/Shoes/${id}`);
 	},
+
+	updateProduct(id, form) {
+		return axios.put(`/api/Shoes/v2/${id}`, form);
+	},
 };

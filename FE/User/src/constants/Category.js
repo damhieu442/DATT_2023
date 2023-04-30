@@ -1,7 +1,7 @@
 export const ECategoriesName = {
-	nu: "Nữ",
-	nam: "Nam",
-	"tre-em": "Trẻ em",
+	nu: "CONVERSE",
+	nam: "VANS",
+	"tre-em": "",
 };
 
 export const ECategoriesCode = {

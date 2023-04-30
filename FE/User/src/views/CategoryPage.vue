@@ -1,6 +1,10 @@
 <template>
 	<main class="main">
-		<PageTitle :orderBy="filter.orderBy" @filter="sortProductHandler" />
+		<PageTitle
+			:total="pagination.total"
+			:orderBy="filter.orderBy"
+			@filter="sortProductHandler"
+		/>
 		<div class="main__content">
 			<Sidebar
 				class="main__content__aside"
@@ -71,7 +75,7 @@
 				keyWord: "",
 				minPrice: filter.minPrice,
 				maxPrice: filter.maxPrice,
-				CategoryCode: category.categoryCode,
+				CategoryCode: category.value.categoryCode,
 				pageSize: pagination.pageSize,
 				pageNumber: pagination.current,
 			};

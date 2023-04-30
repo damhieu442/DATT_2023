@@ -12,11 +12,13 @@
 </template>
 
 <script setup>
+	import { computed } from "vue";
+
 	const props = defineProps({
 		product: {
 			type: Object,
 			default() {
-				return { image: "", name: "", price: 0, quantity: 1 };
+				return { image: "", name: "", price: 0, quantity: 1, discount: 0 };
 			},
 		},
 	});
@@ -27,7 +29,11 @@
 		emit("delete", props.product.id);
 	};
 
-	const formattedPrice = new Intl.NumberFormat().format(props.product.price);
+	const formattedPrice = computed(() =>
+		new Intl.NumberFormat().format(
+			Math.trunc(props.product.price * (1 - (props.product.discount || 0) / 100)),
+		),
+	);
 </script>
 
 <style lang="scss">

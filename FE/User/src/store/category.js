@@ -39,20 +39,19 @@ const category = {
 	mutations: {
 		[EMutationTypes.UPDATE_CATEGORY](state, categories) {
 			const categoryMap = new Map();
-
 			categories.forEach((category) => {
 				if (!category.parent) {
-					switch (category.categoryCode) {
+					switch (category.code) {
 						case nam:
-							state.rootCategories.nam.categoryCode = category.code;
+							state.rootCategories.nam.categoryCode = category.categoryCode;
 							state.rootCategories.nam.id = category.id;
 							break;
 						case nu:
-							state.rootCategories.nu.categoryCode = category.code;
+							state.rootCategories.nu.categoryCode = category.categoryCode;
 							state.rootCategories.nu.id = category.id;
 							break;
 						case treEm:
-							state.rootCategories["tre-em"].categoryCode = category.code;
+							state.rootCategories["tre-em"].categoryCode = category.categoryCode;
 							state.rootCategories["tre-em"].id = category.id;
 							break;
 
@@ -61,7 +60,7 @@ const category = {
 					}
 				}
 
-				categoryMap.set(category.code, category);
+				categoryMap.set(category.categoryCode, category);
 			});
 
 			categories.forEach((category) => {
@@ -75,11 +74,11 @@ const category = {
 			).children;
 
 			state.rootCategories.nu.children = categoryMap.get(
-				state.rootCategories.nam.categoryCode,
+				state.rootCategories.nu.categoryCode,
 			).children;
 
 			state.rootCategories["tre-em"].children = categoryMap.get(
-				state.rootCategories.nam.categoryCode,
+				state.rootCategories["tre-em"].categoryCode,
 			).children;
 		},
 	},

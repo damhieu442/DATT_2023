@@ -24,7 +24,6 @@
 </template>
 
 <script setup>
-	import { useStore } from "vuex";
 	import { useRoute } from "vue-router";
 	import { computed, onMounted, reactive, ref, watch } from "vue";
 	import PageTitle from "@/components/template/Category/PageTitle.vue";
@@ -33,7 +32,6 @@
 	import { product as productAPI } from "@/api";
 	import productFactory from "@/utils/productFactory.js";
 
-	const store = useStore();
 	const route = useRoute();
 
 	const widgetProducts = ref([]);

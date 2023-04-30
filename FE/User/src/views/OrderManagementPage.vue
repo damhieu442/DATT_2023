@@ -1,6 +1,7 @@
 <template>
 	<main class="main">
 		<h2 className="text-2xl">Đơn hàng của tôi</h2>
+		<p>Nhấn vào STT để xem chi tiết đơn hàng</p>
 		<a-tabs v-model:activeKey="activeOrderTab">
 			<a-tab-pane v-for="(tabLabel, tabKey) in OrderLabels" :key="tabKey">
 				<template #tab> {{ tabLabel }} </template>
@@ -31,18 +32,25 @@
 </template>
 
 <script setup>
-	import { computed, ref, watch } from "vue";
-	import { useRoute, useRouter } from "vue-router";
 	import dayjs from "dayjs";
-	import { EOrderState, OrderLabels } from "@/constants/orders";
+	import { useStore } from "vuex";
+	import { computed, onMounted, ref, watch } from "vue";
+	import { notification } from "ant-design-vue";
+	import { useRoute, useRouter } from "vue-router";
+
+	import { cart as cartAPI } from "@/api";
 	import { EKeys } from "@/constants/config";
+	import { EOrderState, OrderLabels } from "@/constants/orders";
+
 	import LoadingPlaceholder from "@/components/shared/LoadingPlaceholder.vue";
 	import OrderList from "@/components/template/OrderManagementPage/OrderList.vue";
 
 	const router = useRouter();
 	const route = useRoute();
+	const store = useStore();
 	const isLoading = ref(false);
 	const orders = ref([]);
+
 	const activeOrderTab = computed({
 		get() {
 			return route.query[EKeys.order] || EOrderState.ALL;
@@ -50,7 +58,9 @@
 		set(tab) {
 			const query = { ...route.query };
 
-			switch (tab) {
+			const activeTab = tab ? Number(tab) : tab;
+
+			switch (activeTab) {
 				case EOrderState.ALL:
 					delete query[EKeys.order];
 					break;
@@ -74,37 +84,56 @@
 		},
 	});
 
-	watch(
-		activeOrderTab,
-		async (tab) => {
-			isLoading.value = true;
-			const numberFormater = new Intl.NumberFormat();
-			try {
-				await new Promise((res) => setTimeout(res, 1500));
-				orders.value = new Array(10).fill("").map((_, i) => ({
-					deliveryAddress: "",
-					items: [
-						{
-							id: "f90a2385-3e7b-4e99-b5bd-b8eff1d81c5c",
-							name: "Shoe",
-							price: `${numberFormater.format(1_500_000)} đ`,
-							img: "https://localhost:7050/api/Shoes/imgName/men-psy-1-300x225",
-						},
-					],
-					note: "",
-					paymentMethod: "",
-					customerPhone: "",
-					state: tab,
-					totalPrice: `${numberFormater.format(1_500_000)} đ`,
-					customerName: "hoangzzzsss",
-					id: "order.id-" + i,
-					createTime: dayjs(new Date(2023, 10 + i, 25)).format("DD/MM/YYYY HH:mm"),
-				}));
-			} catch (error) {}
+	const uid = computed(() => store.state.user.uid);
+
+	const getData = async () => {
+		isLoading.value = true;
+		const numberFormater = new Intl.NumberFormat();
+		try {
+			const queries = {
+				CustomerId: uid.value,
+				status: activeOrderTab.value || undefined,
+				pageSize: 10,
+				pageNumber: 1,
+			};
+
+			const response = await cartAPI.getUserOrdersList(queries);
+			if (response.status > 199 && response.status < 300) {
+				if ("Data" in response.data) {
+					orders.value = response.data.Data.map((bill, i) => ({
+						index: i + 1,
+						deliveryAddress: bill.Address,
+						note: bill.Note,
+						paymentMethod: bill.PaymentMethod,
+						customerPhone: bill.PhoneNumber,
+						state: bill.Status,
+						totalPrice: `${numberFormater.format(bill.TotalPrice)} đ`,
+						customerName: bill.FullName,
+						id: bill.BillId,
+						createTime: dayjs(
+							bill.CreatedDate.endsWith("Z")
+								? bill.CreatedDate
+								: bill.CreatedDate + "Z",
+						).format("DD/MM/YYYY HH:mm"),
+					}));
+				} else {
+					orders.value = [];
+				}
+			}
+		} catch (error) {
+			notification.error({ message: "Có lỗi xảy ra, không lấy được danh sách" });
+		} finally {
 			isLoading.value = false;
-		},
-		{ immediate: true },
-	);
+		}
+	};
+
+	onMounted(() => {
+		getData();
+	});
+
+	watch(activeOrderTab, () => {
+		getData();
+	});
 </script>
 
 <style lang="scss" scoped>

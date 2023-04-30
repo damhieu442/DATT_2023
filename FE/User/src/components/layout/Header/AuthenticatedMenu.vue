@@ -42,6 +42,7 @@
 				break;
 			case EMenuCommandKeys.LOGOUT:
 				store.dispatch("user/signOut");
+				store.dispatch("cart/reset");
 
 				break;
 

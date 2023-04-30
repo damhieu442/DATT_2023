@@ -9,7 +9,7 @@
 	>
 		<h5>ĐĂNG NHẬP</h5>
 		<a-form-item
-			label="Tên tài khoản"
+			label="Tên tài khoản hoặc email"
 			name="email"
 			:rules="[{ required: true, message: 'Vui lòng nhập tài khoản của bạn!' }]"
 		>
@@ -46,7 +46,10 @@
 				</a-form-item>
 			</a-col>
 		</a-row>
-		<router-link to="/quen-mat-khau" class="sign-in-form__forgot-pass"
+		<router-link
+			to="/quen-mat-khau"
+			class="sign-in-form__forgot-pass"
+			@click="forgotPasswordHandler"
 			>Quên mật khẩu?</router-link
 		>
 	</a-form>
@@ -63,10 +66,14 @@
 		isRemeberPassword: false,
 	});
 
-	const emit = defineEmits(["submit"]);
+	const emit = defineEmits(["submit", "exit"]);
 
 	const onSignin = (form) => {
 		emit("submit", { ...form });
+	};
+
+	const forgotPasswordHandler = () => {
+		emit("exit");
 	};
 </script>
 

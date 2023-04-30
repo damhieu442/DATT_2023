@@ -1,12 +1,12 @@
 <template>
 	<section class="accessory">
-		<h3>TRẺ EM</h3>
-		<a-row type="flex">
+		<h3>Gợi ý hôm nay</h3>
+		<a-row type="flex" class="accessory__products">
 			<a-col :span="6" v-for="item in data" :key="item.id">
 				<ProductItem :product="item" />
 			</a-col>
 		</a-row>
-		<router-link to="/danh-muc/tre-em" class="accessory__view-all">Xem tất cả</router-link>
+		<router-link to="/danh-muc" class="accessory__view-all">Xem tất cả</router-link>
 	</section>
 </template>
 
@@ -29,6 +29,11 @@
 			padding-bottom: 10px;
 			font-weight: 700;
 			text-align: center;
+			text-transform: uppercase;
+		}
+
+		&__products {
+			min-height: 665px;
 		}
 
 		&__view-all {

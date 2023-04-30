@@ -3,14 +3,14 @@
 		<div class="promotion__banner">
 			<div>
 				<h5>MONA SNE<i class="fa fa-star-o" aria-hidden="true"></i>KER</h5>
-				<h2>KHUYẾN MÃI <span class="highlight">GIẢM GIÁ 50%</span></h2>
+				<h2>KHUYẾN MÃI <span class="highlight">GIẢM GIÁ HƠN 50%</span></h2>
 				<div style="display: block; height: auto; padding-top: 30px"></div>
 				<router-link to="/danh-muc/tre-em/" target="_self">Xem sản phẩm</router-link>
 			</div>
 		</div>
 		<div style="display: block; height: auto; padding-top: 50px"></div>
 		<h3 class="promotion__title">SẢN PHẨM GIẢM GIÁ</h3>
-		<a-row type="flex">
+		<a-row type="flex" class="promotion__list">
 			<a-col :span="6" v-for="item in products" :key="item.id">
 				<ProductItem :product="item" />
 			</a-col>
@@ -22,7 +22,7 @@
 	import ProductItem from "@/components/shared/ProductItem.vue";
 	export default {
 		name: "Promotion",
-		props: ["products"],
+		props: { products: Array },
 		components: { ProductItem },
 	};
 </script>
@@ -117,6 +117,10 @@
 			font-weight: 700;
 			text-align: center;
 			font-size: 1.25rem;
+		}
+
+		&__list {
+			min-height: 665px;
 		}
 	}
 </style>

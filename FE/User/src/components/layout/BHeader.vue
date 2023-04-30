@@ -8,7 +8,7 @@
 							<img
 								width="200"
 								height="80"
-								src="http://mauweb.monamedia.net/converse/wp-content/uploads/2019/05/logo-mona.png"
+								src="@/assets/img/logo-mona.png"
 								class="header_logo header-logo"
 								alt="Converse"
 							/>
@@ -68,11 +68,11 @@
 							>
 								<CategoryItem categoryCode="nam" />
 							</li>
-							<li
+							<!-- <li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
 								<CategoryItem categoryCode="tre-em" />
-							</li>
+							</li> -->
 							<li
 								class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home page_item page-item-16 current_page_item active menu-item-24"
 							>
@@ -106,7 +106,10 @@
 
 	onMounted(() => {
 		store.dispatch("user/tryLogInUser");
-		store.dispatch("cart/getUserCart");
+		if (!!store.state.user.uid) {
+			store.dispatch("cart/getUserCart");
+			store.dispatch("cart/initCart");
+		}
 	});
 </script>
 

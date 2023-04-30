@@ -7,8 +7,13 @@
 		</div>
 		<div v-else class="main__content">
 			<a-row>
-				<a-col :span="16"><ShopTable :products="productList" /></a-col>
-				<a-col :span="8"
+				<a-col :span="17"
+					><ShopTable
+						:products="productList"
+						:is-synchronizing="isSynchronizing"
+						@synchronize="synchronizeProductList"
+				/></a-col>
+				<a-col :span="7"
 					><CartTotal :total-money="totalPrice" :total-amount="totalProduct"
 				/></a-col>
 			</a-row>
@@ -19,20 +24,32 @@
 <script setup>
 	import { useStore } from "vuex";
 	import PageLoader from "@/components/shared/PageLoader.vue";
-	import { computed } from "vue";
+	import { computed, onMounted, ref } from "vue";
 	import ShopTable from "@/components/template/CartPage/ShopTable.vue";
 	import CartTotal from "@/components/template/CartPage/CartTotal.vue";
 
 	const store = useStore();
+	const isSynchronizing = ref(false);
 
-	const productList = store.state.cart.productList;
+	const productList = computed(() => store.state.cart.productList);
 	const isGettingUserCart = store.state.cart.isLoadingData;
 	const totalProduct = computed(() => store.getters["cart/totalProduct"]);
 	const totalPrice = computed(() => store.getters["cart/totalPrice"]);
 
-	const getCartProduct = () => {
-		store.dispatch("cart/getUserCart");
+	const synchronizeProductList = async () => {
+		isSynchronizing.value = true;
+		try {
+			const results = await store.dispatch("cart/synchronizeCart");
+		} catch (error) {}
+
+		isSynchronizing.value = false;
 	};
+
+	onMounted(() => {
+		if (!!store.state.user.uid) {
+			store.dispatch("cart/getUserCart");
+		}
+	});
 </script>
 
 <style lang="scss" scoped>

@@ -17,6 +17,7 @@ class ProductFactory {
 			id: data.ShoeId,
 			name: data.ShoeName,
 			price: data.Price,
+			discount: data.Discount,
 			image,
 			hoverImage,
 		};
@@ -54,13 +55,15 @@ class ProductFactory {
 				sizes: shoeSizes.map((size) => ({
 					id: size.SizeId,
 					code: size.SizeName,
-					amount: size.Amount,
+					amount: Number(size.Amount),
+					sold: Number(size.SoldNumber),
 				})),
 				categories: [data.ParentId, data.CategoryCode],
 				additionInfos: {
 					sku: data.Description || "-",
 					material: data.Material,
 					target: "-",
+					description: data.Descriptions || "-",
 				},
 				image: images[0],
 			},

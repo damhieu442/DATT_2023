@@ -77,12 +77,20 @@
 
 					isSentForgotPasswordForm.value = true;
 				} else {
-					notification.error({ message: "Sai địa chỉ email, vui lòng thử lại" });
+					// For case when system change response status
+					notification.error({ message: "Email không tồn tại trong hệ thống" });
 				}
 			} else {
 				throw new Error();
 			}
 		} catch (error) {
+			// 500 Status code will be seen as rejected promise by axios
+			if (error.name === "AxiosError" && !error.response.data) {
+				notification.error({ message: "Email không tồn tại trong hệ thống" });
+
+				return;
+			}
+
 			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
 		}
 	};
@@ -96,12 +104,19 @@
 				if (isSuccess) {
 					emits("reset-password", { email: form.email });
 				} else {
+					// For case when system change response status
 					notification.error({ message: "Sai mã cập nhật, vui lòng thử lại" });
 				}
 			} else {
 				throw new Error();
 			}
 		} catch (error) {
+			if (error.name === "AxiosError" && !error.response.data) {
+				notification.error({ message: "Sai mã cập nhật, vui lòng thử lại" });
+
+				return;
+			}
+
 			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
 		}
 	};

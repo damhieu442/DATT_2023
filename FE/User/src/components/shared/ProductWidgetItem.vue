@@ -8,7 +8,7 @@
 				class="widget-product__image"
 				alt=""
 			/>
-			<p class="widget-product__name">{{ product.name }}</p>
+			<p class="widget-product__name" :title="product.name">{{ product.name }}</p>
 			<p class="widget-product__price">{{ formattedProductPrice }}&nbsp;đ</p>
 		</router-link>
 	</div>
@@ -53,6 +53,10 @@
 
 		&__name {
 			grid-area: name;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
 			margin-left: 1rem;
 			color: #334862;
 		}

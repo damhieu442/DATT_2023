@@ -13,12 +13,16 @@ export default {
 		return axios.put(`/api/Customers/${id}`, form);
 	},
 
-	updatePassword(form) {
-		return axios.put("/api/Customers/reset-pass", form);
+	updatePassword(params) {
+		return axios.put("/api/Customers/reset-pass", undefined, { params });
 	},
 
 	getResetPasswordToken(params) {
 		return axios.post("/api/Customers/forgot-password", undefined, { params });
+	},
+
+	updatePassword2(params, id) {
+		return axios.put(`/api/customers/update-password/${id}`, undefined, { params });
 	},
 
 	resetForgotPassword(params) {

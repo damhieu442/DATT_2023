@@ -8,6 +8,7 @@ export const EKeys = {
 	image: "image",
 	uid: "uid",
 	order: "order_state",
+	buyNow: "buy_now",
 };
 
 export const ERole = {

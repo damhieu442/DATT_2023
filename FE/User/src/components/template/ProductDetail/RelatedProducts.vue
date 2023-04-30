@@ -5,8 +5,9 @@
 		<a-carousel
 			class="related-product__carousel"
 			:dots="false"
-			swipe
-			draggable
+			:swipe="products.length > 5"
+			:draggable="products.length > 5"
+			:infinite="products.length > 5"
 			:slidesToShow="5"
 		>
 			<ProductItem v-for="product in products" :key="product.id" :product="product" />
@@ -14,17 +15,20 @@
 	</section>
 </template>
 
-<script setup>
+<script>
 	import ProductItem from "@/components/shared/CategoryProduct.vue";
 
-	const props = defineProps({
-		products: {
-			type: Array,
-			default() {
-				return [];
+	export default {
+		props: {
+			products: {
+				type: Array,
+				default() {
+					return [];
+				},
 			},
 		},
-	});
+		components: { ProductItem },
+	};
 </script>
 
 <style lang="scss" scoped>
@@ -44,6 +48,7 @@
 		}
 
 		&__carousel {
+			min-height: 340px;
 			:deep(.slick-slide) {
 				padding: 0 0.5em;
 

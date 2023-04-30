@@ -1,47 +1,44 @@
 <template>
 	<a-table :dataSource="data" :columns="tableColumns" :pagination="false">
-		<template #bodyCell="{ column, record }">
-			<template v-if="column.dataIndex === 'id'">
-				<router-link :to="`/tai-khoan/don-hang/${record.id}`">{{ record.id }}</router-link>
+		<template #bodyCell="{ column, record, text }">
+			<template v-if="column.dataIndex === 'index'">
+				<router-link :to="`/tai-khoan/don-hang/${record.id}`">{{ text }}</router-link>
 			</template>
-
-			<template v-if="column.dataIndex === 'items'">
-				<div :style="{ minWidth: '250px' }">
-					<router-link
-						v-for="item in record.items"
-						:key="item.id"
-						className="block mb-2 text-current w-full"
-						:to="`/san-pham/${item.id}`"
-					>
-						{{ item.name }}
-					</router-link>
-				</div>
+			<template v-if="column.dataIndex === 'paymentMethod'">
+				<span>
+					{{ PaymentMethodLabels[text] || "-" }}
+				</span>
 			</template>
 
 			<template v-if="column.dataIndex === 'state'">
-				<p className="m-0">{{ orderStates[record.state] }}</p>
+				<p className="m-0" :style="{ color: EOrderStateColors[record.state] }">
+					{{ orderStates[record.state] }}
+				</p>
 			</template>
 		</template>
 	</a-table>
 </template>
 
 <script>
-	import { OrderLabels } from "@/constants/orders";
+	import { OrderLabels, EOrderStateColors } from "@/constants/orders";
+	import { PaymentMethodLabels } from "@/constants/payment";
+
 	const tableColumns = [
 		{
-			title: "Mã đơn hàng",
-			dataIndex: "id",
+			title: "STT",
+			dataIndex: "index",
 			key: "order-id",
-			width: 200,
+			width: 100,
 		},
 		{
-			title: "Sản phẩm",
-			dataIndex: "items",
-			key: "order-product-name",
+			title: "Người nhận",
+			dataIndex: "customerName",
+			key: "order-receiver-name",
 			ellipsis: true,
+			minWidth: 200,
 		},
 		{
-			title: "Ngày tạo",
+			title: "Ngày đặt",
 			dataIndex: "createTime",
 			key: "order-create",
 			width: 150,
@@ -50,6 +47,12 @@
 			title: "Tổng tiền",
 			dataIndex: "totalPrice",
 			key: "order-total",
+			width: 150,
+		},
+		{
+			title: "Phương thức thanh toán",
+			dataIndex: "paymentMethod",
+			key: "order-payment-method",
 			width: 150,
 		},
 		{
@@ -77,6 +80,14 @@
 
 			tableColumns() {
 				return tableColumns;
+			},
+
+			PaymentMethodLabels() {
+				return PaymentMethodLabels;
+			},
+
+			EOrderStateColors() {
+				return EOrderStateColors;
 			},
 		},
 	};

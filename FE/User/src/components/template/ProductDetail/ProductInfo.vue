@@ -12,17 +12,18 @@
 		<div class="product-info__divider"></div>
 
 		<div class="product-info__price">
-			<del v-if="!!promotionAmount" class="product-info__price--origin-price"
-				>{{ formattedOriginPrice }} đ</del
-			>
+			<del v-if="!!discount" class="product-info__price--origin-price">
+				<span>{{ formattedOriginPrice }} đ</span> <sup>-{{ discount }}%</sup>
+			</del>
 			<ins class="product-info__price--new-price">{{ formattedCurrentPrice }} đ</ins>
 		</div>
 
 		<div class="product-info__quality">
 			<a-input-number
-				v-model:value="buyNumber"
+				:value="buyNumber"
 				:controls="false"
 				:disabled="!selectedSize || selectedSize.amount === 0"
+				@change="numberUpdateHandler"
 			>
 				<template #addonBefore>
 					<button
@@ -60,15 +61,16 @@
 
 		<div class="product-info__actions">
 			<a-button
-				@click="buyNowHandler"
 				class="product-info__btns product-info__buy-now"
-				:disabled="!selectedSize || selectedSize.amount === 0"
+				:loading="isAddingToCart"
+				:disabled="!selectedSize || selectedSize.amount === 0 || !uid"
+				@click="buyNowHandler"
 				>Mua ngay</a-button
 			>
 			<a-button
 				class="product-info__btns product-info__add-to-cart"
 				:loading="isAddingToCart"
-				:disabled="!selectedSize || selectedSize.amount === 0"
+				:disabled="!selectedSize || selectedSize.amount === 0 || !uid"
 				@click="addToCartHandler"
 				>Thêm vào giỏ hàng</a-button
 			>
@@ -178,6 +180,7 @@
 <script>
 	import { notification } from "ant-design-vue";
 	import { computed, ref } from "vue";
+	import { useRouter } from "vue-router";
 	import { useStore } from "vuex";
 	export default {
 		props: {
@@ -193,10 +196,9 @@
 			sizes: {
 				type: Array,
 				default() {
-					return [{ code: 34, amount: 12 }];
+					return [{ id: "", code: "34", amount: 12, sold: 0 }];
 				},
 			},
-			promotionAmount: Number,
 			code: String,
 			discount: Number,
 			totalPrice: Number,
@@ -205,10 +207,12 @@
 		emits: ["reset"],
 		setup(props, { emit }) {
 			const store = useStore();
+			const router = useRouter();
 
 			const buyNumber = ref(1);
 			const selectedSize = ref(null);
 			const isAddingToCart = ref(false);
+			const uid = computed(() => store.state.user.uid);
 
 			const breadcrumbs = computed(() => {
 				const breadcrumbs = [
@@ -230,14 +234,18 @@
 				return breadcrumbs;
 			});
 
-			const productPrice = props.promotionAmount
-				? Math.ceil((props.product.price * (100 - props.promotionAmount)) / 100)
+			const productPrice = props.discount
+				? Math.ceil((props.price * (100 - props.discount)) / 100)
 				: props.price;
 
 			const numberFormatter = new Intl.NumberFormat();
 
 			const formattedCurrentPrice = numberFormatter.format(productPrice);
 			const formattedOriginPrice = numberFormatter.format(props.price);
+
+			const numberUpdateHandler = (value) => {
+				console.log("Value", value);
+			};
 
 			const increaseProductQuality = () => {
 				if (buyNumber.value < selectedSize.value.amount) {
@@ -251,13 +259,43 @@
 				}
 			};
 
-			const buyNowHandler = () => {
+			const buyNowHandler = async () => {
 				if (!selectedSize.value) {
 					notification.error({
 						message: "Vui lòng chọn kích thước giày",
 					});
 					return;
 				}
+
+				isAddingToCart.value = true;
+
+				const product = {
+					id: props.id,
+					name: props.name,
+					price: props.price,
+					size: selectedSize.value.code,
+					discount: props.discount,
+					image: props.image,
+					amount: buyNumber.value,
+				};
+
+				const isSuccess = await store.dispatch("cart/createBuyNowSession", {
+					product,
+					sizes: props.sizes,
+				});
+				if (isSuccess) {
+					router.push({
+						path: "/thanh-toan",
+						query: {
+							buyNow: true,
+						},
+					});
+				} else {
+					notification.error({
+						message: "Có lỗi xảy ra, vui lòng thử lại",
+					});
+				}
+				isAddingToCart.value = false;
 			};
 
 			const addToCartHandler = async () => {
@@ -275,15 +313,21 @@
 					name: props.name,
 					price: props.price,
 					size: selectedSize.value.code,
+					discount: props.discount,
 					image: props.image,
 					amount: buyNumber.value,
 				};
 
-				const isSuccess = await store.dispatch("cart/addProductToCart", product);
+				const isSuccess = await store.dispatch("cart/addProductToCart", {
+					product,
+					sizes: props.sizes,
+				});
 				if (isSuccess) {
 					notification.success({
 						message: "Thêm sản phẩm vào giỏ hàng thành công",
 					});
+					buyNumber.value = 1;
+					selectedSize.value = null;
 					emit("reset");
 				} else {
 					notification.error({
@@ -300,10 +344,12 @@
 				formattedCurrentPrice,
 				formattedOriginPrice,
 				isAddingToCart,
+				uid,
 				increaseProductQuality,
 				decreaseProductQuality,
 				buyNowHandler,
 				addToCartHandler,
+				numberUpdateHandler,
 			};
 		},
 	};
@@ -349,6 +395,25 @@
 			line-height: 1.3;
 			font-size: 1.5rem;
 			margin-bottom: 1rem;
+
+			&--new-price {
+			}
+
+			&--origin-price {
+				margin-right: 1.5rem;
+
+				> span {
+					text-decoration: line-through;
+				}
+
+				> sup {
+					text-decoration: none;
+					color: white;
+					background-color: #c30005;
+					padding: 0.5rem;
+					border-radius: 50%;
+				}
+			}
 		}
 
 		&__quality {

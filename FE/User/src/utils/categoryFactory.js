@@ -2,10 +2,10 @@ class CategoryFactory {
 	transformCategoryAPIResponseToCategory(data) {
 		return {
 			id: data.CategoryId,
-			code: data.CategoryCode,
+			code: data.Code,
 			name: data.CategoryName,
 			parent: data.ParentId,
-			categoryCode: data.Code,
+			categoryCode: data.CategoryCode || data.Code,
 			children: [],
 		};
 	}

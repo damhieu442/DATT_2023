@@ -35,6 +35,7 @@
 </template>
 
 <script setup>
+	import { auth } from "@/api";
 	import { Form, notification } from "ant-design-vue";
 	import { reactive, ref } from "vue";
 	import { useStore } from "vuex";
@@ -90,12 +91,12 @@
 		try {
 			await form.validate();
 
-			const { password: newPassword } = formState;
 			const customerId = store.state.user.uid;
-			const sendData = { customerId, newPassword };
-			console.log("Send data: ", sendData);
-			const isSuccess = await store.dispatch("user/updateUserPassword", sendData);
-			if (isSuccess) {
+			const response = await auth.updatePassword2(
+				{ passWordOld: formState.oldPassword, passWordNew: formState.password },
+				customerId,
+			);
+			if (response.status > 199 && response.status < 300) {
 				notification.success({ message: "Cập nhật mật khẩu thành công" });
 				form.resetFields();
 			} else {
@@ -106,6 +107,16 @@
 
 			if (!"errorFields" in error) {
 				notification.error({ message: "Có lỗi xảy ra, thử lại sau" });
+			}
+
+			if (error.name === "AxiosError") {
+				if (error.response.status === 400) {
+					notification.error({ message: "Mật khẩu cũ không chính xác" });
+				} else {
+					notification.error({ message: "Có lỗi xảy ra, thử lại sau" });
+				}
+
+				return;
 			}
 		} finally {
 			isLoading.value = false;

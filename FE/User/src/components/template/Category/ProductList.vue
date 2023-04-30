@@ -26,7 +26,6 @@
 </template>
 
 <script setup>
-	import { computed } from "vue";
 	import CategoryProduct from "@/components/shared/CategoryProduct.vue";
 
 	const emit = defineEmits(["update:page"]);
@@ -55,6 +54,8 @@
 
 <style lang="scss" scoped>
 	.product-list {
+		min-width: 900px;
+
 		&__skeleton {
 			> .ant-skeleton {
 				width: 100%;

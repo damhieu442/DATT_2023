@@ -52,7 +52,7 @@
 		<a-button
 			type="primary"
 			class="order-overview__order"
-			:disabled="!isLoggedIn"
+			:disabled="!isLoggedIn || disabled"
 			:loading="loading"
 			@click="submitOrderHandler"
 			>Đặt hàng</a-button
@@ -83,6 +83,8 @@
 		loading: Boolean,
 
 		isLoggedIn: Boolean,
+
+		disabled: Boolean,
 	});
 
 	const emit = defineEmits(["submit"]);
@@ -102,13 +104,16 @@
 	});
 
 	const productList = computed(() => {
+		const numberFormater = new Intl.NumberFormat();
 		return props.products.map((product) => ({
 			id: product.id,
 			name: product.name,
 			size: product.size,
 			quantity: product.quantity,
 			price: product.price,
-			total: new Intl.NumberFormat().format(product.price * product.quantity),
+			total: numberFormater.format(
+				Math.trunc(product.price * product.quantity * (1 - product.discount / 100)),
+			),
 		}));
 	});
 
@@ -116,7 +121,12 @@
 		const numberFormat = new Intl.NumberFormat();
 
 		return numberFormat.format(
-			props.products.reduce((total, product) => total + product.price * product.quantity, 0),
+			props.products.reduce(
+				(total, product) =>
+					total +
+					Math.trunc(product.price * product.quantity * (1 - product.discount / 100)),
+				0,
+			),
 		);
 	});
 

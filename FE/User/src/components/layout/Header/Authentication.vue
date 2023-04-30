@@ -8,13 +8,15 @@
 			width="875px"
 			:footer="null"
 			class="authentication__modal"
+			destroyOnClose
 		>
 			<a-row justify="space-around">
 				<a-col :span="11">
 					<SignInForm
-						@submit="signInHandler"
 						:loading="isLoggingIn"
 						:disabled="isSigningUp"
+						@submit="signInHandler"
+						@exit="closeAuthenticationModal"
 					/>
 				</a-col>
 				<a-divider type="vertical" class="authentication__divider" />
@@ -45,6 +47,10 @@
 
 	const showAuthenticationModal = () => {
 		isShowModal.value = true;
+	};
+
+	const closeAuthenticationModal = () => {
+		isShowModal.value = false;
 	};
 
 	const signInHandler = async (form) => {

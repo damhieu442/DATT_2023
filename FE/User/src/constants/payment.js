@@ -1,4 +1,6 @@
 export const EPaymentMethod = {
-	OFFLINE: "COD",
-	ONLINE: "BACS",
+	OFFLINE: 0,
+	ONLINE: 1,
 };
+
+export const PaymentMethodLabels = ["Trực tiếp", "Online"];

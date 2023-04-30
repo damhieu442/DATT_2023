@@ -13,7 +13,7 @@
 
 			<div class="sidebar-filter__section__actions">
 				<a-button @click="filterProductInRangeHandler">Lọc</a-button>
-				<p>
+				<p style="font-size: 14px">
 					Giá
 					<strong>
 						{{ formattedPriceRange[0] }} ₫ — {{ formattedPriceRange[1] }} ₫

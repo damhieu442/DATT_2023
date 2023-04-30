@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-	import { computed, onMounted, ref } from "vue";
+	import { computed, onMounted, ref, watch } from "vue";
 
 	import ProductGallery from "@/components/template/ProductDetail/ProductGallery.vue";
 	import ProductInfo from "@/components/template/ProductDetail/ProductInfo.vue";
@@ -84,13 +84,15 @@
 							categories.push({
 								name: category.name,
 								link: "/danh-muc/" + categoryCode,
+								categoryCode: category.categoryCode,
 							});
 
 							for (const cate of category.children) {
-								if (cate.code === childCategory) {
+								if (cate.categoryCode === childCategory) {
 									categories.push({
 										name: cate.name,
 										link: `/danh-muc/${categoryCode}/${cate.id}`,
+										categoryCode: cate.categoryCode,
 									});
 									break;
 								}
@@ -107,8 +109,44 @@
 				productInfo.value.additionInfos.target = categories[0].name;
 			}
 		} catch (error) {
+			console.log("Error: ", error);
 		} finally {
 			loading && (isLoadingData.value = false);
+		}
+	};
+
+	const getRelatedProducts = async () => {
+		try {
+			const query = {
+				keyWord: "",
+				minPrice: 0,
+				maxPrice: 20_000_000,
+				CategoryCode:
+					productInfo.value?.categories[productInfo.value.categories.length - 1]
+						.categoryCode,
+				pageSize: 12,
+				pageNumber: 1,
+			};
+
+			const body = {
+				Field: "CreatedDate",
+				Order: "ASC",
+				operation: "",
+				DataType: "",
+				Type: "sort",
+			};
+
+			const response = await productAPI.getFilteredList(query, [body]);
+
+			if (response.status > 199 && response.status < 300) {
+				relatedProducts.value = response.data.Data.map(
+					productFactory.transformProductAPIResponseToCategoryProduct,
+				).filter((product) => product.id !== route.params.id);
+			} else {
+				relatedProducts.value = [];
+			}
+		} catch (error) {
+			console.log("Error: ", error);
 		}
 	};
 
@@ -148,10 +186,21 @@
 		}
 	};
 
-	onMounted(() => {
-		getProductDetailData();
+	const getData = () => {
+		getProductDetailData().then(getRelatedProducts);
 		getProductEvaluate();
+	};
+
+	onMounted(() => {
+		getData();
 	});
+
+	watch(
+		() => route.params.id,
+		() => {
+			getData();
+		},
+	);
 </script>
 
 <style lang="scss" scoped>

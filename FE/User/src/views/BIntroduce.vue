@@ -21,7 +21,7 @@
             <div class="title-content flex-col">
               <div class="title-breadcrumbs pb-half pt-half">
                 <nav class="woocommerce-breadcrumb breadcrumbs">
-                  <a href="#">TRANG CHỦ</a>
+                  <router-link to="/">TRANG CHỦ</router-link>
                   <div class="divider">/</div>
                   GIỚI THIỆU
                 </nav>

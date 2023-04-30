@@ -5,7 +5,6 @@
 </template>
 
 <script>
-	import { category } from "@/api";
 	import { onBeforeMount } from "vue";
 	import { useStore } from "vuex";
 
@@ -15,19 +14,8 @@
 		setup() {
 			const store = useStore();
 
-			// const getCategoriesList = async () => {
-			// 	try {
-			// 		const categories = await category.getList();
-
-			// 		console.log(categories);
-			// 	} catch (error) {
-			// 		console.log("Error: ", error);
-			// 	}
-			// };
-
 			onBeforeMount(() => {
 				store.dispatch("category/getCategoriesList");
-				// getCategoriesList();
 			});
 		},
 	};

@@ -1,7 +1,7 @@
 <template>
 	<figure class="product-item">
-		<div v-if="!!product.promotionAmount" class="product-item__discount">
-			<div class="product-item__discount__inner">-{{ product.promotionAmount }}%</div>
+		<div v-if="!!product.discount" class="product-item__discount">
+			<div class="product-item__discount__inner">-{{ product.discount }}%</div>
 		</div>
 
 		<img
@@ -18,7 +18,7 @@
 				<p class="product-item__name">{{ product.name }}</p>
 			</router-link>
 			<div class="product-item__price">
-				<del v-if="!!product.promotionAmount" class="product-item__price--origin-price"
+				<del v-if="!!product.discount" class="product-item__price--origin-price"
 					>{{ formattedOriginPrice }} đ</del
 				>
 				<ins class="product-item__price--new-price">{{ formattedCurrentPrice }} đ</ins>
@@ -39,7 +39,6 @@
 
 <script>
 	import { computed, ref } from "vue";
-	import { useStore } from "vuex";
 	import { ArrowRightOutlined } from "@ant-design/icons-vue";
 	import { useRouter } from "vue-router";
 
@@ -52,8 +51,8 @@
 			const router = useRouter();
 			const isAddingProductToCart = ref(false);
 
-			const productPrice = props.product.promotionAmount
-				? Math.ceil((props.product.price * (100 - props.product.promotionAmount)) / 100)
+			const productPrice = props.product.discount
+				? Math.ceil((props.product.price * (100 - props.product.discount)) / 100)
 				: props.product.price;
 
 			const numberFormatter = new Intl.NumberFormat();

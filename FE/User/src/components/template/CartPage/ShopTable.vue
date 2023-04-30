@@ -32,6 +32,7 @@
 						:controls="false"
 						:value="record.quantity"
 						class="cart-shop-table__table__amount"
+						@blur="(event) => amountInputBlurHandler(event, record)"
 					>
 						<template #addonBefore>
 							<button
@@ -44,6 +45,7 @@
 						<template #addonAfter>
 							<button
 								class="cart-shop-table__table__amount__btn cart-shop-table__table__amount--decrease"
+								:disabled="record.quantity <= 1"
 								@click="() => decreaseProductQuality(record)"
 							>
 								-
@@ -58,7 +60,14 @@
 				<ArrowLeftOutlined />
 				tiếp tục xem sản phẩm
 			</router-link>
-			<button class="cart-shop-table__actions__update">Cập nhật giỏ hàng</button>
+			<a-button
+				class="cart-shop-table__actions__update"
+				:loading="isSynchronizing"
+				:disabled="isSynchronizing"
+				@click="synchronizeCartProducts"
+			>
+				Cập nhật giỏ hàng
+			</a-button>
 		</div>
 	</div>
 </template>
@@ -70,6 +79,8 @@
 	import { EMutationTypes } from "@/store/cart";
 	import { Modal } from "ant-design-vue";
 
+	const emits = defineEmits(["synchronize"]);
+
 	const props = defineProps({
 		products: {
 			type: Array,
@@ -77,6 +88,8 @@
 				return [];
 			},
 		},
+
+		isSynchronizing: Boolean,
 	});
 
 	const store = useStore();
@@ -88,9 +101,13 @@
 			image: product.image,
 			name: product.name,
 			size: product.size,
+			discount: `-${product.discount || 0}%`,
 			price: numberFormater.format(product.price) + "đ",
 			quantity: product.quantity,
-			total: numberFormater.format(product.price * product.quantity) + "đ",
+			total:
+				numberFormater.format(
+					Math.trunc(product.price * product.quantity * (1 - product.discount / 100)),
+				) + "đ",
 		}));
 	});
 
@@ -114,13 +131,34 @@
 			dataIndex: "quantity",
 		},
 		{
-			title: "Tổng",
+			title: "Giảm giá",
+			dataIndex: "discount",
+		},
+		{
+			title: "Thành tiền",
 			dataIndex: "total",
 		},
 	];
 
+	const synchronizeCartProducts = () => {
+		emits("synchronize");
+	};
+
+	const amountInputBlurHandler = (event, product) => {
+		const productAmount = Number(event.target.value.replace(/\D/g, "")) || 0;
+
+		if (productAmount < 0) {
+			return;
+		}
+
+		store.commit("cart/" + EMutationTypes.UPDATE_PRODUCT_AMOUNT, {
+			productId: product.id,
+			amount: productAmount,
+			size: product.size,
+		});
+	};
+
 	const increaseProductQuality = (product) => {
-		console.log("Product: ", product);
 		store.commit("cart/" + EMutationTypes.UPDATE_PRODUCT_AMOUNT, {
 			productId: product.id,
 			amount: product.quantity + 1,
@@ -142,7 +180,8 @@
 				innerHTML: `Bạn có chắc bỏ sản phẩm này? <strong>${product.name} - ${product.size}</strong>`,
 			}),
 			onOk() {
-				store.commit("cart/" + EMutationTypes.REMOVE_PRODUCT, product.id);
+				store.dispatch("cart/removeProductFromCart", product.id);
+				// store.commit("cart/" + EMutationTypes.REMOVE_PRODUCT, product.id);
 			},
 
 			onCancel() {
@@ -229,8 +268,8 @@
 
 			&__amount {
 				.ant-input-number-input {
-					width: 2.5rem;
-					max-width: 2.5em;
+					width: 3rem;
+					max-width: 3em;
 				}
 
 				.ant-input-number-group-addon {
@@ -255,7 +294,7 @@
 			margin: 1rem 0;
 
 			&__link,
-			&__update {
+			&__update.ant-btn {
 				text-transform: uppercase;
 				font-weight: 700;
 			}
@@ -277,7 +316,7 @@
 				}
 			}
 
-			&__update {
+			&__update.ant-btn {
 				color: white;
 				border: 2px solid #c30005;
 				padding: 0 1.2em;
@@ -285,6 +324,17 @@
 				line-height: 2.19em;
 				display: inline-block;
 				background-color: #c30005;
+				height: auto;
+				font-size: 1rem;
+
+				&:hover {
+					color: #c30005;
+					border-color: #c30005;
+				}
+
+				> span {
+					text-transform: inherit;
+				}
 			}
 		}
 	}

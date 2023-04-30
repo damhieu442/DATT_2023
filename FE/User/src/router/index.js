@@ -13,6 +13,7 @@ import PaymentPage from "@/views/PaymentPage.vue";
 import UserPage from "@/views/UserPage.vue";
 import ChangePasswordPage from "@/views/ChangePasswordPage.vue";
 import OrderManagementPage from "@/views/OrderManagementPage.vue";
+import OrderDetailPage from "@/views/OrderDetailPage.vue";
 import ForgotPasswordPage from "@/views/ForgotPasswordPage.vue";
 
 export const router = createRouter({
@@ -92,6 +93,11 @@ export const router = createRouter({
 							path: "don-hang",
 							name: "OrderManagement",
 							component: OrderManagementPage,
+						},
+						{
+							path: "don-hang/:id",
+							name: "OrderDetail",
+							component: OrderDetailPage,
 						},
 					],
 				},

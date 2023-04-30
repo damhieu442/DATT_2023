@@ -11,7 +11,7 @@
 			</a-breadcrumb-item>
 		</a-breadcrumb>
 		<div class="page-title__filter">
-			<span> Hiển thị 1-12 trong 22 kết quả </span>
+			<span> Hiển thị 1-{{ total > 12 ? 12 : total }} trong {{ total }} kết quả </span>
 			<a-select
 				v-model:value="seletedFilter"
 				size="middle"
@@ -36,6 +36,7 @@
 		props: {
 			orderBy: String,
 			breadcrumbs: { type: Array, required: false, default: null },
+			total: Number,
 		},
 		setup(props, context) {
 			const store = useStore();
@@ -71,9 +72,15 @@
 						},
 					);
 				} else {
-					breadcrumbs.push({
-						name: ECategoriesName[route.params.slug] || route.params.slug,
-					});
+					if (route.params.slug === "tre-em") {
+						breadcrumbs.push({
+							name: "Sneaker",
+						});
+					} else {
+						breadcrumbs.push({
+							name: ECategoriesName[route.params.slug] || route.params.slug,
+						});
+					}
 				}
 
 				return breadcrumbs;

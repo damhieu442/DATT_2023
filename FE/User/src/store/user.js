@@ -41,7 +41,7 @@ const cart = {
 	mutations: {},
 
 	actions: {
-		async signIn({ state }, form) {
+		async signIn({ state, dispatch }, form) {
 			try {
 				const { email: username, password } = form;
 				const formData = { Username: username, Password: password, Role: ERole.USER };
@@ -80,7 +80,7 @@ const cart = {
 					sessionStorage.setItem(EKeys.phone, userInfo.PhoneNumber);
 					Cookies.set(EKeys.accessToken, accessToken);
 				}
-
+				dispatch("cart/getUserCart");
 				return true;
 			} catch (error) {
 				return false;
@@ -173,24 +173,6 @@ const cart = {
 
 			try {
 				const response = await auth.updateUser(formData, form.uid);
-
-				console.log("Response: ", response);
-				if ((response.status > 199) & (response.status < 300)) {
-					return true;
-				}
-				return false;
-			} catch (error) {
-				return false;
-			}
-		},
-
-		async updateUserPassword(context, form) {
-			const formData = new FormData();
-			formData.append("CustomerId", form.customerId);
-			formData.append("Password", form.newPassword);
-
-			try {
-				const response = await auth.updateUser(formData, form.customerId);
 
 				console.log("Response: ", response);
 				if ((response.status > 199) & (response.status < 300)) {

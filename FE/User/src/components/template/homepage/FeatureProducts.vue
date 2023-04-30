@@ -78,6 +78,8 @@
 		}
 
 		&__carousel {
+			min-height: 450px;
+
 			.slick-slide {
 				padding: 0 0.5rem;
 			}
