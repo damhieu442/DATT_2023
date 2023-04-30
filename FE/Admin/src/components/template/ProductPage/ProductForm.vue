@@ -143,7 +143,6 @@
 							class="w-full"
 							:disabled="disabled"
 						/>
-						<p class="m-0">Để trống nếu không có khuyến mại</p>
 					</a-form-item>
 					<a-form-item label="Thực giá">
 						<p class="m-0">{{ actualPrice }} đ</p>
@@ -151,12 +150,17 @@
 				</Card>
 				<Card class="card">
 					<h2 class="text-lg font-bold title">Thuộc tính</h2>
-					<a-row v-for="(size, i) in form.size" :key="size.id" :gutter="16">
+					<a-row v-for="(size, sizeIndex) in form.size" :key="size.id" :gutter="16">
 						<a-col :span="8">
 							<a-form-item
 								label="Kích thước"
+								:name="['size', sizeIndex, 'name']"
 								:label-col="{ span: 10 }"
 								:wrapper-col="{ span: 14 }"
+								:rules="{
+									validator: formItemValidate,
+									trigger: 'blur',
+								}"
 							>
 								<a-input
 									v-model:value="size.name"
@@ -187,7 +191,7 @@
 								<a-input :value="size.sold" placeholder="" disabled />
 							</a-form-item>
 						</a-col>
-						<a-col :span="1">
+						<a-col v-if="store.state.user.role === ERole.SUPER_ADMIN" :span="1">
 							<button
 								v-if="size.deletable"
 								class="mt-1 text-black bg-transparent border-0 hover:text-gray-600 hover:cursor-pointer disabled:cursor-not-allowed"
@@ -263,6 +267,7 @@
 	import { useStore } from "vuex";
 	import Card from "@/components/shared/Card.vue";
 	import { CameraFilled, PictureFilled } from "@ant-design/icons-vue";
+	import { ERole } from "@/constants/config";
 
 	const props = defineProps({
 		disabled: {
@@ -360,6 +365,7 @@
 				trigger: "change",
 			},
 		],
+		size: [],
 	};
 
 	const FILE_DROPDOWN_KEYS = {
@@ -393,6 +399,22 @@
 			Number(form.price) * (1 - (Number(form.discount) || 0) / 100),
 		).toLocaleString();
 	});
+
+	/* async (_, value) => {
+										const currentSize = form.size[sizeIndex];
+										for (let index = 0; index < sizeIndex; index++) {
+											const size = form.size[index];
+											if (size.name === currentSize.name) {
+												throw new Error('Kích thước giày bị trùng');
+											}
+										}
+
+										return undefined;
+									} */
+	const formItemValidate = (rule, value) => {
+		console.log("Field: ", rule, value);
+		return Promise.resolve();
+	};
 
 	const deleteSize = (index) => {
 		form.size.splice(index, 1);

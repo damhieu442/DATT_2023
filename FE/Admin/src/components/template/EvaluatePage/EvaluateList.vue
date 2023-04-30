@@ -20,6 +20,7 @@
 						<i class="fas fa-pen" />
 					</button>
 					<button
+						v-if="store.state.role === ERole.SUPER_ADMIN"
 						class="border-0 bg-transparent cursor-pointer text-base"
 						@click="deleteFeedback(record)"
 					>
@@ -32,6 +33,11 @@
 </template>
 
 <script setup>
+	import { ERole } from "@/constants/config";
+	import { useStore } from "vuex";
+
+	const store = useStore();
+
 	const props = defineProps({
 		loading: Boolean,
 		data: {

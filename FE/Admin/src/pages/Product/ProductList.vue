@@ -23,17 +23,17 @@
 </template>
 
 <script setup>
-	import { product as productAPI } from "@/api";
-	import ProductFilter from "@/components/template/ProductPage/ProductFilter.vue";
+	import { useRoute } from "vue-router";
+	import { notification } from "ant-design-vue";
 	import { onMounted, reactive, ref, watch } from "vue";
 
+	import { product as productAPI } from "@/api";
+	import ProductFilter from "@/components/template/ProductPage/ProductFilter.vue";
 	import { DEFAULT_VALUES } from "@/constants/config";
-	import { useRoute } from "vue-router";
 	import { productFactory } from "@/utils/products";
 	import ProductTableList from "@/components/template/ProductPage/ProductList.vue";
 	import ThePagination from "@/components/shared/ThePagination.vue";
 	import DeleteProductModal from "@/components/template/ProductPage/ConfirmDeleteProductModal.vue";
-	import { notification } from "ant-design-vue";
 
 	const route = useRoute();
 	const isSearchingProduct = ref(false);
@@ -59,6 +59,8 @@
 			const query = {
 				pageSize: limit || DEFAULT_VALUES.DEFAULT_PAGE_SIZE,
 				pageNumber: page || DEFAULT_VALUES.DEFAULT_PAGE,
+				minPrice: 0,
+				maxPrice: 10_000_000,
 			};
 
 			const body = {
@@ -107,7 +109,6 @@
 						break;
 				}
 			}
-
 			const response = await productAPI.getFilteredList(query, [body]);
 			console.log("Response: ", response);
 			if (response.status > 199 && response.status < 300) {

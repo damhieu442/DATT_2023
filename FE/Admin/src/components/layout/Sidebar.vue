@@ -31,23 +31,32 @@
 </template>
 
 <script>
+	import { ERole } from "@/constants/config";
 	import { useRoute } from "vue-router";
+	import { useStore } from "vuex";
 
 	export default {
 		name: "SideBar",
 
 		setup() {
 			const route = useRoute();
+			const store = useStore();
 
 			const menuList = [
 				{
 					title: "Dashboard",
 					link: "/",
 				},
-				{
+			];
+
+			if (store.state.user.role === ERole.SUPER_ADMIN) {
+				menuList.push({
 					title: "Khách hàng",
 					link: "/khach-hang",
-				},
+				});
+			}
+
+			menuList.push(
 				{
 					title: "Sản phẩm",
 					link: "san-pham",
@@ -74,7 +83,7 @@
 					title: "Góp ý",
 					link: "/gop-y",
 				},
-			];
+			);
 
 			const defaultOpenKeys = () => {
 				const keys = [];

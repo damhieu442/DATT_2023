@@ -29,7 +29,7 @@
 				<p class="m-0">{{ text }} VNĐ</p>
 			</template>
 			<template v-if="column.dataIndex === 'state'">
-				<a-tag :color="orderStateColors[text]" class="!text-sm">
+				<a-tag :color="orderStateColors[text]" class="!text-sm min-w-[120px] text-center">
 					{{ orderStates[text] }}
 				</a-tag>
 			</template>

@@ -19,16 +19,17 @@
 					{{ text }}
 				</p>
 			</template>
+			<template v-else-if="column.dataIndex === 'image'">
+				<img :src="text" :alt="record.name" width="100" class="w-24 h-24 object-fill" />
+			</template>
 			<template v-else-if="column.dataIndex === 'price'">
 				<p class="m-0">{{ text }} VNĐ</p>
 			</template>
 			<template v-else-if="column.dataIndex === 'discount'">
-				<p class="m-0">{{ text || 0 }} VNĐ</p>
+				<p class="m-0">- {{ text || 0 }} %</p>
 			</template>
-			<template v-else-if="column.key === 'total'">
-				<p class="m-0 text-red-500">
-					{{ record.price * record.amount - (record.discount || 0) }} VNĐ
-				</p>
+			<template v-else-if="column.dataIndex === 'totalPrice'">
+				<p class="m-0 text-red-500">{{ text }} VNĐ</p>
 			</template>
 		</template>
 	</a-table>
@@ -52,14 +53,27 @@
 			dataIndex: "id",
 			key: "id",
 			title: "Mã sản phẩm",
-
 			width: 150,
+		},
+		{
+			dataIndex: "image",
+			key: "image",
+			title: "Ảnh minh họa",
+			width: 100,
 		},
 		{
 			dataIndex: "name",
 			key: "name",
 			title: "Tên sản phẩm",
+			width: 250,
 		},
+		{
+			dataIndex: "size",
+			key: "size",
+			title: "Kích thước",
+			width: 150,
+		},
+
 		{
 			title: "Số lượng",
 			dataIndex: "amount",
@@ -82,7 +96,8 @@
 		},
 		{
 			title: "Thành tiền",
-			key: "total",
+			key: "totalPrice",
+			dataIndex: "totalPrice",
 
 			width: 175,
 		},

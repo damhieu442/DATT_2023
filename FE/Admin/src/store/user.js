@@ -24,11 +24,13 @@ const cart = {
 				console.log("Form: ", form);
 
 				const { username, password } = form;
-				const formData = { Username: username, Password: password, Role: ERole.ADMIN };
+				const formData = {
+					Username: username,
+					Password: password,
+					Role: ERole.SUPER_ADMIN,
+				};
 
 				const token = await auth.signIn(formData);
-
-				console.log("token,", token);
 
 				const userInfo = token.data;
 				const accessToken = userInfo.Token;
@@ -39,6 +41,7 @@ const cart = {
 				state.uid = userInfo.CustomerId;
 				state.phone = userInfo.PhoneNumber;
 				state.address = userInfo.Address;
+				state.role = userInfo.Role;
 				state.image = userInfo.ImgName
 					? ROOT_URL.concat("/api/Customers/imgName/", userInfo.ImgName.split(".")[0])
 					: "";
@@ -51,6 +54,8 @@ const cart = {
 					localStorage.setItem(EKeys.image, userInfo.ImgName || "");
 					localStorage.setItem(EKeys.address, userInfo.Address);
 					localStorage.setItem(EKeys.phone, userInfo.PhoneNumber);
+					localStorage.setItem(EKeys.role, userInfo.Role);
+
 					Cookies.set(EKeys.accessToken, accessToken, { expires: 400 });
 				} else {
 					sessionStorage.setItem(EKeys.username, state.username);
@@ -60,6 +65,7 @@ const cart = {
 					sessionStorage.setItem(EKeys.image, userInfo.ImgName || "");
 					sessionStorage.setItem(EKeys.address, userInfo.Address);
 					sessionStorage.setItem(EKeys.phone, userInfo.PhoneNumber);
+					sessionStorage.setItem(EKeys.role, userInfo.Role);
 					Cookies.set(EKeys.accessToken, accessToken);
 				}
 
@@ -129,6 +135,9 @@ const cart = {
 				localStorage.getItem(EKeys.address) || sessionStorage.getItem(EKeys.address) || "";
 			const phone =
 				localStorage.getItem(EKeys.phone) || sessionStorage.getItem(EKeys.phone) || "";
+			const role = Number(
+				localStorage.getItem(EKeys.role) || sessionStorage.getItem(EKeys.role) || "",
+			);
 
 			Object.assign(state, {
 				username,
@@ -138,6 +147,7 @@ const cart = {
 				phone,
 				address,
 				image: image ? ROOT_URL.concat("/api/Customers/imgName/", image.split(".")[0]) : "",
+				role,
 			});
 		},
 

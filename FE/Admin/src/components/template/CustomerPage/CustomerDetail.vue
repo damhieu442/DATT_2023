@@ -251,7 +251,14 @@
 						trigger: "change",
 					},
 				],
-				email: [],
+				email: [
+					{
+						required: true,
+						type: "email",
+						message: "Vui lòng nhập địa chỉ email hợp lệ",
+						trigger: "blur",
+					},
+				],
 				address: [],
 				role: [],
 				phoneNumer: [

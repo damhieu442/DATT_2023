@@ -39,7 +39,7 @@ class ProductFactory {
 			name: size.SizeName,
 			amount: size.Amount,
 			sold: size.SoldNumber,
-			deletable: false,
+			deletable: true,
 		}));
 
 		return {

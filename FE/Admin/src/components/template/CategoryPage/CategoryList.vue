@@ -28,6 +28,7 @@
 						<i class="fas fa-pen" />
 					</button>
 					<button
+						v-if="$store.state.user.role === 1"
 						class="border-0 bg-transparent cursor-pointer text-base disabled:opacity-60 disabled:cursor-not-allowed"
 						@click="deleteCategory(record)"
 						:disabled="record.parent === '-'"

@@ -5,3 +5,4 @@ export { default as auth } from "./auth";
 export { default as evaluate } from "./evaluate";
 export { default as customer } from "./customer";
 export { default as mics } from "./mics";
+export { default as order } from "./order";

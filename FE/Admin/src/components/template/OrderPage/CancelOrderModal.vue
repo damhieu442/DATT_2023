@@ -41,16 +41,17 @@
 	});
 
 	const closeModalHandler = () => {
-		isShow.value = false;
 		form.reason = "";
-		rfForm.clearValidate();
+		rfForm.value.clearValidate();
+
+		isShow.value = false;
 	};
 
 	const submitForm = () => {
 		emits("submit", { ...form });
 		isShow.value = false;
 		form.reason = "";
-		rfForm.clearValidate();
+		rfForm.value.clearValidate();
 	};
 
 	const open = () => {

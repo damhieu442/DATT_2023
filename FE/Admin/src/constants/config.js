@@ -8,14 +8,16 @@ export const EKeys = {
 	image: "image",
 	uid: "uid",
 	order: "order_state",
+	role: "role",
 };
 
 export const ERole = {
 	USER: 0,
-	ADMIN: 1,
+	SUPER_ADMIN: 1,
+	ADMIN: 2,
 };
 
-export const RoleLabels = ["User", "Admin"];
+export const RoleLabels = ["User", "Super Admin", "Admin"];
 
 export const DEFAULT_VALUES = {
 	DEFAULT_PAGE: 1,

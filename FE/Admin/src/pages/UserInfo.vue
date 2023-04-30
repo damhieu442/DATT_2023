@@ -7,7 +7,7 @@
 			<CustomerDetail
 				class="my-6"
 				:user="userInfo"
-				:isAdmin="userInfo?.role === ERole.ADMIN"
+				:isAdmin="userInfo?.role === ERole.SUPER_ADMIN"
 				@submit="updateUserInfoHandler"
 			/>
 		</div>

@@ -44,4 +44,8 @@ export default {
 	updateProduct(id, form) {
 		return axios.put(`/api/Shoes/${id}`, form);
 	},
+
+	updateProductv2(id, form) {
+		return axios.put(`/api/Shoes/v2/${id}`, form);
+	},
 };
