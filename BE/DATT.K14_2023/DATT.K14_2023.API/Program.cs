@@ -22,8 +22,12 @@ using DATT.k14_2023.DL.BillDetailDL;
 using DATT.K14_2023.BL.BillBL;
 using DATT.k14_2023.DL.BillDL;
 using EmailService;
+using Stripe;
+using DATT.K14_2023.BL.DashBoardBL;
+using DATT.k14_2023.DL.DashBoardDL;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -68,6 +72,9 @@ builder.Services.AddTransient<IBillDetailDL, BillDetailDL>();
 builder.Services.AddTransient<IBillBL, BillBL>();
 builder.Services.AddTransient<IBillDL, BillDL>();
 
+builder.Services.AddTransient<IDashBoardBL, DashBoardBL>();
+builder.Services.AddTransient<IDashBoardDL, DashBoardDL>();
+
 DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MySql");
 var email = builder.Configuration.GetSection("EmailConfiguration")
     .Get<EmailConfiguration>();
@@ -80,6 +87,11 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
+
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+builder.Services.AddRouting(x => x.LowercaseUrls = true);
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Convert output to pascalcase
 builder.Services.AddControllers()
@@ -102,6 +114,8 @@ app.UseHttpsRedirection();
 app.UseCors("corspolicy");
 
 app.UseAuthorization();
+
+app.UseRouting();
 
 app.UseMiddleware<JwtMiddleware>();
 

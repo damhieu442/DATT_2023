@@ -138,8 +138,7 @@ namespace DATT.k14_2023.DL.CustomerDL
             int numberOfAffectedRows;
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
             {
-                var result = mySqlConnection.QueryMultiple(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
-                numberOfAffectedRows = result.Read<int>().Single();
+                numberOfAffectedRows = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
             }
 
             return numberOfAffectedRows;
@@ -179,7 +178,7 @@ namespace DATT.k14_2023.DL.CustomerDL
             return count;
         }
 
-        public int UpdateToken(string email, string token, DateTime tokenDate)
+        public int UpdateToken(string email, string token)
         {
             string storedProcedureName = "Proc_Customer_UpdateToken";
             var parameters = new DynamicParameters();

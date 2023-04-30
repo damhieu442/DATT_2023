@@ -93,19 +93,17 @@ namespace DATT.K14_2023.API.Controllers
             try
             {
                 dynamic records = _baseBL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyWord , minPrice, maxPrice, CategoryCode, customParams);
-
+                var empty = new PagingResult<dynamic>()
+                {
+                    Data = new List<dynamic>()
+                };
                 if (records.Data.Count > 0)
                 {
                     return StatusCode(StatusCodes.Status200OK, records);
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status200OK, new ErrorResult
-                    {
-                        ErrorCode = k14_2023.COMMON.Enums.ErrorCode.None,
-                        DevMsg = Resource.DevMsg_CallAPI.ToString(),
-                        UserMsg = Resource.UserMsg_CallAPI.ToString(),
-                    });
+                    return StatusCode(StatusCodes.Status200OK, empty);
                 }
             }
             catch (Exception ex)

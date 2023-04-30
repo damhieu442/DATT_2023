@@ -246,9 +246,9 @@ namespace DATT.K14_2023.BL.CustomerBL
             return _customerDL.CheckEmail(password);
         }
 
-        public int UpdateToken(string email, string token, DateTime tokenDate)
+        public int UpdateToken(string email, string token)
         {
-            return _customerDL.UpdateToken(email, token, tokenDate);
+            return _customerDL.UpdateToken(email, token);
         }
 
         public int ConfirmToken(string email, string token, DateTime date)

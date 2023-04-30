@@ -19,6 +19,11 @@ namespace DATT.k14_2023.COMMON.Enums
         /// <summary>
         /// tk quản trị 
         /// </summary>
-        Admin = 1
+        Admin = 1,
+
+        /// <summary>
+        /// tk nhân viên
+        /// </summary>
+        staff = 2,
     }
 }

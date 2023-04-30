@@ -158,3 +158,10 @@ D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\NETCore.MailKit.dll
 D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\BouncyCastle.Crypto.dll
 D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\EmailService.dll
 D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\EmailService.pdb
+D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\Stripe.net.dll
+D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\BE-Shoe\DATT.K14_2023\DATT.K14_2023.API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll

@@ -31,7 +31,7 @@ namespace DATT.k14_2023.DL.CustomerDL
         int UpdatePassWord(Guid id, string passWord);
         int CheckEmailUnique(Guid id, string email);
         int CheckEmail(string email);
-        int UpdateToken(string email, string token, DateTime tokenDate);
+        int UpdateToken(string email, string token);
         int ConfirmToken(string email, string token, DateTime date);
 
         dynamic isUserName(string userName, string passWord, int role);

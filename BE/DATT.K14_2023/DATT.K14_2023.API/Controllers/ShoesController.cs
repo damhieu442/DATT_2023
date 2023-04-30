@@ -75,6 +75,10 @@ namespace DATT.K14_2023.API.Controllers
         protected internal override string CreatedAndUpdateImg(Shoe shoe)
         {
             string imgName = "";
+            if(shoe.Img == null)
+            {
+                return "";
+            };
             if (shoe.Img.Count > 0)
             {
                 foreach (var file in shoe.Img)

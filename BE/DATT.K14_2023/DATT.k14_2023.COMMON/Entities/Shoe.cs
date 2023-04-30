@@ -20,13 +20,11 @@ namespace DATT.k14_2023.COMMON.Entities
         /// <summary>
         /// Mã giày
         /// </summary>
-        [NotEmpty("Mã giày không được để trống")]
         public string? ShoeCode { get; set; }
 
         /// <summary>
         /// Tên giày
         /// </summary>
-        [NotEmpty("Tên giày không được để trống")]
         public string? ShoeName { get; set; }
 
         /// <summary>
@@ -42,13 +40,11 @@ namespace DATT.k14_2023.COMMON.Entities
         /// <summary>
         /// Source ảnh
         /// </summary>
-        [NotEmpty("Ảnh không được để trống")]
-        public List<IFormFile> Img { get; set; }
+        public List<IFormFile>? Img { get; set; }
 
         /// <summary>
         /// Giá bán
         /// </summary>
-        [NotEmpty("Giá không được để trống")]
         public long? Price { get; set; }
 
         /// <summary>
@@ -69,13 +65,11 @@ namespace DATT.k14_2023.COMMON.Entities
         /// <summary>
         /// size detail
         /// </summary>
-        [NotEmpty("Size không được để trống")]
         public string? Size { get; set; }
 
         /// <summary>
         /// Khóa phụ danh mục
         /// </summary>
-        [NotEmpty("Mã danh mục không được để trống")]
         public Guid? CategoryId { get; set; }
 
         public int? CategoryCode { get; set; }
@@ -87,6 +81,7 @@ namespace DATT.k14_2023.COMMON.Entities
         public int? ParentId { get; set; }
 
         public string? Code { get; set; }
+        public int? TotalSold { get; set; }
 
         /// <summary>
         /// Điểm đánh giá trung bình

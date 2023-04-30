@@ -206,8 +206,7 @@ namespace DATT.K14_2023.API.Controllers
                 {
                     Random rd = new Random();
                     int token = rd.Next(10000,99999);
-                    var tokenDate = DateTime.Now.AddMinutes(10);
-                    int number = _customerBL.UpdateToken(email, token.ToString(), tokenDate);
+                    int number = _customerBL.UpdateToken(email, token.ToString());
                     var message = new Message(new string[] { email }, "Mã xác nhận", token.ToString());
                     _emailSender.SendEmail(message);
                     return StatusCode(StatusCodes.Status200OK, true);
