@@ -113,7 +113,7 @@ namespace DATT.K14_2023.BL.ShoeBL
             workSheet.Cells[3, 9].Value = "Số lượng bán";
             workSheet.Cells[3, 10].Value = "Ngày tạo";
             workSheet.Cells[3, 11].Value = "Ngày sửa";
-            workSheet.Cells["L:U"].Clear();
+            workSheet.Cells["L:W"].Clear();
 
             using (var range = workSheet.Cells["A3:K3"])
             {
@@ -138,14 +138,20 @@ namespace DATT.K14_2023.BL.ShoeBL
                 workSheet.Cells[i + 4, 6].Value = item.Discount;
                 workSheet.Cells[i + 4, 7].Value = item.TotalPrice;
                 workSheet.Cells[i + 4, 8].Value = item.Material;
+                workSheet.Cells[i + 4, 9].Value = item.TotalSold;
                 workSheet.Cells[i + 4, 10].Value = item.CreatedDate;
                 workSheet.Cells[i + 4, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 workSheet.Cells[i + 4, 11].Value = item.ModifiedDate;
                 workSheet.Cells[i + 4, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             }
 
-            workSheet.Cells[4, 7, listShoe.Count + 4, 10].Style.Numberformat.Format = "DD/MM/YYYY";
-            workSheet.Cells[4, 8, listShoe.Count + 4, 11].Style.Numberformat.Format = "DD/MM/YYYY";
+            workSheet.Column(1).Width = 5;
+            workSheet.Column(5).Width = 10;
+            workSheet.Column(10).Width = 15;
+            workSheet.Column(11).Width = 15;
+
+            workSheet.Cells[4, 10, listShoe.Count + 4, 10].Style.Numberformat.Format = "DD/MM/YYYY";
+            workSheet.Cells[4, 11, listShoe.Count + 4, 11].Style.Numberformat.Format = "DD/MM/YYYY";
         }
 
         public int UpdateSoldNumber(Guid id, int soldNumber)

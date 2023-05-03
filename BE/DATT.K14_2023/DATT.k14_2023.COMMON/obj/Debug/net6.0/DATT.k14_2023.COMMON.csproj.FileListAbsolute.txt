@@ -40,3 +40,17 @@ D:\BE-Shoe\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COM
 D:\BE-Shoe\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\refint\DATT.k14_2023.COMMON.dll
 D:\BE-Shoe\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.pdb
 D:\BE-Shoe\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\ref\DATT.k14_2023.COMMON.dll
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\bin\Debug\net6.0\DATT.k14_2023.COMMON.deps.json
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\bin\Debug\net6.0\DATT.k14_2023.COMMON.dll
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\bin\Debug\net6.0\DATT.k14_2023.COMMON.pdb
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.csproj.AssemblyReference.cache
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.Resource.resources
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.csproj.GenerateResource.cache
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.GeneratedMSBuildEditorConfig.editorconfig
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.AssemblyInfoInputs.cache
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.AssemblyInfo.cs
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.csproj.CoreCompileInputs.cache
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.dll
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\refint\DATT.k14_2023.COMMON.dll
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\DATT.k14_2023.COMMON.pdb
+D:\customer\BE\DATT.K14_2023\DATT.k14_2023.COMMON\obj\Debug\net6.0\ref\DATT.k14_2023.COMMON.dll
