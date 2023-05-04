@@ -12,8 +12,23 @@
 </template>
 
 <script>
-	import _forOwn from "lodash/_baseForOwn";
 	import LineChart from "@/components/shared/charts/Line.vue";
+	import _cloneDeep from "lodash/cloneDeep";
+
+	const monthLabels = {
+		January: 1,
+		February: 2,
+		March: 3,
+		April: 4,
+		May: 5,
+		June: 6,
+		July: 7,
+		August: 8,
+		September: 9,
+		October: 10,
+		November: 11,
+		December: 12,
+	};
 
 	export default {
 		name: "CompleteOrderStatisticLineChart",
@@ -41,14 +56,6 @@
 					lineTension: 0,
 				},
 			];
-			_forOwn(this.growthStatistic, (statistic, month) => {
-				if (!parseInt(month, 10)) {
-					return;
-				}
-
-				datasets[0].data.push(statistic);
-				labels.push(month);
-			});
 
 			return {
 				chartdata: {
@@ -93,6 +100,20 @@
 					},
 				},
 			};
+		},
+
+		watch: {
+			growthStatistic(value) {
+				const chartdata = _cloneDeep(this.chartdata);
+
+				for (const month in value) {
+					const statistic = value[month];
+					chartdata.datasets[0].data.push(statistic);
+					chartdata.labels.push(monthLabels[month] || month);
+				}
+
+				this.chartdata = chartdata;
+			},
 		},
 	};
 </script>

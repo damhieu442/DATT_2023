@@ -53,11 +53,14 @@
 	const getData = async () => {
 		isGettingData.value = true;
 
-		const { pageNum: page, pageSize: limit, search } = route.query;
+		const { pageNum: page, pageSize: limit, id, phone_number, recipient } = route.query;
+
 		const query = {
 			pageNumber: page || DEFAULT_PAGE,
 			pageSize: limit || MAX_RECORD,
-			keyWord: search || undefined,
+			id: id || undefined,
+			phone: phone_number || undefined,
+			name: recipient || undefined,
 		};
 		const body = {
 			Field: "CreatedDate",

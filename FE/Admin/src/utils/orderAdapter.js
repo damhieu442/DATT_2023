@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-const ROOT_URL = process.env.VUE_APP_API_URL;
+const IMAGE_BASE_URL = process.env.VUE_APP_API_URL;
 class OrderAdapter {
 	transformAPIResponseToOrderData(data) {
 		return {
@@ -37,7 +37,7 @@ class OrderAdapter {
 				amount: item.Quantity,
 				price: item.Price.toLocaleString(),
 				discount: item.Discount,
-				image: ROOT_URL.concat(
+				image: IMAGE_BASE_URL.concat(
 					"/api/Shoes/imgName/",
 					item.ImgName.split(",")[0].split(".")[0],
 				),

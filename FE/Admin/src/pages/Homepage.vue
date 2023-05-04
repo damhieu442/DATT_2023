@@ -51,22 +51,15 @@
 	import { notification } from "ant-design-vue";
 
 	const order = reactive({
-		all: 100,
-		processing: 100,
-		deliverying: 100,
-		cancel: 100,
+		all: 0,
+		processing: 0,
+		deliverying: 0,
+		cancel: 0,
 	});
 
-	const statistic = ref({
-		1: 15,
-		2: 50,
-		3: 70,
-		4: 90,
-		5: 150,
-		6: 170,
-	});
+	const statistic = ref({});
 
-	const getData = async () => {
+	const getOrderStatistics = async () => {
 		try {
 			const response = await dashboardAPI.getStatistics();
 
@@ -84,8 +77,22 @@
 		}
 	};
 
+	const getMonthlyOrderData = async () => {
+		try {
+			const response = await dashboardAPI.getChartData();
+
+			if (response.status > 199 && response.status < 300) {
+				statistic.value = response.data[0];
+			}
+		} catch (error) {
+			console.log("err", error);
+			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
+		}
+	};
+
 	onMounted(() => {
-		getData();
+		getOrderStatistics();
+		getMonthlyOrderData();
 	});
 </script>
 

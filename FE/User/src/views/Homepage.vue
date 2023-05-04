@@ -126,6 +126,8 @@
 				productFactory.transformProductAPIResponseToCategoryProduct,
 			);
 		} catch (error) {
+			console.log("Error: ", error);
+
 			return [];
 		}
 	};

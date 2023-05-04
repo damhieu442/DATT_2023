@@ -50,7 +50,7 @@
 	};
 
 	const getUserDetailInfo = async () => {
-		const ROOT_URL = process.env.VUE_APP_API_URL;
+		const IMAGE_BASE_URL = process.env.VUE_APP_API_URL;
 
 		try {
 			const response = await customer.getDetail(userId);
@@ -63,7 +63,10 @@
 					phoneNumer: data.PhoneNumber,
 					email: data.Email,
 					avatarURL: data.ImgName
-						? ROOT_URL.concat("/api/Customers/imgName/", data.ImgName.split(".")[0])
+						? IMAGE_BASE_URL.concat(
+								"/api/Customers/imgName/",
+								data.ImgName.split(".")[0],
+						  )
 						: "",
 					address: data.Address,
 					role: data.Role,

@@ -2,7 +2,7 @@ import { cart as cartAPI, product as productAPI } from "@/api";
 import { EKeys } from "@/constants/config";
 import _cloneDeep from "lodash/cloneDeep";
 
-const ROOT_URL = process.env.VUE_APP_API_URL;
+const IMAGE_BASE_URL = process.env.VUE_APP_API_URL;
 
 export const EMutationTypes = {
 	UPDATE_PRODUCT_AMOUNT: "UPDATE_PRODUCT_AMOUNT",
@@ -261,9 +261,9 @@ const cart = {
 						cartId: item.CartDetailId,
 						id: item.ShoeId,
 						image: item.ImgName
-							? ROOT_URL.concat(
+							? IMAGE_BASE_URL.concat(
 									"/api/Shoes/imgName/",
-									item.ImgName.split(",")[0].split(".")[0],
+									item.ImgName.split(",")[0],
 							  )
 							: "",
 						name: item.ShoeName,

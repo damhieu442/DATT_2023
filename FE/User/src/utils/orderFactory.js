@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
-const ROOT_URL = process.env.VUE_APP_API_URL;
+
+const IMAGE_BASE_URL = process.env.VUE_APP_API_URL;
+
 class OrderFactory {
 	transformCategoryAPIResponseToCategory(orderData, orderList) {
 		return {
@@ -22,10 +24,7 @@ class OrderFactory {
 				name: item.ShoeName,
 				price: item.Price.toLocaleString(),
 				discount: item.Discount,
-				img: ROOT_URL.concat(
-					"/api/Shoes/imgName/",
-					item.ImgName.split(",")[0].split(".")[0],
-				),
+				img: IMAGE_BASE_URL.concat("/api/Shoes/imgName/", item.ImgName.split(",")[0]),
 				size: item.Size,
 				totalPrice: item.TotalPrice.toLocaleString(),
 			})),

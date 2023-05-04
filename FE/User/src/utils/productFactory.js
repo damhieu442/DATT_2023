@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
-const ROOT_URL = process.env.VUE_APP_API_URL;
+
+const IMAGE_BASE_URL = process.env.VUE_APP_API_URL;
 
 class ProductFactory {
 	transformProductAPIResponseToCategoryProduct(data) {
 		const images = data.ImgName.split(",").map((image) =>
-			image ? ROOT_URL.concat("/api/Shoes/imgName/", image.split(".")[0]) : "",
+			image ? IMAGE_BASE_URL.concat("/api/Shoes/imgName/", image.split(".")[0]) : "",
 		);
 
 		if (!images[images.length - 1]) {
@@ -25,7 +26,7 @@ class ProductFactory {
 
 	transformProductAPIResponseToPromotedProduct(data) {
 		const images = data.ImgName.split(",").map((image) =>
-			ROOT_URL.concat("/api/Shoes/imgName/", image.split(".")[0]),
+			IMAGE_BASE_URL.concat("/shoe/", image),
 		);
 		const [image] = images;
 
@@ -37,7 +38,7 @@ class ProductFactory {
 	transformResponseToProductDetail(data) {
 		const shoeSizes = JSON.parse(data.Size);
 		const images = data.ImgName.split(",").map((image) =>
-			image ? ROOT_URL.concat("/api/Shoes/imgName/", image.split(".")[0]) : "",
+			image ? IMAGE_BASE_URL.concat("/api/Shoes/imgName/", image.split(".")[0]) : "",
 		);
 
 		if (!images[images.length - 1]) {

@@ -16,7 +16,9 @@
 		Title,
 		Tooltip,
 	} from "chart.js";
+
 	ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement);
+
 	export default {
 		name: "DonutChart",
 		components: { Line },
@@ -28,6 +30,12 @@
 			options: {
 				type: Object,
 				default: null,
+			},
+		},
+
+		watch: {
+			chartdata() {
+				console.log("Chaine: ", this.chartdata);
 			},
 		},
 	};

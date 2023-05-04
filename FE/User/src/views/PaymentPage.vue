@@ -76,6 +76,8 @@
 	});
 
 	const getDetailCartProducts = async () => {
+		console.log("Called: ", productList);
+
 		try {
 			const productResponses = await Promise.all(
 				productList.value.map((product) => productAPI.getDetail(product.id)),
@@ -230,10 +232,15 @@
 		// store.dispatch()
 	};
 
-	watch(productList, () => {
-		productSizes.value.clear();
-		getDetailCartProducts();
-	});
+	watch(
+		productList,
+		() => {
+			console.log("Change: ");
+			productSizes.value.clear();
+			getDetailCartProducts();
+		},
+		{ immediate: true },
+	);
 
 	onBeforeUnmount(() => {
 		if (route.query.buyNow) {

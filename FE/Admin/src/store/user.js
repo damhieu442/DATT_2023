@@ -2,7 +2,7 @@ import { auth } from "@/api";
 import { EKeys, ERole } from "@/constants/config";
 import Cookies from "js-cookie";
 
-const ROOT_URL = process.env.VUE_APP_API_URL;
+const IMAGE_BASE_URL = process.env.VUE_APP_API_URL;
 
 const cart = {
 	namespaced: true,
@@ -43,7 +43,10 @@ const cart = {
 				state.address = userInfo.Address;
 				state.role = userInfo.Role;
 				state.image = userInfo.ImgName
-					? ROOT_URL.concat("/api/Customers/imgName/", userInfo.ImgName.split(".")[0])
+					? IMAGE_BASE_URL.concat(
+							"/api/Customers/imgName/",
+							userInfo.ImgName.split(".")[0],
+					  )
 					: "";
 
 				if (form.isRemeberPassword) {
@@ -146,7 +149,9 @@ const cart = {
 				uid,
 				phone,
 				address,
-				image: image ? ROOT_URL.concat("/api/Customers/imgName/", image.split(".")[0]) : "",
+				image: image
+					? IMAGE_BASE_URL.concat("/api/Customers/imgName/", image.split(".")[0])
+					: "",
 				role,
 			});
 		},
@@ -163,7 +168,6 @@ const cart = {
 			try {
 				const response = await auth.updateUser(formData, form.uid);
 
-				console.log("Response: ", response);
 				if ((response.status > 199) & (response.status < 300)) {
 					return true;
 				}
@@ -181,7 +185,6 @@ const cart = {
 			try {
 				const response = await auth.updateUser(formData, form.customerId);
 
-				console.log("Response: ", response);
 				if ((response.status > 199) & (response.status < 300)) {
 					return true;
 				}

@@ -2,7 +2,7 @@ import axios from "@/request";
 
 export default {
 	getList(query, params) {
-		return axios.post("/api/bills/pagingandfilter", { params });
+		return axios.post("/api/bills/pagingandfilter", undefined, { params });
 	},
 
 	getDetailOrder(id) {

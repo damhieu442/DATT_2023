@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
 
-const ROOT_URL = process.env.VUE_APP_API_URL;
+const IMAGE_BASE_URL = process.env.VUE_APP_API_URL;
 
 class ProductFactory {
 	transformResponseToProductData(data) {
 		const images = data.ImgName.split(",").map((image) =>
-			ROOT_URL.concat("/api/Shoes/imgName/", image.split(".")[0]),
+			image ? IMAGE_BASE_URL.concat("/api/Shoes/imgName/", image.split(".")[0]) : "",
 		);
 		const [image] = images;
 		return {
@@ -32,7 +32,7 @@ class ProductFactory {
 				: data.ImgName
 		)
 			.split(",")
-			.map((imgName) => ROOT_URL.concat("/api/Shoes/imgName/", imgName.split(".")[0]));
+			.map((imgName) => IMAGE_BASE_URL.concat("/api/Shoes/imgName/", imgName.split(".")[0]));
 
 		const size = JSON.parse(data.Size).map((size) => ({
 			id: size.SizeId,

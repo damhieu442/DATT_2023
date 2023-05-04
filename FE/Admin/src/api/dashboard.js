@@ -4,4 +4,8 @@ export default {
 	getStatistics() {
 		return axios.get("/api/dashboards");
 	},
+
+	getChartData() {
+		return axios.get("/api/dashboards/chart");
+	},
 };

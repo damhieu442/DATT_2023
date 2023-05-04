@@ -2,6 +2,8 @@ import { auth } from "@/api";
 import { EKeys, ERole } from "@/constants/config";
 import Cookies from "js-cookie";
 
+const IMAGE_BASE_URL = process.env.VUE_APP_API_URL;
+
 const cart = {
 	namespaced: true,
 	state: () => ({
@@ -58,7 +60,7 @@ const cart = {
 				state.phone = userInfo.PhoneNumber;
 				state.address = userInfo.Address;
 				state.image = userInfo.ImgName
-					? ROOT_URL.concat("/api/Shoes/imgName/", userInfo.ImgName)
+					? IMAGE_BASE_URL.concat("/api/Shoes/imgName/", userInfo.ImgName)
 					: "";
 
 				if (form.isRemeberPassword) {
@@ -174,7 +176,6 @@ const cart = {
 			try {
 				const response = await auth.updateUser(formData, form.uid);
 
-				console.log("Response: ", response);
 				if ((response.status > 199) & (response.status < 300)) {
 					return true;
 				}
