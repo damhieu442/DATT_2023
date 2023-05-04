@@ -48,4 +48,10 @@ export default {
 	updateProductv2(id, form) {
 		return axios.put(`/api/Shoes/v2/${id}`, form);
 	},
+
+	exportExcel() {
+		return axios.post("/api/shoes/exportv2", [], {
+			responseType: "blob",
+		});
+	},
 };

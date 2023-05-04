@@ -2,12 +2,26 @@
 	<div>
 		<div class="flex justify-between items-center my-4">
 			<h1 class="text-xl font-bold">Danh sách sản phẩm</h1>
-			<router-link
-				class="py-2 px-14 mr-4 inline-block bg-blue-400 text-white hover:text-white text-base rounded-lg"
-				to="/san-pham/tao-moi"
-			>
-				Tạo sản phẩm
-			</router-link>
+			<div>
+				<a-button
+					class="rounded border-0 inline-block mx-2 py-1 bg-sky-400 text-base text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					:loading="isExporting"
+					@click="exportExcelHandler"
+					>Xuất excel</a-button
+				>
+				<a-button
+					class="rounded border-0 inline-block mx-2 py-1 bg-sky-400 text-base text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					@click="getProductList"
+					>Làm mới</a-button
+				>
+
+				<router-link
+					class="py-1 px-6 mx-2 rounded inline-block border border-transparent bg-blue-400 text-white hover:text-white text-base"
+					to="/san-pham/tao-moi"
+				>
+					Tạo sản phẩm
+				</router-link>
+			</div>
 		</div>
 		<div class="my-5 px-7 py-6 border bg-cyan-200 rounded-md">
 			<ProductFilter :loading="isSearchingProduct" @submit="filterProduct" />
@@ -25,7 +39,7 @@
 <script setup>
 	import { useRoute } from "vue-router";
 	import { notification } from "ant-design-vue";
-	import { onMounted, reactive, ref, watch } from "vue";
+	import { onMounted, reactive, ref } from "vue";
 
 	import { product as productAPI } from "@/api";
 	import ProductFilter from "@/components/template/ProductPage/ProductFilter.vue";
@@ -36,8 +50,9 @@
 	import DeleteProductModal from "@/components/template/ProductPage/ConfirmDeleteProductModal.vue";
 
 	const route = useRoute();
-	const isSearchingProduct = ref(false);
+	const isExporting = ref(false);
 	const isGettingData = ref(false);
+	const isSearchingProduct = ref(false);
 	const pagination = reactive({
 		page: Number(route.query.pageNum) || DEFAULT_VALUES.DEFAULT_PAGE,
 		total: DEFAULT_VALUES.DEFAULT_PAGE_COUNT,
@@ -61,6 +76,7 @@
 				pageNumber: page || DEFAULT_VALUES.DEFAULT_PAGE,
 				minPrice: 0,
 				maxPrice: 10_000_000,
+				keyWord: undefined,
 			};
 
 			const body = {
@@ -72,7 +88,7 @@
 			};
 
 			if (filter) {
-				query.keyWord = filter.search;
+				query.keyWord = filter.search || undefined;
 				query.minPrice = filter.minPrice;
 				query.maxPrice = filter.maxPrice;
 				query.CategoryCode = filter.category;
@@ -81,28 +97,32 @@
 					case "":
 						body.Field = "CreatedDate";
 						body.Order = "DESC";
+
 						break;
-					// TODO
 					case "popularity":
-						body.Field = "Price";
+						body.Field = "AvgStar";
 						body.Order = "ASC";
+
 						break;
-					// TODO
 					case "rating":
-						body.Field = "Price";
+						body.Field = "AvgStar";
 						body.Order = "DESC";
+
 						break;
 					case "date":
 						body.Field = "CreatedDate";
 						body.Order = "DESC";
+
 						break;
 					case "price":
 						body.Field = "Price";
 						body.Order = "ASC";
+
 						break;
 					case "price-desc":
 						body.Field = "Price";
 						body.Order = "DESC";
+
 						break;
 
 					default:
@@ -110,14 +130,12 @@
 				}
 			}
 			const response = await productAPI.getFilteredList(query, [body]);
-			console.log("Response: ", response);
+
 			if (response.status > 199 && response.status < 300) {
 				if ("Data" in response.data) {
 					const data = response.data;
-					console.log("data", data);
 
 					products.value = data.Data.map(productFactory.transformResponseToProductData);
-
 					Object.assign(pagination, {
 						page: Number(data.CurrentPage),
 						total: Number(data.TotalRecord),
@@ -166,13 +184,37 @@
 		}
 	};
 
-	onMounted(() => getProductList());
+	const exportExcelHandler = async () => {
+		isExporting.value = true;
 
-	watch(
-		() => route.query,
-		() => {
-			getProductList();
-		},
-		{ deep: true },
-	);
+		try {
+			const result = await productAPI.exportExcel();
+
+			if (result.status === 200) {
+				const blob = new Blob([result.data], {
+					type:
+						result.data.type ||
+						"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+				});
+
+				const downloadURL = URL.createObjectURL(blob);
+				const aEl = document.createElement("a");
+
+				aEl.href = downloadURL;
+				aEl.download = "bao_cao";
+				aEl.style.display = "none";
+				document.body.appendChild(aEl);
+				aEl.click();
+				aEl.remove();
+			} else if (result.status > 499) {
+				throw new Error("Server error");
+			}
+		} catch (error) {
+			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
+		} finally {
+			isExporting.value = false;
+		}
+	};
+
+	onMounted(() => getProductList());
 </script>

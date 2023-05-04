@@ -1,6 +1,10 @@
 <template>
 	<div>
-		<h1 class="text-2xl">Chi tiết đơn hàng</h1>
+		<h1 class="text-2xl">
+			<button class="cursor-pointer mr-4 bg-transparent border-0" @click="goBack">
+				<i class="fas fa-arrow-left" /></button
+			>Chi tiết đơn hàng
+		</h1>
 		<p>
 			Trạng thái:
 			<span :style="{ color: stateColors[order.state] }">{{ orderStates[order.state] }}</span>
@@ -88,13 +92,14 @@
 	import OrderItemsTable from "@/components/template/OrderPage/DetailOrderItemList.vue";
 	import { computed, onMounted, reactive, ref } from "vue";
 	import { notification } from "ant-design-vue";
-	import { useRoute } from "vue-router";
+	import { useRoute, useRouter } from "vue-router";
 	import CancelOrderModal from "@/components/template/OrderPage/CancelOrderModal.vue";
 	import { order as orderAPI, mics as micsAPI, product as productAPI } from "@/api";
 	import { orderAdapter } from "@/utils/orderAdapter";
 	import { PaymentMethodLabels } from "@/constants/order";
 
 	const route = useRoute();
+	const router = useRouter();
 	const rfCancelModal = ref(null);
 
 	const isSubmitting = ref(false);
@@ -102,6 +107,10 @@
 	const order = reactive({});
 	const productSizes = ref(new Map());
 	const orderId = route.params.id;
+
+	const goBack = () => {
+		router.back();
+	};
 
 	const getDetailCartProducts = async () => {
 		try {

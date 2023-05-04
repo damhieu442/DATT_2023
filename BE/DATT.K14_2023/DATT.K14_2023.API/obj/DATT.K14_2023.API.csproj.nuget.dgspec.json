@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj": {}
+    "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj": {}
   },
   "projects": {
-    "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj": {
+    "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj",
+        "projectUniqueName": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj",
         "projectName": "DATT.K14_2023.API",
-        "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj",
+        "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj",
         "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-        "outputPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.API\\obj\\",
+        "outputPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,14 +28,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj": {
-                "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj"
+              "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj": {
+                "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj"
               },
-              "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
-                "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
+              "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
+                "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
               },
-              "D:\\BE-Shoe\\DATT.K14_2023\\EmailService\\EmailService.csproj": {
-                "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\EmailService\\EmailService.csproj"
+              "D:\\DATT_2023\\BE\\DATT.K14_2023\\EmailService\\EmailService.csproj": {
+                "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\EmailService\\EmailService.csproj"
               }
             }
           }
@@ -82,14 +82,14 @@
         }
       }
     },
-    "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj": {
+    "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj",
+        "projectUniqueName": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj",
         "projectName": "DATT.K14_2023.BL",
-        "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj",
+        "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj",
         "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-        "outputPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.BL\\obj\\",
+        "outputPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.BL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -106,11 +106,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
-                "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
+              "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
+                "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
               },
-              "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj": {
-                "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj"
+              "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj": {
+                "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj"
               }
             }
           }
@@ -150,14 +150,14 @@
         }
       }
     },
-    "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
+    "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
+        "projectUniqueName": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
         "projectName": "DATT.k14_2023.COMMON",
-        "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
+        "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj",
         "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-        "outputPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\obj\\",
+        "outputPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -223,14 +223,14 @@
         }
       }
     },
-    "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj": {
+    "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
+        "projectUniqueName": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
         "projectName": "DATT.k14_2023.DL",
-        "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
+        "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
         "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-        "outputPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\obj\\",
+        "outputPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -247,8 +247,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
-                "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
+              "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
+                "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
               }
             }
           }
@@ -292,14 +292,14 @@
         }
       }
     },
-    "D:\\BE-Shoe\\DATT.K14_2023\\EmailService\\EmailService.csproj": {
+    "D:\\DATT_2023\\BE\\DATT.K14_2023\\EmailService\\EmailService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BE-Shoe\\DATT.K14_2023\\EmailService\\EmailService.csproj",
+        "projectUniqueName": "D:\\DATT_2023\\BE\\DATT.K14_2023\\EmailService\\EmailService.csproj",
         "projectName": "EmailService",
-        "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\EmailService\\EmailService.csproj",
+        "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\EmailService\\EmailService.csproj",
         "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-        "outputPath": "D:\\BE-Shoe\\DATT.K14_2023\\EmailService\\obj\\",
+        "outputPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\EmailService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",

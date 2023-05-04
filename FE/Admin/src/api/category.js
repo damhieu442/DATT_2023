@@ -35,4 +35,10 @@ export default {
 	updateCategory(form) {
 		return axios.put(`/api/Categorys/v2/${form.CategoryId}`, form);
 	},
+
+	exportExcel() {
+		return axios.post("/api/categorys/exportv2", [], {
+			responseType: "blob",
+		});
+	},
 };

@@ -5,11 +5,26 @@
 			<a-col :span="14">
 				<Search placeholder="Nhập họ tên khách hàng muốn tìm kiếm" />
 			</a-col>
-			<a-col :span="4">
+			<a-col :span="2">
 				<router-link
 					to="/khach-hang/them-moi"
 					class="inline-block m-auto bg-[#40a9ff] text-white h-full px-6 ml-4 align-middle leading-8 hover:text-white hover:bg-sky-500"
 					>Thêm mới</router-link
+				>
+			</a-col>
+			<a-col :span="2">
+				<a-button
+					class="inline-block m-auto bg-sky-400 text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					@click="getUserList"
+					>Làm mới</a-button
+				>
+			</a-col>
+			<a-col :span="2">
+				<a-button
+					class="inline-block m-auto bg-sky-400 text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					:loading="isExporting"
+					@click="exportExcelHandler"
+					>Xuất excel</a-button
 				>
 			</a-col>
 		</a-row>
@@ -22,7 +37,7 @@
 
 <script setup>
 	import Search from "@/components/shared/Search.vue";
-	import { reactive, ref, watch } from "vue";
+	import { onMounted, reactive, ref, watch } from "vue";
 	import { useRoute } from "vue-router";
 
 	import UserList from "@/components/template/CustomerPage/UserList.vue";
@@ -45,6 +60,7 @@
 
 	const user = ref([]);
 	const isLoading = ref(false);
+	const isExporting = ref(false);
 
 	const getUserList = async () => {
 		isLoading.value = true;
@@ -112,13 +128,45 @@
 		}
 	};
 
+	const exportExcelHandler = async () => {
+		isExporting.value = true;
+
+		try {
+			const result = await customer.exportExcel();
+
+			if (result.status === 200) {
+				const blob = new Blob([result.data], {
+					type:
+						result.data.type ||
+						"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+				});
+				const downloadURL = URL.createObjectURL(blob);
+				const aEl = document.createElement("a");
+
+				aEl.href = downloadURL;
+				aEl.download = "bao_cao";
+				aEl.style.display = "none";
+				document.body.appendChild(aEl);
+				aEl.click();
+				aEl.remove();
+			} else if (result.status > 499) {
+				throw new Error("Server error");
+			}
+		} catch (error) {
+			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
+		} finally {
+			isExporting.value = false;
+		}
+	};
+
+	onMounted(() => {
+		getUserList();
+	});
+
 	watch(
 		() => route.query,
 		() => {
 			getUserList();
-		},
-		{
-			immediate: true,
 		},
 	);
 </script>

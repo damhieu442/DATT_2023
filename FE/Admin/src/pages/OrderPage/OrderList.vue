@@ -1,10 +1,28 @@
 <template>
-	<div><h1 class="text-2xl">Danh sách đơn hàng</h1></div>
-	<div class="my-5 px-7 py-6 border rounded-md bg-cyan-200">
-		<OrderFilter />
+	<div>
+		<div class="flex justify-between items-center my-4">
+			<h1 class="text-2xl">Danh sách đơn hàng</h1>
+			<div>
+				<a-button
+					class="rounded inline-block mx-2 py-1 bg-sky-400 text-base text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					:loading="isExporting"
+					@click="exportExcelHandler"
+					>Xuất excel</a-button
+				>
+				<a-button
+					class="rounded inline-block mx-2 py-1 bg-sky-400 text-base text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					@click="getData"
+					>Làm mới</a-button
+				>
+			</div>
+		</div>
+
+		<div class="my-5 px-7 py-6 border rounded-md bg-cyan-200">
+			<OrderFilter />
+		</div>
+		<OrderListPage :loading="isGettingData" :data="orders" class="my-5" />
+		<ThePagination :data="pagination" />
 	</div>
-	<OrderListPage :loading="isGettingData" :data="orders" class="my-5" />
-	<ThePagination :data="pagination" />
 </template>
 
 <script setup>
@@ -13,7 +31,6 @@
 	import { notification } from "ant-design-vue";
 
 	import { order as orderAPI } from "@/api";
-	import ORDER_STATE from "@/constants/order";
 	import OrderFilter from "@/components/template/OrderPage/OrderFilter.vue";
 	import ThePagination from "@/components/shared/ThePagination.vue";
 	import OrderListPage from "@/components/template/OrderPage/OrderList.vue";
@@ -30,6 +47,7 @@
 		perPage: Number(route.query.pageSize) || MAX_RECORD,
 	});
 	const isGettingData = ref(false);
+	const isExporting = ref(false);
 	const orders = ref([]);
 
 	const getData = async () => {
@@ -71,6 +89,38 @@
 			notification.error({ message: "Có lỗi xảy ra, không thế lấy danh sách đơn hàng" });
 		} finally {
 			isGettingData.value = false;
+		}
+	};
+
+	const exportExcelHandler = async () => {
+		isExporting.value = true;
+
+		try {
+			const result = await orderAPI.exportExcel();
+
+			if (result.status === 200) {
+				const blob = new Blob([result.data], {
+					type:
+						result.data.type ||
+						"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+				});
+
+				const downloadURL = URL.createObjectURL(blob);
+				const aEl = document.createElement("a");
+
+				aEl.href = downloadURL;
+				aEl.download = "bao_cao";
+				aEl.style.display = "none";
+				document.body.appendChild(aEl);
+				aEl.click();
+				aEl.remove();
+			} else if (result.status > 499) {
+				throw new Error("Server error");
+			}
+		} catch (error) {
+			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
+		} finally {
+			isExporting.value = false;
 		}
 	};
 

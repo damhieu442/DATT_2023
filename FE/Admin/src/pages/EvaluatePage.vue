@@ -1,7 +1,20 @@
 <template>
 	<div>
 		<div class="flex justify-between items-center mb-4">
-			<h1 class="text-3xl">Góp ý</h1>
+			<h1 class="text-2xl">Góp ý</h1>
+			<div>
+				<a-button
+					class="rounded inline-block mx-2 py-1 bg-sky-400 text-base text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					:loading="isExporting"
+					@click="exportExcelHandler"
+					>Xuất excel</a-button
+				>
+				<a-button
+					class="rounded inline-block mx-2 py-1 bg-sky-400 text-base text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					@click="getEvaluateList"
+					>Làm mới</a-button
+				>
+			</div>
 		</div>
 		<Search placeholder="Nhập góp ý muốn tìm kiếm" class="my-6 w-3/5" />
 		<EvaluateList
@@ -37,6 +50,7 @@
 	const route = useRoute();
 	const store = useStore();
 
+	const isExporting = ref(false);
 	const isGettingData = ref(false);
 	const feedbacks = ref([]);
 	const rfEditModal = ref(null);
@@ -153,6 +167,38 @@
 			}
 		} catch (error) {
 			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
+		}
+	};
+
+	const exportExcelHandler = async () => {
+		isExporting.value = true;
+
+		try {
+			const result = await feedback.exportExcel();
+
+			if (result.status === 200) {
+				const blob = new Blob([result.data], {
+					type:
+						result.data.type ||
+						"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+				});
+
+				const downloadURL = URL.createObjectURL(blob);
+				const aEl = document.createElement("a");
+
+				aEl.href = downloadURL;
+				aEl.download = "bao_cao";
+				aEl.style.display = "none";
+				document.body.appendChild(aEl);
+				aEl.click();
+				aEl.remove();
+			} else if (result.status > 499) {
+				throw new Error("Server error");
+			}
+		} catch (error) {
+			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
+		} finally {
+			isExporting.value = false;
 		}
 	};
 

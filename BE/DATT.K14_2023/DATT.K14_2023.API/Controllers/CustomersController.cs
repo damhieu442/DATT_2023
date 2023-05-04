@@ -80,9 +80,9 @@ namespace DATT.K14_2023.API.Controllers
             try
             {
                 // string path local
-                string path = _webHostEnvironment.WebRootPath + "\\customer\\";
+                // string path = _webHostEnvironment.WebRootPath + "\\customer\\";
                 // string path deploy azure
-                // string path = "/home/site/wwwroot/wwwroot/customer/";
+                string path = "/home/site/wwwroot/wwwroot/customer/";
                 var filePath = path + imgName + ".jpg";
                 if (System.IO.File.Exists(filePath))
                 {
@@ -122,9 +122,9 @@ namespace DATT.K14_2023.API.Controllers
                 if (count == 0)
                 {
                     // string path local
-                    string path = _webHostEnvironment.WebRootPath + "\\customer\\";
+                    // string path = _webHostEnvironment.WebRootPath + "\\customer\\";
                     // string path deploy azure
-                    // string path = "/home/site/wwwroot/wwwroot/customer/";
+                    string path = "/home/site/wwwroot/wwwroot/customer/";
                     if (!Directory.Exists(path))
                     {
                         Directory.CreateDirectory(path);

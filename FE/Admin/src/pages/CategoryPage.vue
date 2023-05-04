@@ -2,9 +2,22 @@
 	<div>
 		<div class="flex justify-between items-center mb-4">
 			<h1 class="text-3xl">Danh mục sản phẩm</h1>
-			<a-button class="category-add-btn" @click="showAddCategoryDialog">
-				<span>+ Thêm danh mục sản phẩm</span>
-			</a-button>
+			<div>
+				<a-button
+					class="rounded inline-block mx-2 py-1 bg-sky-400 text-base text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					:loading="isExporting"
+					@click="exportExcelHandler"
+					>Xuất excel</a-button
+				>
+				<a-button
+					class="rounded inline-block mx-2 py-1 bg-sky-400 text-base text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
+					@click="getCategoryList"
+					>Làm mới</a-button
+				>
+				<a-button class="category-add-btn" @click="showAddCategoryDialog">
+					<span>+ Thêm danh mục sản phẩm</span>
+				</a-button>
+			</div>
 		</div>
 		<Search placeholder="Nhập tên danh mục muốn tìm kiếm" class="my-6 w-3/5" />
 		<CategoryTable
@@ -49,6 +62,7 @@
 		total: 0,
 		perPage: Number(route.query.pageSize) || MAX_RECORD,
 	});
+	const isExporting = ref(false);
 	const isGettingData = ref(false);
 	const categories = ref([]);
 	const rfDeleteCategoryDialog = ref(null);
@@ -140,8 +154,6 @@
 
 	const editCategory = async (categoryForm) => {
 		try {
-			console.log("cate", categoryForm);
-
 			const { isEdit, form } = categoryForm;
 			const sendForm = {
 				CategoryName: form.name,
@@ -206,6 +218,38 @@
 		}
 	};
 
+	const exportExcelHandler = async () => {
+		isExporting.value = true;
+
+		try {
+			const result = await category.exportExcel();
+
+			if (result.status === 200) {
+				const blob = new Blob([result.data], {
+					type:
+						result.data.type ||
+						"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+				});
+
+				const downloadURL = URL.createObjectURL(blob);
+				const aEl = document.createElement("a");
+
+				aEl.href = downloadURL;
+				aEl.download = "bao_cao";
+				aEl.style.display = "none";
+				document.body.appendChild(aEl);
+				aEl.click();
+				aEl.remove();
+			} else if (result.status > 499) {
+				throw new Error("Server error");
+			}
+		} catch (error) {
+			notification.error({ message: "Có lỗi xảy ra, vui lòng thử lại" });
+		} finally {
+			isExporting.value = false;
+		}
+	};
+
 	onMounted(() => getCategoryList());
 
 	watch(
@@ -219,6 +263,6 @@
 
 <style lang="scss" scoped>
 	.category-add-btn {
-		@apply py-2 px-10 text-base bg-blue-500 text-white h-auto #{!important};
+		@apply py-1 px-10 rounded text-base bg-blue-500 text-white h-auto;
 	}
 </style>

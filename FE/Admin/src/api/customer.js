@@ -20,4 +20,8 @@ export default {
 	createUser(form) {
 		return axios.post("/api/Customers", form);
 	},
+
+	exportExcel() {
+		return axios.post("/api/customers/exportv2", [], { responseType: "blob" });
+	},
 };

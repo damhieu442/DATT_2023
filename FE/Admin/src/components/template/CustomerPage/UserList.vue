@@ -11,14 +11,14 @@
 			align="center"
 			title="Mã khách hàng"
 			data-index="id"
-			width="300px"
+			width="150px"
 		>
-			<template #default="{ value: id }">
+			<template #default="{ text: id, index }">
 				<router-link
 					:to="'/khach-hang/' + id"
 					class="text-current underline hover:text-blue-500"
 				>
-					{{ id }}
+					{{ index + 1 }}
 				</router-link>
 			</template>
 		</a-table-column>

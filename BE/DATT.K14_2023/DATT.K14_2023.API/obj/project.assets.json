@@ -5433,11 +5433,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj",
+      "projectUniqueName": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj",
       "projectName": "DATT.K14_2023.API",
-      "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj",
+      "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\DATT.K14_2023.API.csproj",
       "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-      "outputPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.API\\obj\\",
+      "outputPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5454,14 +5454,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj": {
-              "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj"
+            "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj": {
+              "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.K14_2023.BL\\DATT.K14_2023.BL.csproj"
             },
-            "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
-              "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
+            "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
+              "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
             },
-            "D:\\BE-Shoe\\DATT.K14_2023\\EmailService\\EmailService.csproj": {
-              "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\EmailService\\EmailService.csproj"
+            "D:\\DATT_2023\\BE\\DATT.K14_2023\\EmailService\\EmailService.csproj": {
+              "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\EmailService\\EmailService.csproj"
             }
           }
         }

@@ -31,7 +31,7 @@
 <script setup>
 	import { useStore } from "vuex";
 	import { useRouter, useRoute } from "vue-router";
-	import { ref, computed, nextTick, onMounted, onBeforeUnmount } from "vue";
+	import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch } from "vue";
 
 	import { notification } from "ant-design-vue";
 
@@ -230,7 +230,8 @@
 		// store.dispatch()
 	};
 
-	onMounted(() => {
+	watch(productList, () => {
+		productSizes.value.clear();
 		getDetailCartProducts();
 	});
 

@@ -119,7 +119,7 @@
 						><a-radio-group
 							v-model:value="formState.role"
 							:options="roleOptionsList"
-							:disabled="disabled"
+							:disabled="disabled || !isAdmin"
 						/>
 					</a-form-item>
 				</Card>

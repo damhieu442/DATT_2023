@@ -16,4 +16,10 @@ export default {
 	deleteFeedBack(id) {
 		return axios.delete(`/api/FeedBacks/${id}`);
 	},
+
+	exportExcel() {
+		return axios.post("/api/feedbacks/exportv2", [], {
+			responseType: "blob",
+		});
+	},
 };

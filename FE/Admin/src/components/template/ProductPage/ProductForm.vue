@@ -506,6 +506,10 @@
 		}
 	};
 
+	const resetForm = () => {
+		Object.assign(form, _cloneDeep(defaultForm));
+	};
+
 	watch(
 		() => props.product,
 		() => {
@@ -522,6 +526,8 @@
 			URL.revokeObjectURL(url);
 		});
 	});
+
+	defineExpose({ reset: resetForm });
 </script>
 
 <style lang="scss" scoped>

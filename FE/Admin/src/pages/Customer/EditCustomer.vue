@@ -2,7 +2,11 @@
 	<div>
 		<div v-if="!notFound">
 			<div class="flex justify-between items-center">
-				<h1 class="text-2xl">Thông tin khách hàng</h1>
+				<h1 class="text-2xl">
+					<button class="cursor-pointer mr-4 bg-transparent border-0" @click="goBack">
+						<i class="fas fa-arrow-left" /></button
+					>Thông tin khách hàng
+				</h1>
 			</div>
 			<CustomerDetail
 				class="my-6"
@@ -40,6 +44,10 @@
 	const route = useRoute();
 	const router = useRouter();
 	const userId = route.params.id;
+
+	const goBack = () => {
+		router.back();
+	};
 
 	const getUserDetailInfo = async () => {
 		const ROOT_URL = process.env.VUE_APP_API_URL;

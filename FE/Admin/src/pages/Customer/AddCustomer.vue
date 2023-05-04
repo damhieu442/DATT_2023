@@ -1,7 +1,11 @@
 <template>
 	<div>
 		<div class="flex justify-between items-center">
-			<h1 class="text-2xl">Thêm mới khách hàng</h1>
+			<h1 class="text-2xl">
+				<button class="cursor-pointer mr-4 bg-transparent border-0" @click="goBack">
+					<i class="fas fa-arrow-left" /></button
+				>Thêm mới khách hàng
+			</h1>
 		</div>
 		<CustomerDetail class="my-6" @submit="addUser" />
 	</div>
@@ -14,6 +18,10 @@
 	import CustomerDetail from "@/components/template/CustomerPage/CustomerDetail.vue";
 
 	const router = useRouter();
+
+	const goBack = () => {
+		router.back();
+	};
 
 	/**
 	 * @typedef TUpdateForm

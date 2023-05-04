@@ -2,7 +2,11 @@
 	<div>
 		<div v-if="!notFound">
 			<div class="flex justify-between items-center">
-				<h1 class="text-2xl">Thông tin khách hàng</h1>
+				<h1 class="text-2xl">
+					<button class="cursor-pointer mr-4 bg-transparent border-0" @click="goBack">
+						<i class="fas fa-arrow-left" /></button
+					>Thông tin khách hàng
+				</h1>
 				<router-link
 					:to="editLink"
 					class="py-2 px-10 rounded-md bg-blue-500 hover:bg-blue-400 text-white hover:text-white"
@@ -30,7 +34,7 @@
 	import { customer } from "@/api";
 	import { notification } from "ant-design-vue";
 	import { onMounted, ref } from "vue";
-	import { useRoute } from "vue-router";
+	import { useRoute, useRouter } from "vue-router";
 
 	import CustomerDetail from "@/components/template/CustomerPage/CustomerDetail.vue";
 
@@ -38,9 +42,14 @@
 	const userInfo = ref(null);
 
 	const route = useRoute();
+	const router = useRouter();
 	const userId = route.params.id;
 
 	const editLink = `/khach-hang/${userId}/chinh-sua`;
+
+	const goBack = () => {
+		router.back();
+	};
 
 	const getUserDetailInfo = async () => {
 		const ROOT_URL = process.env.VUE_APP_API_URL;

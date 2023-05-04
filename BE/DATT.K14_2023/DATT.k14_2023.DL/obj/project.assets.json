@@ -3937,11 +3937,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
+      "projectUniqueName": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
       "projectName": "DATT.k14_2023.DL",
-      "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
+      "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\DATT.k14_2023.DL.csproj",
       "packagesPath": "C:\\Users\\hieud\\.nuget\\packages\\",
-      "outputPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.DL\\obj\\",
+      "outputPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.DL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hieud\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3958,8 +3958,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
-              "projectPath": "D:\\BE-Shoe\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
+            "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj": {
+              "projectPath": "D:\\DATT_2023\\BE\\DATT.K14_2023\\DATT.k14_2023.COMMON\\DATT.k14_2023.COMMON.csproj"
             }
           }
         }

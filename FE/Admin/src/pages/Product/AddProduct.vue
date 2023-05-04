@@ -10,7 +10,12 @@
 				</h1>
 			</div>
 
-			<ProductForm :loading="isSubmitting" @submit="submitFormHandler" @cancel="goBack" />
+			<ProductForm
+				ref="rfForm"
+				:loading="isSubmitting"
+				@submit="submitFormHandler"
+				@cancel="goBack"
+			/>
 		</div>
 	</div>
 </template>
@@ -26,9 +31,11 @@
 
 	const router = useRouter();
 	const store = useStore();
+
 	const username = store.state.user.username;
 
 	const isSubmitting = ref(false);
+	const rfForm = ref(null);
 
 	const goBack = () => {
 		router.back();
@@ -47,6 +54,7 @@
 			const response = await product.createProduct(sendForm);
 			if (response.status > 199 && response.status < 300) {
 				notification.success({ message: "Tạo sản phẩm thành công" });
+				rfForm.value.reset();
 			} else {
 				throw new Error();
 			}

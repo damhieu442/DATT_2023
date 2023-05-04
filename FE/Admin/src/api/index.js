@@ -6,3 +6,4 @@ export { default as evaluate } from "./evaluate";
 export { default as customer } from "./customer";
 export { default as mics } from "./mics";
 export { default as order } from "./order";
+export { default as dashboard } from "./dashboard";

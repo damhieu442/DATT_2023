@@ -16,4 +16,10 @@ export default {
 	getOrderProductList(id) {
 		return axios.get(`/api/billdetails/${id}`);
 	},
+
+	exportExcel() {
+		return axios.post("/api/bills/exportv2", [], {
+			responseType: "blob",
+		});
+	},
 };
