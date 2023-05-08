@@ -10,6 +10,7 @@
 				<a-col :span="17"
 					><ShopTable
 						:products="productList"
+						:product-sizes="productSizes"
 						:is-synchronizing="isSynchronizing"
 						@synchronize="synchronizeProductList"
 				/></a-col>
@@ -24,17 +25,31 @@
 <script setup>
 	import { useStore } from "vuex";
 	import PageLoader from "@/components/shared/PageLoader.vue";
-	import { computed, onMounted, ref } from "vue";
+	import { computed, onMounted, ref, watch } from "vue";
 	import ShopTable from "@/components/template/CartPage/ShopTable.vue";
 	import CartTotal from "@/components/template/CartPage/CartTotal.vue";
+	import { product as productAPI } from "@/api";
 
 	const store = useStore();
 	const isSynchronizing = ref(false);
+	const productSizes = ref(new Map());
 
 	const productList = computed(() => store.state.cart.productList);
 	const isGettingUserCart = store.state.cart.isLoadingData;
 	const totalProduct = computed(() => store.getters["cart/totalProduct"]);
 	const totalPrice = computed(() => store.getters["cart/totalPrice"]);
+
+	const getDetailCartProducts = async () => {
+		try {
+			const productResponses = await Promise.all(
+				productList.value.map((product) => productAPI.getDetail(product.id)),
+			);
+
+			for (const response of productResponses) {
+				productSizes.value.set(response.data.ShoeId, JSON.parse(response.data.Size));
+			}
+		} catch (error) {}
+	};
 
 	const synchronizeProductList = async () => {
 		isSynchronizing.value = true;
@@ -50,6 +65,15 @@
 			store.dispatch("cart/getUserCart");
 		}
 	});
+
+	watch(
+		productList,
+		() => {
+			productSizes.value.clear();
+			getDetailCartProducts();
+		},
+		{ immediate: true },
+	);
 </script>
 
 <style lang="scss" scoped>

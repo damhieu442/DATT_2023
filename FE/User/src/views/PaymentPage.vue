@@ -9,6 +9,7 @@
 					:products="productList"
 					:isLoggedIn="isLoggedIn"
 					:loading="isGettingCheckoutKey"
+					:running-out-carts="runOutCarts"
 					:disabled="productList.length === 0"
 					@submit="orderHandler"
 				/>
@@ -51,6 +52,7 @@
 	const rfCheckoutModal = ref(null);
 	const isShowCheckout = ref(false);
 	const isGettingCheckoutKey = ref(false);
+	const runOutCarts = ref("");
 	const paymentId = ref("");
 	const productSizes = ref(new Map());
 	let paymentForm = null;
@@ -76,8 +78,6 @@
 	});
 
 	const getDetailCartProducts = async () => {
-		console.log("Called: ", productList);
-
 		try {
 			const productResponses = await Promise.all(
 				productList.value.map((product) => productAPI.getDetail(product.id)),
@@ -111,12 +111,16 @@
 				return {
 					ShoeId: product.id,
 					Size: JSON.stringify(productSize),
+					TotalSold: productSize.reduce(
+						(totalSold, size) => totalSold + size.SoldNumber,
+						0,
+					),
 				};
 			});
 
 			const productUpdateResponse = Promise.all(
 				updateProducts.map((item) => productAPI.updateProduct(item.ShoeId, item)),
-			).then(console.log);
+			);
 
 			if (response.status > 199 && response.status < 300) {
 				store.dispatch("cart/reset");
@@ -125,6 +129,18 @@
 				throw new Error();
 			}
 		} catch (error) {
+			const RUNNING_OUT_SHOE = 6;
+
+			if (error.name === "AxiosError") {
+				if (error.response.data.ErrorCode === RUNNING_OUT_SHOE) {
+					const runOutShoeCartId = error.response.data.MoreInfo.map(
+						(cart) => cart.CartDetailId,
+					).join(",");
+
+					return runOutShoeCartId;
+				}
+			}
+
 			return false;
 		}
 	};
@@ -165,39 +181,34 @@
 
 	const orderHandler = async (paymentMethod) => {
 		const form = await deliveryAddress.value.submit();
-		const uid = store.state.user.uid;
 
 		if (!form) {
 			return;
 		}
 
-		const sendForm = {
-			CustomerId: uid,
-			FullName: form.fullName,
-			Email: form.email,
-			Address: form.address,
-			PhoneNumber: form.phone,
-			TotalPrice: totalPrice.value,
-			PaymentMethod: EPaymentMethod.OFFLINE,
-			Country: form.country,
-			City: form.city,
-			Note: form.note,
-		};
-
 		if (paymentMethod === EPaymentMethod.OFFLINE) {
 			paymentForm = null;
-			const isSuccess = await createBillHandler(form);
+			try {
+				const isSuccess = await createBillHandler(form);
+				if (typeof isSuccess === "string") {
+					notification.error({
+						message: "Sản phẩm đã hết hàng",
+					});
 
-			if (isSuccess) {
-				notification.success({
-					message:
-						"Đơn hàng đã đang được xử lý, bạn có thể kiểm tra trong quản lý đơn hàng",
-				});
-				router.replace("/");
-			} else {
-				notification.error({
-					message: "Có lỗi xảy ra, vui lòng thử lại",
-				});
+					runOutCarts.value = isSuccess.split(",");
+				} else if (isSuccess) {
+					notification.success({
+						message:
+							"Đơn hàng đã đang được xử lý, bạn có thể kiểm tra trong quản lý đơn hàng",
+					});
+					router.replace("/");
+				} else {
+					notification.error({
+						message: "Có lỗi xảy ra, vui lòng thử lại",
+					});
+				}
+			} catch (error) {
+				console.log("Error: ", error);
 			}
 			return;
 		}
@@ -214,19 +225,28 @@
 
 		notification.success({ message: `Thanh toán thành công, mã giao dịch ${payId}` });
 		rfCheckoutModal.value.close();
-
-		const isSuccess = await createBillHandler(paymentForm, true);
-		if (isSuccess) {
-			notification.success({
-				message: "Đơn hàng đã đang được xử lý, bạn có thể kiểm tra trong quản lý đơn hàng",
-			});
-			paymentForm = null;
-			router.replace("/");
-		} else {
-			notification.error({
-				message:
-					"Có lỗi xảy ra, vui lòng gửi phản hồi với chúng tôi tại mục Liên hệ và đính kèm mã giao dịch của bạn vào mục nội dung",
-			});
+		try {
+			const isSuccess = await createBillHandler(paymentForm, true);
+			if (typeof isSuccess === "string") {
+				notification.error({
+					message: "Sản phẩm đã hết hàng",
+				});
+				runOutCarts.value = isSuccess.split(",");
+			} else if (isSuccess) {
+				notification.success({
+					message:
+						"Đơn hàng đã đang được xử lý, bạn có thể kiểm tra trong quản lý đơn hàng",
+				});
+				paymentForm = null;
+				router.replace("/");
+			} else {
+				notification.error({
+					message:
+						"Có lỗi xảy ra, vui lòng gửi phản hồi với chúng tôi tại mục Liên hệ và đính kèm mã giao dịch của bạn vào mục nội dung",
+				});
+			}
+		} catch (error) {
+			console.log("Error: ", error);
 		}
 
 		// store.dispatch()
@@ -235,7 +255,7 @@
 	watch(
 		productList,
 		() => {
-			console.log("Change: ");
+			console.log("Prod: ", JSON.stringify(productList.value));
 			productSizes.value.clear();
 			getDetailCartProducts();
 		},

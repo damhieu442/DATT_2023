@@ -10,5 +10,7 @@ namespace DATT.k14_2023.DL.DashBoardDL
     {
         dynamic getDashBoard();
         dynamic getDashBoardChart();
+        dynamic getDashBoarPrice();
+        dynamic getDashBoarCategory();
     }
 }

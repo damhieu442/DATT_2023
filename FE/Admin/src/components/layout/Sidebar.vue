@@ -72,6 +72,10 @@
 					],
 				},
 				{
+					title: "Đánh giá",
+					link: "/danh-gia",
+				},
+				{
 					title: "Đơn hàng",
 					link: "/don-hang",
 				},

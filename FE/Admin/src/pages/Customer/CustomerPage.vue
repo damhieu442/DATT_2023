@@ -1,18 +1,18 @@
 <template>
 	<div>
 		<h1 class="text-3xl">Danh sách khách hàng</h1>
-		<a-row class="my-6">
-			<a-col :span="14">
+		<a-row class="my-6" :gutter="[16, 16]">
+			<a-col :span="20" :xxl="14">
 				<Search placeholder="Nhập họ tên khách hàng muốn tìm kiếm" />
 			</a-col>
-			<a-col :span="2">
+			<a-col :span="4" :xxl="3">
 				<router-link
 					to="/khach-hang/them-moi"
 					class="inline-block m-auto bg-[#40a9ff] text-white h-full px-6 ml-4 align-middle leading-8 hover:text-white hover:bg-sky-500"
 					>Thêm mới</router-link
 				>
 			</a-col>
-			<a-col :span="2">
+			<a-col :span="3" :xxl="2">
 				<a-button
 					class="inline-block m-auto bg-sky-400 text-white h-auto px-6 ml-4 align-middle hover:text-white hover:bg-sky-500"
 					@click="getUserList"

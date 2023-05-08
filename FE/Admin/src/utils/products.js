@@ -16,8 +16,10 @@ class ProductFactory {
 			price: data.Price.toLocaleString() + "đ",
 			discount: data.Discount + "%",
 			category: data.CategoryName,
-			sold: data.SoldNumber || "-",
+			sold: data.TotalSold || 0,
 			rating: data.AvgStar || "-",
+			total: data.Total,
+			remain: data.Inventory,
 			createAt: data.CreatedDate ? dayjs(data.CreatedDate).format("DD/MM/YYYY HH:mm") : "-",
 			createdBy: data.CreatedBy,
 			updateAt: data.ModifiedDate ? dayjs(data.ModifiedDate).format("DD/MM/YYYY HH:mm") : "-",
@@ -92,6 +94,13 @@ class ProductFactory {
 					Amount: Number(size.amount),
 					SoldNumber: size.sold || 0,
 				})),
+			),
+		);
+		sendForm.append(
+			"Total",
+			form.size.reduce(
+				(total, size) => total + Number(size.amount) + Number(size.sold || 0),
+				0,
 			),
 		);
 		sendForm.append("CategoryCode", form.categoryCode);

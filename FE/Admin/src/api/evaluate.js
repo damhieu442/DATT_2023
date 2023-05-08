@@ -16,4 +16,12 @@ export default {
 	createItem(form) {
 		return axios.post("/api/Evaluates", form);
 	},
+
+	updateItem(form, id) {
+		return axios.put(`/api/Evaluates/${id}`, form);
+	},
+
+	deleteItem(id) {
+		return axios.delete(`/api/Evaluates/${id}`);
+	},
 };

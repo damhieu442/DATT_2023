@@ -20,6 +20,7 @@ import OrderList from "@/pages/OrderPage/OrderList.vue";
 import OrderDetail from "@/pages/OrderPage/OrderDetail.vue";
 import UserInfoPage from "@/pages/UserInfo.vue";
 import ChangePasswordPage from "@/pages/ChangePassword.vue";
+import ProductReviewPage from "@/pages/ProductReviewPage.vue";
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -48,6 +49,7 @@ export const router = createRouter({
 				{ path: "/san-pham/tao-moi", component: AddProduct },
 				{ path: "/san-pham/:id", component: ProductDetail },
 				{ path: "/san-pham/:id/chinh-sua", component: EditProduct },
+				{ path: "/danh-gia", component: ProductReviewPage },
 				{ path: "/don-hang", component: OrderList },
 				{ path: "/don-hang/:id", component: OrderDetail },
 				{ path: "/khach-hang", component: CustomerPage },

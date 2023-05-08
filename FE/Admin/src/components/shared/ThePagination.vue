@@ -50,6 +50,8 @@
 			},
 		},
 
+		emits: ["update:page", "update:size"],
+
 		data() {
 			return {
 				pagination: _clondeDeep({
@@ -85,7 +87,7 @@
 					page !== 1
 						? _assign({}, otherParams, { [this.pageNumQuery]: page })
 						: otherParams;
-
+				this.$emit("update:page", page);
 				return { path, query };
 			},
 
@@ -95,6 +97,8 @@
 						[this.pageSizeQuery]: this.value,
 					}),
 				});
+
+				this.$emit("update:size", this.value);
 			},
 
 			itemRender({ type, originalElement }) {

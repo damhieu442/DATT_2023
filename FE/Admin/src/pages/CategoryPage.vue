@@ -19,7 +19,7 @@
 				</a-button>
 			</div>
 		</div>
-		<Search placeholder="Nhập tên danh mục muốn tìm kiếm" class="my-6 w-3/5" />
+		<Search placeholder="Nhập tên danh mục muốn tìm kiếm" class="my-6 w-full 2xl:w-3/5" />
 		<CategoryTable
 			class="my-5"
 			:data="categories"

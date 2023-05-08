@@ -51,5 +51,41 @@ namespace DATT.K14_2023.API.Controllers
                 });
             }
         }
+        [HttpGet("price")]
+        public IActionResult getDashBoardPrice()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _dashBoardBL.getDashBoarPrice());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+        }
+        [HttpGet("category")]
+        public IActionResult getDashBoardCategory()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, _dashBoardBL.getDashBoarCategory());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                {
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.Exception,
+                    DevMsg = ex.Message,
+                    UserMsg = Resource.UserMsg.ToString(),
+                });
+            }
+        }
     }
 }

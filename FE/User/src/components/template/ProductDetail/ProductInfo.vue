@@ -234,6 +234,13 @@
 				return breadcrumbs;
 			});
 
+			const activeCartProductItem = computed(() => {
+				return store.state.cart.productList.find(
+					(product) =>
+						product.id === props.id && product.size === selectedSize.value?.code,
+				);
+			});
+
 			const productPrice = props.discount
 				? Math.ceil((props.price * (100 - props.discount)) / 100)
 				: props.price;
@@ -244,7 +251,17 @@
 			const formattedOriginPrice = numberFormatter.format(props.price);
 
 			const numberUpdateHandler = (value) => {
-				console.log("Value", value);
+				const enteredAmount = Number(value);
+
+				const availabelAmount = activeCartProductItem.value
+					? selectedSize.value.amount - activeCartProductItem.value.quantity
+					: selectedSize.value.amount;
+
+				if (enteredAmount && enteredAmount > availabelAmount) {
+					buyNumber.value = availabelAmount;
+				} else {
+					buyNumber.value = enteredAmount || 1;
+				}
 			};
 
 			const increaseProductQuality = () => {
@@ -269,6 +286,13 @@
 
 				isAddingToCart.value = true;
 
+				const availabelAmount = activeCartProductItem.value
+					? selectedSize.value.amount - activeCartProductItem.value.quantity
+					: selectedSize.value.amount;
+
+				const amount =
+					buyNumber.value > availabelAmount ? availabelAmount : buyNumber.value;
+
 				const product = {
 					id: props.id,
 					name: props.name,
@@ -276,8 +300,16 @@
 					size: selectedSize.value.code,
 					discount: props.discount,
 					image: props.image,
-					amount: buyNumber.value,
+					amount,
 				};
+
+				if (amount <= 0) {
+					isAddingToCart.value = false;
+					notification.error({
+						message: "Bạn đã thêm tối đa số giày cho phép",
+					});
+					return;
+				}
 
 				const isSuccess = await store.dispatch("cart/createBuyNowSession", {
 					product,
@@ -308,6 +340,12 @@
 
 				isAddingToCart.value = true;
 
+				const availabelAmount = activeCartProductItem.value
+					? selectedSize.value.amount - activeCartProductItem.value.quantity
+					: selectedSize.value.amount;
+				const amount =
+					buyNumber.value > availabelAmount ? availabelAmount : buyNumber.value;
+
 				const product = {
 					id: props.id,
 					name: props.name,
@@ -315,8 +353,16 @@
 					size: selectedSize.value.code,
 					discount: props.discount,
 					image: props.image,
-					amount: buyNumber.value,
+					amount,
 				};
+
+				if (amount <= 0) {
+					isAddingToCart.value = false;
+					notification.error({
+						message: "Bạn đã thêm tối đa số giày cho phép",
+					});
+					return;
+				}
 
 				const isSuccess = await store.dispatch("cart/addProductToCart", {
 					product,

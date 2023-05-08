@@ -11,7 +11,7 @@ namespace DATT.k14_2023.COMMON.Entities
     {
         [Key]
         public Guid? CartDetailId { get; set; }
-        public Guid? ShoeId { get; set; }
+        public Guid ShoeId { get; set; }
         public string? ShoeCode { get; set; }
         public string? ShoeName { get; set; }
         public string? ImgName { get; set; }

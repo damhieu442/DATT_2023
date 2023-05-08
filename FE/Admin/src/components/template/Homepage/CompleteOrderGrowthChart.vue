@@ -13,22 +13,8 @@
 
 <script>
 	import LineChart from "@/components/shared/charts/Line.vue";
+	import { monthLabels } from "@/constants/months";
 	import _cloneDeep from "lodash/cloneDeep";
-
-	const monthLabels = {
-		January: 1,
-		February: 2,
-		March: 3,
-		April: 4,
-		May: 5,
-		June: 6,
-		July: 7,
-		August: 8,
-		September: 9,
-		October: 10,
-		November: 11,
-		December: 12,
-	};
 
 	export default {
 		name: "CompleteOrderStatisticLineChart",

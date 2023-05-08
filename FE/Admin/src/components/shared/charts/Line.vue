@@ -32,11 +32,5 @@
 				default: null,
 			},
 		},
-
-		watch: {
-			chartdata() {
-				console.log("Chaine: ", this.chartdata);
-			},
-		},
 	};
 </script>

@@ -29,9 +29,9 @@ namespace DATT.K14_2023.BL.EvaluateBL
             return _evaluateDL.GetRecordAll();
         }
 
-        public PagingResult<Evaluate> GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword)
+        public PagingResult<Evaluate> GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, int? status)
         {
-            dynamic dataRecord = _evaluateDL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyword, null, null);
+            dynamic dataRecord = _evaluateDL.GetRecordByFilterAndPaging(pageSize, pageNumber, keyword, status);
             double totalPage = Convert.ToDouble(dataRecord[1]) / pageSize;
 
             return new PagingResult<Evaluate>
@@ -199,6 +199,44 @@ namespace DATT.K14_2023.BL.EvaluateBL
                 workSheet.Cells[i + 4, 4].Value = item.Email;
                 workSheet.Cells[i + 4, 5].Value = item.Comment;
                 workSheet.Cells[i + 4, 6].Value = item.ShoeName;
+            }
+        }
+
+        public ServiceResult UpdateRecord(Guid id, Evaluate record)
+        {
+            var validateResults = ValidateRequestData(record);
+            if (validateResults.Count > 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.APIParameterNullOrInvalid,
+                    Message = Resource.InvalidData,
+                    Data = validateResults,
+                };
+            }
+
+            var validateCustom = ValidateCustom(record);
+            if (!validateCustom.IsSuccess)
+            {
+                return validateCustom;
+            }
+            int numberOfAffectedRows = _evaluateDL.UpdateRecord(id, record);
+            if (numberOfAffectedRows > 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = true,
+                };
+            }
+            else
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = k14_2023.COMMON.Enums.ErrorCode.UpdateFailed,
+                    Message = Resource.Update_Failed,
+                };
             }
         }
     }

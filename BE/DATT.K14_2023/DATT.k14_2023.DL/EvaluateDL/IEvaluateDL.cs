@@ -10,9 +10,10 @@ namespace DATT.k14_2023.DL.EvaluateDL
     public interface IEvaluateDL
     {
         dynamic GetRecordAll();
-        dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, string? queryString, string? type);
+        dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, int? status);
         dynamic GetRecordById(Guid id);
         int InsertRecord(Evaluate record);
+        int UpdateRecord(Guid id, Evaluate record);
         int DeleteRecordOne(Guid id);
         int DeleteRecordMany(List<Guid> listId);
         List<Evaluate> ExportExcel(List<Guid>? listId);

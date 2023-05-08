@@ -26,6 +26,7 @@ namespace DATT.k14_2023.COMMON.Entities
         /// Tên giày
         /// </summary>
         public string? ShoeName { get; set; }
+        public int? Inventory { get; set; }
 
         /// <summary>
         /// Mô tả
@@ -82,6 +83,7 @@ namespace DATT.k14_2023.COMMON.Entities
 
         public string? Code { get; set; }
         public int? TotalSold { get; set; }
+        public int? Total { get; set; }
 
         /// <summary>
         /// Điểm đánh giá trung bình

@@ -9,7 +9,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="product in productList" :key="product.id">
+				<tr
+					v-for="product in productList"
+					:key="product.id"
+					:class="{ error: runningOutCarts.includes(product.cartId) }"
+				>
 					<td>
 						{{ product.name }} - {{ product.size }}
 						<strong> x {{ product.quantity }}</strong>
@@ -80,6 +84,8 @@
 			},
 		},
 
+		runningOutCarts: { type: [Array, String] },
+
 		loading: Boolean,
 
 		isLoggedIn: Boolean,
@@ -110,6 +116,7 @@
 			name: product.name,
 			size: product.size,
 			quantity: product.quantity,
+			cartId: product.cartId,
 			price: product.price,
 			total: numberFormater.format(
 				Math.trunc(product.price * product.quantity * (1 - product.discount / 100)),
@@ -151,6 +158,10 @@
 
 		&__table {
 			width: 100%;
+
+			.error {
+				color: red;
+			}
 
 			> thead {
 				> tr {

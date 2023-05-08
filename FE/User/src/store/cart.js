@@ -263,7 +263,7 @@ const cart = {
 						image: item.ImgName
 							? IMAGE_BASE_URL.concat(
 									"/api/Shoes/imgName/",
-									item.ImgName.split(",")[0],
+									item.ImgName.split(",")[0].split(".")[0],
 							  )
 							: "",
 						name: item.ShoeName,

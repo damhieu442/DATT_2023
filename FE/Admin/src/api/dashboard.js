@@ -8,4 +8,12 @@ export default {
 	getChartData() {
 		return axios.get("/api/dashboards/chart");
 	},
+
+	getRevenueData() {
+		return axios.get("/api/dashboards/price");
+	},
+
+	getCategoryData() {
+		return axios.get("/api/dashboards/category");
+	},
 };

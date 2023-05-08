@@ -16,7 +16,7 @@
 				>
 			</div>
 		</div>
-		<Search placeholder="Nhập góp ý muốn tìm kiếm" class="my-6 w-3/5" />
+		<Search placeholder="Nhập góp ý muốn tìm kiếm" class="my-6 w-full 2xl:w-3/5" />
 		<EvaluateList
 			:loading="isGettingData"
 			:data="feedbacks"

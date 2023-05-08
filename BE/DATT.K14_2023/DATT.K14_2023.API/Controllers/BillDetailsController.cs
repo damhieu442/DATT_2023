@@ -74,6 +74,17 @@ namespace DATT.K14_2023.API.Controllers
                         TraceId = HttpContext.TraceIdentifier
                     });
                 }
+                else if (!result.IsSuccess && result.ErrorCode == (ErrorCode?)6)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                    {
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = "Sản phẩm đã hết hàng",
+                        UserMsg = "Sản phẩm đã hết hàng",
+                        MoreInfo = result.Data,
+                        TraceId = HttpContext.TraceIdentifier
+                    });
+                }
                 else
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult

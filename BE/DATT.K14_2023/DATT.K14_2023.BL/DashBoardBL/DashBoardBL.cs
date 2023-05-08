@@ -14,6 +14,10 @@ namespace DATT.K14_2023.BL.DashBoardBL
         {
             _dashBoardDL = dashBoardDL;
         }
+        public dynamic getDashBoarCategory()
+        {
+            return _dashBoardDL.getDashBoarCategory();
+        }
 
         public dynamic getDashBoard()
         {
@@ -23,6 +27,10 @@ namespace DATT.K14_2023.BL.DashBoardBL
         public dynamic getDashBoardChart()
         {
             return _dashBoardDL.getDashBoardChart();
+        }
+        public dynamic getDashBoarPrice()
+        {
+            return _dashBoardDL.getDashBoarPrice();
         }
     }
 }

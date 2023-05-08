@@ -28,7 +28,7 @@ namespace DATT.k14_2023.DL.EvaluateDL
             return record;
         }
 
-        public dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, string? queryString, string? type)
+        public dynamic GetRecordByFilterAndPaging(int pageSize, int pageNumber, string? keyword, int? status)
         {
             string storedProcedureName = String.Format(ProcedureName.Get, typeof(Evaluate).Name, "ByPagingAndFilter");
 
@@ -36,8 +36,7 @@ namespace DATT.k14_2023.DL.EvaluateDL
             parameters.Add("p_KeyWord", keyword);
             parameters.Add("p_PageSize", pageSize);
             parameters.Add("p_PageNumber", pageNumber);
-            parameters.Add("p_CustomParam", queryString);
-            parameters.Add("p_Type", type);
+            parameters.Add("p_Status", status);
 
             dynamic records;
             int totalRecord;
@@ -180,6 +179,25 @@ namespace DATT.k14_2023.DL.EvaluateDL
             }
 
             return evaluate;
+        }
+
+        public int UpdateRecord(Guid id, Evaluate record)
+        {
+            string storedProcedureName = String.Format(ProcedureName.Update, typeof(Evaluate).Name);
+            var parameters = new DynamicParameters();
+            var properties = typeof(Evaluate).GetProperties();
+            foreach (var property in properties)
+            {
+                parameters.Add($"p_{property.Name}", property.GetValue(record));
+            }
+            GeneratePrimaryKeyValue(parameters, properties, id);
+            int numberOfAffectedRows;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                numberOfAffectedRows = mySqlConnection.Execute(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return numberOfAffectedRows;
         }
     }
 }

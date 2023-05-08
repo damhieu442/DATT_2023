@@ -37,5 +37,29 @@ namespace DATT.k14_2023.DL.DashBoardDL
 
             return record;
         }
+        public dynamic getDashBoarCategory()
+        {
+            string storedProcedureName = "Proc_Dashboard_GetCategory";
+            dynamic record;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, commandType: CommandType.StoredProcedure);
+                record = result.Read<DM>().ToList();
+            }
+
+            return record;
+        }
+        public dynamic getDashBoarPrice()
+        {
+            string storedProcedureName = "Proc_Dashboard_GetPrice";
+            dynamic record;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                var result = mySqlConnection.QueryMultiple(storedProcedureName, commandType: CommandType.StoredProcedure);
+                record = result.Read<Month>().ToList();
+            }
+
+            return record;
+        }
     }
 }

@@ -31,7 +31,11 @@
 			:data="products"
 			@delete="openConfirmDeleteDialog"
 		/>
-		<ThePagination :data="pagination" />
+		<ThePagination
+			:data="pagination"
+			@update:page="getProductList"
+			@update:size="getProductList"
+		/>
 		<DeleteProductModal ref="rfDeleteModal" @delete="deleteProductHandler" />
 	</div>
 </template>
@@ -75,7 +79,7 @@
 				pageSize: limit || DEFAULT_VALUES.DEFAULT_PAGE_SIZE,
 				pageNumber: page || DEFAULT_VALUES.DEFAULT_PAGE,
 				minPrice: 0,
-				maxPrice: 10_000_000,
+				maxPrice: 100_000_000,
 				keyWord: undefined,
 			};
 
@@ -93,7 +97,7 @@
 				query.maxPrice = filter.maxPrice;
 				query.CategoryCode = filter.category;
 
-				switch (filter.orderBy) {
+				switch (filter.sort) {
 					case "":
 						body.Field = "CreatedDate";
 						body.Order = "DESC";
@@ -129,6 +133,9 @@
 						break;
 				}
 			}
+
+			console.log("Body: ", body);
+
 			const response = await productAPI.getFilteredList(query, [body]);
 
 			if (response.status > 199 && response.status < 300) {
@@ -165,6 +172,7 @@
 	};
 
 	const filterProduct = (filter) => {
+		console.log("Filter: ", filter);
 		getProductList(true, filter);
 	};
 

@@ -88,6 +88,12 @@
 				return [];
 			},
 		},
+		productSizes: {
+			type: Object,
+			default() {
+				return [];
+			},
+		},
 
 		isSynchronizing: Boolean,
 	});
@@ -151,17 +157,27 @@
 			return;
 		}
 
+		const totalProductAmount = props.productSizes
+			.get(product.id)
+			.find((size) => size.SizeName === product.size).Amount;
+		const availabelAmount = totalProductAmount;
+
 		store.commit("cart/" + EMutationTypes.UPDATE_PRODUCT_AMOUNT, {
 			productId: product.id,
-			amount: productAmount,
+			amount: productAmount > availabelAmount ? availabelAmount : productAmount,
 			size: product.size,
 		});
 	};
 
 	const increaseProductQuality = (product) => {
+		const totalProductAmount = props.productSizes
+			.get(product.id)
+			.find((size) => size.SizeName === product.size).Amount;
+		const availabelAmount = totalProductAmount;
+
 		store.commit("cart/" + EMutationTypes.UPDATE_PRODUCT_AMOUNT, {
 			productId: product.id,
-			amount: product.quantity + 1,
+			amount: product.quantity < availabelAmount ? product.quantity + 1 : availabelAmount,
 			size: product.size,
 		});
 	};
@@ -169,7 +185,7 @@
 	const decreaseProductQuality = (product) => {
 		store.commit("cart/" + EMutationTypes.UPDATE_PRODUCT_AMOUNT, {
 			productId: product.id,
-			amount: product.quantity - 1,
+			amount: product.quantity > 1 ? product.quantity - 1 : 1,
 			size: product.size,
 		});
 	};
@@ -268,8 +284,8 @@
 
 			&__amount {
 				.ant-input-number-input {
-					width: 3rem;
-					max-width: 3em;
+					width: 3.2rem;
+					max-width: 3.2rem;
 				}
 
 				.ant-input-number-group-addon {

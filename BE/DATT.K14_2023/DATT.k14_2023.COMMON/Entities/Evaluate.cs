@@ -16,12 +16,10 @@ namespace DATT.k14_2023.COMMON.Entities
 
         public Star? Star { get; set; }
 
-        [NotEmpty("Tên không được để trống")]
         public string? FullName { get; set; }
 
         public string? Email { get; set; }
 
-        [NotEmpty("Bình luận không được để trống")]
         public string? Comment { get; set; }
 
         public Guid? ShoeId { get; set; }
@@ -31,5 +29,6 @@ namespace DATT.k14_2023.COMMON.Entities
         public DateTime? CreatedDate { get; set; }
 
         public string? CreatedBy { get; set; }
+        public int? Status { get; set; }
     }
 }

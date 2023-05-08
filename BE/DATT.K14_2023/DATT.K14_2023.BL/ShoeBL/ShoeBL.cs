@@ -84,21 +84,21 @@ namespace DATT.K14_2023.BL.ShoeBL
         private void FomatStyleExcel(List<Shoe> listShoe, ExcelWorksheet workSheet)
         {
             workSheet.DefaultColWidth = 17;
-            workSheet.Cells["A:K"].Style.Font.SetFromFont("Times New Roman", 11);
+            workSheet.Cells["A:L"].Style.Font.SetFromFont("Times New Roman", 11);
 
-            workSheet.Cells["A1:K1"].Merge = true;
-            workSheet.Cells["A1:K1"].Style.Font.SetFromFont("Arial", 16);
-            workSheet.Cells["A1:K1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            workSheet.Cells["A1:L1"].Merge = true;
+            workSheet.Cells["A1:L1"].Style.Font.SetFromFont("Arial", 16);
+            workSheet.Cells["A1:L1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             workSheet.Cells[1, 1].Value = "DANH SÁCH GIÀY";
-            workSheet.Cells["A2:K2"].Merge = true;
+            workSheet.Cells["A2:L2"].Merge = true;
             workSheet.Cells[2, 1].Value = "";
-            workSheet.Cells["A3:K3"].Style.Font.Bold = true;
+            workSheet.Cells["A3:L3"].Style.Font.Bold = true;
 
             int number = listShoe.Count + 3;
-            workSheet.Cells[$"A3:K{number}"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-            workSheet.Cells[$"A3:K{number}"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-            workSheet.Cells[$"A3:K{number}"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-            workSheet.Cells[$"A3:K{number}"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            workSheet.Cells[$"A3:L{number}"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+            workSheet.Cells[$"A3:L{number}"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+            workSheet.Cells[$"A3:L{number}"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            workSheet.Cells[$"A3:L{number}"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
             // Tạo header
             workSheet.Cells[3, 1].Value = "STT";
@@ -111,11 +111,12 @@ namespace DATT.K14_2023.BL.ShoeBL
             workSheet.Cells[3, 7].Value = "Tổng tiền sau khi giảm";
             workSheet.Cells[3, 8].Value = "Chất liệu";
             workSheet.Cells[3, 9].Value = "Số lượng bán";
-            workSheet.Cells[3, 10].Value = "Ngày tạo";
-            workSheet.Cells[3, 11].Value = "Ngày sửa";
-            workSheet.Cells["L:W"].Clear();
+            workSheet.Cells[3, 10].Value = "Số lượng hàng tồn";
+            workSheet.Cells[3, 11].Value = "Ngày tạo";
+            workSheet.Cells[3, 12].Value = "Ngày sửa";
+            workSheet.Cells["M:Y"].Clear();
 
-            using (var range = workSheet.Cells["A3:K3"])
+            using (var range = workSheet.Cells["A3:L3"])
             {
                 range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 range.Style.Font.SetFromFont("Arial", 10);
@@ -139,19 +140,23 @@ namespace DATT.K14_2023.BL.ShoeBL
                 workSheet.Cells[i + 4, 7].Value = item.TotalPrice;
                 workSheet.Cells[i + 4, 8].Value = item.Material;
                 workSheet.Cells[i + 4, 9].Value = item.TotalSold;
-                workSheet.Cells[i + 4, 10].Value = item.CreatedDate;
-                workSheet.Cells[i + 4, 10].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                workSheet.Cells[i + 4, 11].Value = item.ModifiedDate;
+                workSheet.Cells[i + 4, 10].Value = item.Total - item.TotalSold;
+                workSheet.Cells[i + 4, 11].Value = item.CreatedDate;
                 workSheet.Cells[i + 4, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                workSheet.Cells[i + 4, 12].Value = item.ModifiedDate;
+                workSheet.Cells[i + 4, 12].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             }
 
             workSheet.Column(1).Width = 5;
             workSheet.Column(5).Width = 10;
-            workSheet.Column(10).Width = 15;
+            workSheet.Column(6).Width = 20;
+            workSheet.Column(9).Width = 20;
+            workSheet.Column(10).Width = 20;
             workSheet.Column(11).Width = 15;
+            workSheet.Column(12).Width = 15;
 
-            workSheet.Cells[4, 10, listShoe.Count + 4, 10].Style.Numberformat.Format = "DD/MM/YYYY";
             workSheet.Cells[4, 11, listShoe.Count + 4, 11].Style.Numberformat.Format = "DD/MM/YYYY";
+            workSheet.Cells[4, 12, listShoe.Count + 4, 12].Style.Numberformat.Format = "DD/MM/YYYY";
         }
 
         public int UpdateSoldNumber(Guid id, int soldNumber)

@@ -26,7 +26,7 @@ class ProductFactory {
 
 	transformProductAPIResponseToPromotedProduct(data) {
 		const images = data.ImgName.split(",").map((image) =>
-			IMAGE_BASE_URL.concat("/shoe/", image),
+			IMAGE_BASE_URL.concat("/api/Shoes/imgName/", image.split(".")[0]),
 		);
 		const [image] = images;
 
